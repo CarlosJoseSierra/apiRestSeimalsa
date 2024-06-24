@@ -208,3 +208,17 @@ export const getHistReparados = async (req, res) => {
         res.send(error.message);
       }
   };
+
+  export const getHistTotalPorSerie = async (req, res) => {
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      .request()
+      .input("serie", req.params.serie)
+      .query(querys.getDataHIstorialPorSerie); //dataReparados
+      res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+      res.send(error.message);
+    }
+    };
