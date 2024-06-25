@@ -20,8 +20,9 @@ var transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
+    type: 'OAuth2',
     user: "requerimientosseimalsa@gmail.com",
-    pass: "AIzaSyDHDorIY66rjfN4bjVZ0kNSuYCPiCIqkQg"
+    pass: "AIzaSyD5Bk0Let-gxt_R2Ovxix0gmKHTjEjivVg"
   }
 });
 var EnviarCorreo = /*#__PURE__*/function () {
