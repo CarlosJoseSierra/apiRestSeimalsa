@@ -7,9 +7,12 @@ const transporter = nodemailer.createTransport({
      * cambiar el valor de la propiedad service y ajustar la configuración de autenticación correspondiente.
      */
     service: "gmail",
+     host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
     auth: {
       user: "requerimientosseimalsa@gmail.com",
-      pass: "txextswxdelretqn",
+      pass: "AIzaSyDHDorIY66rjfN4bjVZ0kNSuYCPiCIqkQg",
     },
   });
 
@@ -25,7 +28,7 @@ export const EnviarCorreo = async (req, res) => {
 
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-            return res.status(400).json({ status: "400", msg: "El correo no fue enviado" ,token:0});
+            return res.status(400).json({ status: "400", msg: error.message ,token:0});
         } else {
             return res.json({status: "ok", msg: "Correo Enviado",token:0});
         }

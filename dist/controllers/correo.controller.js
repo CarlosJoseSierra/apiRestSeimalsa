@@ -16,9 +16,12 @@ var transporter = nodemailer.createTransport({
    * cambiar el valor de la propiedad service y ajustar la configuración de autenticación correspondiente.
    */
   service: "gmail",
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
     user: "requerimientosseimalsa@gmail.com",
-    pass: "txextswxdelretqn"
+    pass: "AIzaSyDHDorIY66rjfN4bjVZ0kNSuYCPiCIqkQg"
   }
 });
 var EnviarCorreo = /*#__PURE__*/function () {
@@ -38,7 +41,7 @@ var EnviarCorreo = /*#__PURE__*/function () {
             if (error) {
               return res.status(400).json({
                 status: "400",
-                msg: "El correo no fue enviado",
+                msg: error.message,
                 token: 0
               });
             } else {
