@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
      * cambiar el valor de la propiedad service y ajustar la configuración de autenticación correspondiente.
      */
     service: "gmail",
-        host: 'smtp.example.com', // Your SMTP server hostname
+        host: 'smtp.gmail.com', // Your SMTP server hostname
         port: 587,                 // Typically port 587 for SMTP with STARTTLS
         secure: false,  
         auth: {
