@@ -222,3 +222,17 @@ export const getHistReparados = async (req, res) => {
       res.send(error.message);
     }
     };
+
+    export const getHistTotalPorPlaca = async (req, res) => {
+      try {
+        const pool = await getConnection();
+        const result = await pool
+        .request()
+        .input("serie", req.params.placa)
+        .query(querys.getDataHIstorialPorPlaca); //dataReparados
+        res.json(result.recordset);
+      } catch (error) {
+        res.status(500);
+        res.send(error.message);
+      }
+      };
