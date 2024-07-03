@@ -616,7 +616,7 @@ var getHistTotalPorPlaca = /*#__PURE__*/function () {
         case 3:
           pool = _context18.sent;
           _context18.next = 6;
-          return pool.request().input("serie", req.params.placa).query(_database.querys.getDataHIstorialPorPlaca);
+          return pool.request().input("placa", req.params.placa).query(_database.querys.getDataHIstorialPorPlaca);
         case 6:
           result = _context18.sent;
           //dataReparados

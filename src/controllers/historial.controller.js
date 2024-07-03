@@ -228,7 +228,7 @@ export const getHistReparados = async (req, res) => {
         const pool = await getConnection();
         const result = await pool
         .request()
-        .input("serie", req.params.placa)
+        .input("placa", req.params.placa)
         .query(querys.getDataHIstorialPorPlaca); //dataReparados
         res.json(result.recordset);
       } catch (error) {
