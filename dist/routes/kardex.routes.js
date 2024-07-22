@@ -11,5 +11,7 @@ router.get("/kardex", _kardex.getClienteKardex);
 router.get("/kardexP", _kardex.getClienteKardexP);
 router.get("/kardexA", _kardex.getClienteKardexA);
 router.get("/kardexU", _kardex.getClienteKardexU);
+router.get("/kardexT", _kardex.getClienteKardexT);
+router.get("/kardexR", _kardex.getClienteKardexR);
 var _default = router;
 exports["default"] = _default;
