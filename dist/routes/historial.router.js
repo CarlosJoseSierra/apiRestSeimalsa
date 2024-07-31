@@ -26,6 +26,7 @@ router.get("/historial5x", _historial.getHistTotalReparado);
 router.get("/historial6y", _historial.getHistTotalDisponible);
 router.get("/historialxyz/:serie", _historial.getHistTotalPorSerie);
 router.get("/historialxxx/:placa", _historial.getHistTotalPorPlaca);
+router.get("/historialxyzw/:serie", _historial.getEntregadosPorSerie);
 
 //GLOBAL REFRIGERACION
 router.get("/historialxy", _historial.getTotalEquiposMapa);

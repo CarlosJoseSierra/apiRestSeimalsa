@@ -74,7 +74,7 @@ Content-Type: application/json
 
 
 ### get idCliente
-@api200 = http://localhost:3000/api/tservicioPers
+@api200 = http://localhost:3000/api/historialxyzw/H08220580497
 {{api200}}
 
 

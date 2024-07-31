@@ -16,10 +16,11 @@ import {
   getHistTotalDisponible,
   getHistTotalPorSerie,
   getHistTotalPorPlaca,
+  getEntregadosPorSerie,
   //GLOBAL REFRIGERACION
   getTotalEquiposMapa,
   getTopFiveTecnicos,
-
+  
 } from "../controllers/historial.controller";
 
 const router = Router();
@@ -43,6 +44,7 @@ router.get("/historial5x", getHistTotalReparado);
 router.get("/historial6y", getHistTotalDisponible);
 router.get("/historialxyz/:serie", getHistTotalPorSerie);
 router.get("/historialxxx/:placa", getHistTotalPorPlaca);
+router.get("/historialxyzw/:serie", getEntregadosPorSerie);
 
 //GLOBAL REFRIGERACION
 router.get("/historialxy", getTotalEquiposMapa);

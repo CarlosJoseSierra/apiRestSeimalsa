@@ -221,7 +221,7 @@ export const getHistReparados = async (req, res) => {
       res.status(500);
       res.send(error.message);
     }
-    };
+  };
 
     export const getHistTotalPorPlaca = async (req, res) => {
       try {
@@ -235,4 +235,19 @@ export const getHistReparados = async (req, res) => {
         res.status(500);
         res.send(error.message);
       }
-      };
+    };
+
+    export const getEntregadosPorSerie = async (req, res) => {
+      try {
+        const pool = await getConnection();
+        const result = await pool
+        .request()
+        .input("serie", req.params.serie)
+        .query(querys.getDataEntregadosPorSerie); 
+        res.json(result.recordset);
+      } catch (error) {
+        res.status(500);
+        res.send(error.message);
+        console.log(error.message);
+      }
+    };
