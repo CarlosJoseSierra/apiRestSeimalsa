@@ -21,5 +21,11 @@ router.get("/areaservicio/mov", _areaservicio.getAreaServicioMovimiento); //Obte
 router.get("/areaservicio/mant", _areaservicio.getAreaServicioMantenimiento); //Obtengo las cts con area de servicio mantenimiento
 
 router.get("/areaservicio/z", _areaservicio.getReporteGeneral);
+router.get("/areaservicio/H", _areaservicio.getEntregadosHeineken);
+router.get("/areaservicio/P", _areaservicio.getEntregadosPronaca);
+router.get("/areaservicio/T", _areaservicio.getEntregadosTesalia);
+router.get("/areaservicio/U", _areaservicio.getEntregadosUnilever);
+router.get("/areaservicio/R", _areaservicio.getEntregadosElRosado);
+router.get("/areaservicio/A", _areaservicio.getEntregadosArca);
 var _default = router;
 exports["default"] = _default;

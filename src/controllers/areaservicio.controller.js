@@ -221,3 +221,81 @@ export const getAreaByPlaca = async (req, res) => {
     }
   }
 
+  export const getEntregadosHeineken = async(req, res) =>{
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      
+        .request()
+        .query(querys.getEntregaGeneralHeineken);
+        return res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+    }
+  }
+
+  export const getEntregadosPronaca = async(req, res) =>{
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      
+        .request()
+        .query(querys.getEntregaGeneralPronaca);
+        return res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+    }
+  }
+
+  export const getEntregadosTesalia = async(req, res) =>{
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      
+        .request()
+        .query(querys.getEntregaGeneralTesalia);
+        return res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+    }
+  }
+
+  export const getEntregadosUnilever = async(req, res) =>{
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      
+        .request()
+        .query(querys.getEntregaGeneralUnilever);
+        return res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+    }
+  }
+  
+  export const getEntregadosElRosado = async(req, res) =>{
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      
+        .request()
+        .query(querys.getEntregaGeneralElRosado);
+        return res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+    }
+  }
+
+  export const getEntregadosArca = async(req, res) =>{
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      
+        .request()
+        .query(querys.getEntregaGeneralArca);
+        return res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+    }
+  }
+ 

@@ -9,7 +9,12 @@ import {
     getAreaServicioMovimiento,
     getAreaServicioMantenimiento,
     getReporteGeneral,
-    getResumenTaller,
+    getEntregadosHeineken,
+    getEntregadosPronaca,
+    getEntregadosTesalia,
+    getEntregadosUnilever,
+    getEntregadosElRosado,
+    getEntregadosArca,
 } from "../controllers/areaservicio.controller";
 
 const router = Router();
@@ -31,5 +36,12 @@ router.get("/areaservicio/mov", getAreaServicioMovimiento); //Obtengo las cts co
 router.get("/areaservicio/mant", getAreaServicioMantenimiento); //Obtengo las cts con area de servicio mantenimiento
 
 router.get("/areaservicio/z", getReporteGeneral);
+
+router.get("/areaservicio/H", getEntregadosHeineken);
+router.get("/areaservicio/P", getEntregadosPronaca);
+router.get("/areaservicio/T", getEntregadosTesalia);
+router.get("/areaservicio/U", getEntregadosUnilever);
+router.get("/areaservicio/R", getEntregadosElRosado);
+router.get("/areaservicio/A", getEntregadosArca);
 
 export default router;
