@@ -292,10 +292,23 @@ export const getAreaByPlaca = async (req, res) => {
       const result = await pool
       
         .request()
+        .input("id", req.params.id)
         .query(querys.getEntregaGeneralArca);
         return res.json(result.recordset);
     } catch (error) {
       res.status(500);
     }
   }
- 
+
+  export const getDetalleCTById = async(req, res) =>{
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      
+        .request()
+        .query(querys.getDetalleCTById);
+        return res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+    }
+  }

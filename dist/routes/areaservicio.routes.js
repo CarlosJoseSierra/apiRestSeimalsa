@@ -27,5 +27,6 @@ router.get("/areaservicio/T", _areaservicio.getEntregadosTesalia);
 router.get("/areaservicio/U", _areaservicio.getEntregadosUnilever);
 router.get("/areaservicio/R", _areaservicio.getEntregadosElRosado);
 router.get("/areaservicio/A", _areaservicio.getEntregadosArca);
+router.get("/areaservicio/DET/:id", _areaservicio.getDetalleCTById);
 var _default = router;
 exports["default"] = _default;

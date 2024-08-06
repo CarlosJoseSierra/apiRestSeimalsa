@@ -15,6 +15,7 @@ import {
     getEntregadosUnilever,
     getEntregadosElRosado,
     getEntregadosArca,
+    getDetalleCTById,
 } from "../controllers/areaservicio.controller";
 
 const router = Router();
@@ -43,5 +44,6 @@ router.get("/areaservicio/T", getEntregadosTesalia);
 router.get("/areaservicio/U", getEntregadosUnilever);
 router.get("/areaservicio/R", getEntregadosElRosado);
 router.get("/areaservicio/A", getEntregadosArca);
+router.get("/areaservicio/DET/:id", getDetalleCTById);
 
 export default router;
