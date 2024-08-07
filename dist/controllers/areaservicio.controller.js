@@ -526,7 +526,7 @@ var getEntregadosArca = /*#__PURE__*/function () {
         case 3:
           pool = _context15.sent;
           _context15.next = 6;
-          return pool.request().input("id", req.params.id).query(_database.querys.getEntregaGeneralArca);
+          return pool.request().query(_database.querys.getEntregaGeneralArca);
         case 6:
           result = _context15.sent;
           return _context15.abrupt("return", res.json(result.recordset));
@@ -557,7 +557,7 @@ var getDetalleCTById = /*#__PURE__*/function () {
         case 3:
           pool = _context16.sent;
           _context16.next = 6;
-          return pool.request().query(_database.querys.getDetalleCTById);
+          return pool.request().input("id", req.params.id).query(_database.querys.getDetalleCTById);
         case 6:
           result = _context16.sent;
           return _context16.abrupt("return", res.json(result.recordset));
