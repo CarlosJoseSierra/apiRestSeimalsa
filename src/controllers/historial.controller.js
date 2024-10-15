@@ -215,7 +215,24 @@ export const getHistReparados = async (req, res) => {
       const result = await pool
       .request()
       .input("serie", req.params.serie)
+      .input("idCli1", req.params.idCli1)
+      .input("idCli2", req.params.idCli2)
       .query(querys.getDataHIstorialPorSerie); //dataReparados
+      res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+      res.send(error.message);
+    }
+  };
+
+  
+  export const getHistTotalPorSerieInterno = async (req, res) => {
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      .request()
+      .input("serie", req.params.serie)
+      .query(querys.getDataHIstorialPorSerieInterno); //dataReparados
       res.json(result.recordset);
     } catch (error) {
       res.status(500);
@@ -229,6 +246,8 @@ export const getHistReparados = async (req, res) => {
         const result = await pool
         .request()
         .input("placa", req.params.placa)
+        .input("idCli1", req.params.idCli1)
+        .input("idCli2", req.params.idCli2)
         .query(querys.getDataHIstorialPorPlaca); //dataReparados
         res.json(result.recordset);
       } catch (error) {

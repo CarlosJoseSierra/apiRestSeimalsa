@@ -24,7 +24,8 @@ router.get("/historialz", _historial.getHistorialTotalEquipoEntregado);
 router.get("/historial4z", _historial.getHistTotalEntregado);
 router.get("/historial5x", _historial.getHistTotalReparado);
 router.get("/historial6y", _historial.getHistTotalDisponible);
-router.get("/historialxyz/:serie", _historial.getHistTotalPorSerie);
+router.get("/historialxyz/:serie/:idCli1/:idCli2", _historial.getHistTotalPorSerie);
+router.get("/historialxyz/:serie", _historial.getHistTotalPorSerieInterno);
 router.get("/historialxxx/:placa", _historial.getHistTotalPorPlaca);
 router.get("/historialxyzw/:serie", _historial.getEntregadosPorSerie);
 

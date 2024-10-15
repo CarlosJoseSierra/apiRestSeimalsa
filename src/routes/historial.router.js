@@ -17,6 +17,7 @@ import {
   getHistTotalPorSerie,
   getHistTotalPorPlaca,
   getEntregadosPorSerie,
+  getHistTotalPorSerieInterno,
   //GLOBAL REFRIGERACION
   getTotalEquiposMapa,
   getTopFiveTecnicos,
@@ -42,7 +43,8 @@ router.get("/historialz", getHistorialTotalEquipoEntregado);
 router.get("/historial4z", getHistTotalEntregado);
 router.get("/historial5x", getHistTotalReparado);
 router.get("/historial6y", getHistTotalDisponible);
-router.get("/historialxyz/:serie", getHistTotalPorSerie);
+router.get("/historialxyz/:serie/:idCli1/:idCli2", getHistTotalPorSerie);
+router.get("/historialxyz/:serie", getHistTotalPorSerieInterno);
 router.get("/historialxxx/:placa", getHistTotalPorPlaca);
 router.get("/historialxyzw/:serie", getEntregadosPorSerie);
 
