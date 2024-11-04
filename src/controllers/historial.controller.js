@@ -270,3 +270,21 @@ export const getHistReparados = async (req, res) => {
         console.log(error.message);
       }
     };
+
+    export const getHistTotalCodSubCliente = async (req, res) => {
+      try {
+        const pool = await getConnection();
+        const result = await pool
+        .request()
+        .input("codigo", req.params.codigo)
+        .input("idCli1", req.params.idCli1)
+        .input("idCli2", req.params.idCli2)
+        .query(querys.getHistTotalCodSubCliente); //dataReparados
+        res.json(result.recordset);
+      } catch (error) {
+        res.status(500);
+        res.send(error.message);
+      }
+    };
+  
+    
