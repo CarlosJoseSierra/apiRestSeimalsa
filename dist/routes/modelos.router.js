@@ -10,6 +10,6 @@ var router = (0, _express.Router)();
 
 //router.get("/modelosy", getEquipos);
 router.get("/modelos/:id/:id2", _modelos.getModeloByIdCliente);
-router.get("/modelosx", _modelos.getTotalModelo);
+router.get("/modelosx/:mes/:anio", _modelos.getTotalModelo);
 var _default = router;
 exports["default"] = _default;
