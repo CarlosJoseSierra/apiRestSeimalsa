@@ -55,7 +55,7 @@ var getTotalModeloFiltro = /*#__PURE__*/function () {
         case 3:
           pool = _context2.sent;
           _context2.next = 6;
-          return pool.request().input("Mes", req.params.mes).input("Anio", req.params.anio).query(_database.querys.getTotalModelos);
+          return pool.request().input("Mes", req.params.mes).input("Anio", req.params.anio).query(_database.querys.getTotalModelosFiltro);
         case 6:
           result = _context2.sent;
           res.json(result.recordset);
@@ -89,7 +89,7 @@ var getTotalModelo = /*#__PURE__*/function () {
         case 3:
           pool = _context3.sent;
           _context3.next = 6;
-          return pool.request().input("Mes", req.params.mes).input("Anio", req.params.anio).query(_database.querys.getTotalModelos);
+          return pool.request().input("Anio", req.params.anio).query(_database.querys.getTotalModelos);
         case 6:
           result = _context3.sent;
           res.json(result.recordset);

@@ -50,7 +50,8 @@ export const querys = {
 
   //Querys Tabla Area Servicio
   getTopSevenModelos: "SELECT TOP 7 COUNT(AS_id) AS CONTEO,EQUIP_modelo  FROM AREA_SERVICIO INNER JOIN EQUIPO ON AS_EQUIP_id = EQUIP_id WHERE (AS_OT_id>0) AND (AS_CLI_id = @id or AS_CLI_id = @id2) GROUP BY EQUIP_modelo ORDER BY CONTEO DESC",
-  getTotalModelos: "SELECT TOP 7 COUNT(AS_id) AS CONTEO,EQUIP_modelo  FROM AREA_SERVICIO INNER JOIN EQUIPO ON AS_EQUIP_id = EQUIP_id WHERE (AS_OT_id>0) AND (MONTH(AS_fecha) = @Mes) AND YEAR(AS_fecha) = @Anio GROUP BY EQUIP_modelo ORDER BY CONTEO DESC",
+  getTotalModelos: "SELECT TOP 7 COUNT(AS_id) AS CONTEO,EQUIP_modelo  FROM AREA_SERVICIO INNER JOIN EQUIPO ON AS_EQUIP_id = EQUIP_id WHERE (AS_OT_id>0) AND YEAR(AS_fecha) = @Anio GROUP BY EQUIP_modelo ORDER BY CONTEO DESC",
+  getTotalModelosFiltro: "SELECT TOP 7 COUNT(AS_id) AS CONTEO,EQUIP_modelo  FROM AREA_SERVICIO INNER JOIN EQUIPO ON AS_EQUIP_id = EQUIP_id WHERE (AS_OT_id>0) AND (MONTH(AS_fecha) = @Mes) AND YEAR(AS_fecha) = @Anio GROUP BY EQUIP_modelo ORDER BY CONTEO DESC",
 
   //Querys Tabla Logos
   getAllLogos: "SELECT LOGO_id,LOGO_nombre FROM LOGO ORDER BY LOGO_nombre", 

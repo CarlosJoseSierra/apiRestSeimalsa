@@ -10,6 +10,6 @@ const router = Router();
 //router.get("/modelosy", getEquipos);
 router.get("/modelos/:id/:id2", getModeloByIdCliente);
 router.get("/modelosx/:mes/:anio", getTotalModeloFiltro);
-router.get("/modelosy", getTotalModelo);
+router.get("/modelosy/:anio", getTotalModelo);
 
 export default router;
