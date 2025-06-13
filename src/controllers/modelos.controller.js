@@ -15,6 +15,21 @@ export const getModeloByIdCliente = async (req, res) => {
   }
 };
 
+export const getTotalModeloFiltro = async (req, res) => {
+  try {
+    const pool = await getConnection();
+    const result = await pool
+    .request()
+    .input("Mes", req.params.mes)
+    .input("Anio", req.params.anio)
+    .query(querys.getTotalModelos);
+    res.json(result.recordset);
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};
+
 export const getTotalModelo = async (req, res) => {
   try {
     const pool = await getConnection();
