@@ -22,9 +22,12 @@ router.get("/historialx/:anio", _historial.getHistorialTotalEquipoReparado);
 router.get("/historialy/:anio", _historial.getHistorialTotalEquipoDisponible);
 router.get("/historialz/:anio", _historial.getHistorialTotalEquipoEntregado);
 //La parte de abajo del dashboard
-router.get("/historial4z", _historial.getHistTotalEntregado);
-router.get("/historial5x", _historial.getHistTotalReparado);
-router.get("/historial6y", _historial.getHistTotalDisponible);
+router.get("/historial4z/:anio", _historial.getHistTotalEntregado);
+router.get("/historial4z1/:anio/:mes", _historial.getHistTotalEntregadoFiltro);
+router.get("/historial5x/:anio", _historial.getHistTotalReparado);
+router.get("/historial5x1/:anio/:mes", _historial.getHistTotalReparadoFiltro);
+router.get("/historial6y/:anio", _historial.getHistTotalDisponible);
+router.get("/historial6y1/:anio/:mes", _historial.getHistTotalDisponibleFiltro);
 router.get("/historialxyz/:serie/:idCli1/:idCli2", _historial.getHistTotalPorSerie);
 router.get("/historialxyz/:serie", _historial.getHistTotalPorSerieInterno);
 router.get("/historialxxx/:placa", _historial.getHistTotalPorPlaca);

@@ -134,7 +134,25 @@ export const getHistReparados = async (req, res) => {
   export const getHistTotalEntregado = async (req, res) => {
     try {
       const pool = await getConnection();
-      const result = await pool.request().query(querys.getHistorialTotalEntregados);//
+      const result = await pool
+      .request()
+      .input("Anio", req.params.anio)
+      .query(querys.getHistorialTotalEntregados);//
+      res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+      res.send(error.message);
+    }
+  };
+
+  export const getHistTotalEntregadoFiltro = async (req, res) => {
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      .request()
+      .input("Anio", req.params.anio)
+      .input("Mes", req.params.mes)
+      .query(querys.getHistorialTotalEntregadosFiltro);//
       res.json(result.recordset);
     } catch (error) {
       res.status(500);

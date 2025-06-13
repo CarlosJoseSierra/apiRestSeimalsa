@@ -20,6 +20,9 @@ import {
   getHistTotalPorSerieInterno,
   getHistTotalCodSubCliente,
   getTotalItemsServFiltro,
+  getHistTotalEntregadoFiltro,
+  getHistTotalReparadoFiltro,
+  getHistTotalDisponibleFiltro,
   //GLOBAL REFRIGERACION
   getTotalEquiposMapa,
   getTopFiveTecnicos,
@@ -43,9 +46,12 @@ router.get("/historialx/:anio", getHistorialTotalEquipoReparado);
 router.get("/historialy/:anio", getHistorialTotalEquipoDisponible);
 router.get("/historialz/:anio", getHistorialTotalEquipoEntregado);
 //La parte de abajo del dashboard
-router.get("/historial4z", getHistTotalEntregado);
-router.get("/historial5x", getHistTotalReparado);
-router.get("/historial6y", getHistTotalDisponible);
+router.get("/historial4z/:anio", getHistTotalEntregado);
+router.get("/historial4z1/:anio/:mes", getHistTotalEntregadoFiltro);
+router.get("/historial5x/:anio", getHistTotalReparado);
+router.get("/historial5x1/:anio/:mes", getHistTotalReparadoFiltro);
+router.get("/historial6y/:anio", getHistTotalDisponible);
+router.get("/historial6y1/:anio/:mes", getHistTotalDisponibleFiltro);
 router.get("/historialxyz/:serie/:idCli1/:idCli2", getHistTotalPorSerie);
 router.get("/historialxyz/:serie", getHistTotalPorSerieInterno);
 router.get("/historialxxx/:placa", getHistTotalPorPlaca);
