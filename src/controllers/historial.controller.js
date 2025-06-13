@@ -79,6 +79,21 @@ export const getHistReparados = async (req, res) => {
     }
   };
 
+  export const getTotalItemsServFiltro = async (req, res) => {
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      .request()
+      .input("Anio", req.params.anio)
+      .input("Mes", req.params.mes)
+      .query(querys.geoTotalItemsServiciosFiltro);
+      res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+      res.send(error.message);
+    }
+  };
+
   export const getHistorialEquipoEntregado = async (req, res) => {
     try {
         const pool = await getConnection();
