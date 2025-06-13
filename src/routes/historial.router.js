@@ -31,7 +31,7 @@ router.get("/historial1/:id/:id2/:anio", getHistReparados);
 router.get("/historial2/:id/:id2/:anio", getHistDisponibles);
 router.get("/historial3/:id/:id2/:anio", getHistEntregados);
 router.get("/historial/:id/:id2", getTopFiveItems);
-router.get("/historials", getTotalItemsServ);
+router.get("/historials/:anio", getTotalItemsServ);
 router.get("/historial4/:id/:id2", getHistorialEquipoEntregado);
 router.get("/historial5/:id/:id2", getHistorialEquipoReparado);
 router.get("/historial6/:id/:id2", getHistorialEquipoDisponible);

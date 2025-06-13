@@ -161,7 +161,7 @@ var getTotalItemsServ = /*#__PURE__*/function () {
         case 3:
           pool = _context5.sent;
           _context5.next = 6;
-          return pool.request().query(_database.querys.geoTotalItemsServicios);
+          return pool.request().input("Anio", req.params.anio).query(_database.querys.geoTotalItemsServicios);
         case 6:
           result = _context5.sent;
           res.json(result.recordset);

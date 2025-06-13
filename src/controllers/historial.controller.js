@@ -68,7 +68,10 @@ export const getHistReparados = async (req, res) => {
   export const getTotalItemsServ = async (req, res) => {
     try {
       const pool = await getConnection();
-      const result = await pool.request().query(querys.geoTotalItemsServicios);
+      const result = await pool
+      .request()
+      .input("Anio", req.params.anio)
+      .query(querys.geoTotalItemsServicios);
       res.json(result.recordset);
     } catch (error) {
       res.status(500);
