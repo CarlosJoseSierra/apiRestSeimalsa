@@ -112,7 +112,25 @@ export const getHistReparados = async (req, res) => {
   export const getHistTotalReparado = async (req, res) => {
     try {
       const pool = await getConnection();
-      const result = await pool.request().query(querys.getHistorialTotalReparacion);//
+      const result = await pool
+      .request()
+      .input("Anio", req.params.anio)
+      .query(querys.getHistorialTotalReparacion);//
+      res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+      res.send(error.message);
+    }
+  };
+
+  export const getHistTotalReparadoFiltro = async (req, res) => {
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      .request()
+      .input("Anio", req.params.anio)
+      .input("Mes", req.params.mes)
+      .query(querys.getHistorialTotalReparacionFiltro);//
       res.json(result.recordset);
     } catch (error) {
       res.status(500);
@@ -123,7 +141,25 @@ export const getHistReparados = async (req, res) => {
   export const getHistTotalDisponible = async (req, res) => {
     try {
       const pool = await getConnection();
-      const result = await pool.request().query(querys.getHistorialTotalDisponible);//
+      const result = await pool
+      .request()
+      .input("Anio", req.params.anio)
+      .query(querys.getHistorialTotalDisponible);//
+      res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+      res.send(error.message);
+    }
+  };
+
+  export const getHistTotalDisponibleFiltro = async (req, res) => {
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      .request()
+      .input("Anio", req.params.anio)
+      .input("Mes", req.params.mes)
+      .query(querys.getHistorialTotalDisponibleFiltro);//
       res.json(result.recordset);
     } catch (error) {
       res.status(500);
