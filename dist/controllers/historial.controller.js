@@ -22,7 +22,7 @@ var getHistReparados = /*#__PURE__*/function () {
         case 3:
           pool = _context.sent;
           _context.next = 6;
-          return pool.request().input("id", req.params.id).input("id2", req.params.id2).query(_database.querys.getDataReparados);
+          return pool.request().input("id", req.params.id).input("id2", req.params.id2).input("Anio", req.params.anio).query(_database.querys.getDataReparados);
         case 6:
           result = _context.sent;
           //dataReparados
@@ -57,7 +57,7 @@ var getHistDisponibles = /*#__PURE__*/function () {
         case 3:
           pool = _context2.sent;
           _context2.next = 6;
-          return pool.request().input("id", req.params.id).input("id2", req.params.id2).query(_database.querys.getDataDisponibles);
+          return pool.request().input("id", req.params.id).input("id2", req.params.id2).input("Anio", req.params.anio).query(_database.querys.getDataDisponibles);
         case 6:
           result = _context2.sent;
           //datadisponbles
@@ -92,7 +92,7 @@ var getHistEntregados = /*#__PURE__*/function () {
         case 3:
           pool = _context3.sent;
           _context3.next = 6;
-          return pool.request().input("id", req.params.id).input("id2", req.params.id2).query(_database.querys.getDataEntregados);
+          return pool.request().input("id", req.params.id).input("id2", req.params.id2).input("Anio", req.params.anio).query(_database.querys.getDataEntregados);
         case 6:
           result = _context3.sent;
           //dataentregados
@@ -405,7 +405,7 @@ var getHistorialTotalEquipoReparado = /*#__PURE__*/function () {
         case 3:
           pool = _context12.sent;
           _context12.next = 6;
-          return pool.request().query(_database.querys.getDataReparadosTotal);
+          return pool.request().input("Anio", req.params.anio).query(_database.querys.getDataReparadosTotal);
         case 6:
           result = _context12.sent;
           //DataTotalRep
@@ -440,7 +440,7 @@ var getHistorialTotalEquipoDisponible = /*#__PURE__*/function () {
         case 3:
           pool = _context13.sent;
           _context13.next = 6;
-          return pool.request().query(_database.querys.getDataDisponiblesTotal);
+          return pool.request().input("Anio", req.params.anio).query(_database.querys.getDataDisponiblesTotal);
         case 6:
           result = _context13.sent;
           //DataTotalDisp
@@ -475,7 +475,7 @@ var getHistorialTotalEquipoEntregado = /*#__PURE__*/function () {
         case 3:
           pool = _context14.sent;
           _context14.next = 6;
-          return pool.request().query(_database.querys.getDataEntregadosTotal);
+          return pool.request().input("Anio", req.params.anio).query(_database.querys.getDataEntregadosTotal);
         case 6:
           result = _context14.sent;
           //DataTotalEnt

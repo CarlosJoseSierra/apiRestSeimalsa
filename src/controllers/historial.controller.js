@@ -8,6 +8,7 @@ export const getHistReparados = async (req, res) => {
     .request()
     .input("id", req.params.id)
     .input("id2", req.params.id2)
+    .input("Anio", req.params.anio)
     .query(querys.getDataReparados); //dataReparados
     res.json(result.recordset);
   } catch (error) {
@@ -24,6 +25,7 @@ export const getHistReparados = async (req, res) => {
       .request()
       .input("id", req.params.id)
       .input("id2", req.params.id2)
+      .input("Anio", req.params.anio)
       .query(querys.getDataDisponibles);//datadisponbles
       res.json(result.recordset);
     } catch (error) {
@@ -39,6 +41,7 @@ export const getHistReparados = async (req, res) => {
       .request()
       .input("id", req.params.id)
       .input("id2", req.params.id2)
+      .input("Anio", req.params.anio)
       .query(querys.getDataEntregados);//dataentregados
       res.json(result.recordset);
     } catch (error) {
@@ -154,7 +157,10 @@ export const getHistReparados = async (req, res) => {
   export const getHistorialTotalEquipoReparado = async (req, res) => {
     try {
       const pool = await getConnection();
-      const result = await pool.request().query(querys.getDataReparadosTotal);//DataTotalRep
+      const result = await pool
+      .request()
+      .input("Anio", req.params.anio)
+      .query(querys.getDataReparadosTotal);//DataTotalRep
       res.json(result.recordset);
     } catch (error) {
       res.status(500);
@@ -165,7 +171,10 @@ export const getHistReparados = async (req, res) => {
   export const getHistorialTotalEquipoDisponible = async (req, res) => {
     try {
       const pool = await getConnection();
-      const result = await pool.request().query(querys.getDataDisponiblesTotal);//DataTotalDisp
+      const result = await pool
+      .request()
+      .input("Anio", req.params.anio)
+      .query(querys.getDataDisponiblesTotal);//DataTotalDisp
       res.json(result.recordset);
     } catch (error) {
       res.status(500);
@@ -176,7 +185,10 @@ export const getHistReparados = async (req, res) => {
   export const getHistorialTotalEquipoEntregado = async (req, res) => {
     try {
       const pool = await getConnection();
-      const result = await pool.request().query(querys.getDataEntregadosTotal);//DataTotalEnt
+      const result = await pool
+      .request()
+      .input("Anio", req.params.anio)
+      .query(querys.getDataEntregadosTotal);//DataTotalEnt
       res.json(result.recordset);
     } catch (error) {
       res.status(500);
