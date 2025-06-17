@@ -161,7 +161,7 @@ var getTopFiveItemsFiltro = /*#__PURE__*/function () {
         case 3:
           pool = _context5.sent;
           _context5.next = 6;
-          return pool.request().input("id", req.params.id).input("id2", req.params.id2).input("Anio", req.params.anio).input("Mes", req.params.mes).query(_database.querys.getTopFiveItems);
+          return pool.request().input("id", req.params.id).input("id2", req.params.id2).input("Anio", req.params.anio).input("Mes", req.params.mes).query(_database.querys.getTopFiveItemsFiltro);
         case 6:
           result = _context5.sent;
           res.json(result.recordset);

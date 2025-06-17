@@ -75,7 +75,7 @@ export const getHistReparados = async (req, res) => {
         .input("id2", req.params.id2)
         .input("Anio", req.params.anio)
         .input("Mes", req.params.mes)
-        .query(querys.getTopFiveItems);
+        .query(querys.getTopFiveItemsFiltro);
         res.json(result.recordset);
       } catch (error) {
         res.status(500);
