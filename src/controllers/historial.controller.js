@@ -57,6 +57,24 @@ export const getHistReparados = async (req, res) => {
         .request()
         .input("id", req.params.id)
         .input("id2", req.params.id2)
+        .input("Anio", req.params.anio)
+        .query(querys.getTopFiveItems);
+        res.json(result.recordset);
+      } catch (error) {
+        res.status(500);
+        res.send(error.message);
+      }
+  };
+
+  export const getTopFiveItemsFiltro = async (req, res) => {
+    try {
+        const pool = await getConnection();
+        const result = await pool
+        .request()
+        .input("id", req.params.id)
+        .input("id2", req.params.id2)
+        .input("Anio", req.params.anio)
+        .input("Mes", req.params.mes)
         .query(querys.getTopFiveItems);
         res.json(result.recordset);
       } catch (error) {
@@ -101,6 +119,24 @@ export const getHistReparados = async (req, res) => {
         .request()
         .input("id", req.params.id)
         .input("id2", req.params.id2)
+        .input("Anio", req.params.anio)
+        .query(querys.getHistorialEntregados);//gistorialentregados
+        res.json(result.recordset);
+      } catch (error) {
+        res.status(500);
+        res.send(error.message);
+      }
+  };
+
+  export const getHistorialEquipoEntregadoFiltro = async (req, res) => {
+    try {
+        const pool = await getConnection();
+        const result = await pool
+        .request()
+        .input("id", req.params.id)
+        .input("id2", req.params.id2)
+        .input("Anio", req.params.anio)
+        .input("Mes", req.params.mes)
         .query(querys.getHistorialEntregados);//gistorialentregados
         res.json(result.recordset);
       } catch (error) {
@@ -203,6 +239,24 @@ export const getHistReparados = async (req, res) => {
         .request()
         .input("id", req.params.id)
         .input("id2", req.params.id2)
+        .input("Anio", req.params.anio)
+        .query(querys.getHistorialReparacion);//historialReparacion
+        res.json(result.recordset);
+      } catch (error) {
+        res.status(500);
+        res.send(error.message);
+      }
+  };
+
+  export const getHistorialEquipoReparadoFiltro = async (req, res) => {
+    try {
+        const pool = await getConnection();
+        const result = await pool
+        .request()
+        .input("id", req.params.id)
+        .input("id2", req.params.id2)
+        .input("Anio", req.params.anio)
+        .input("Mes", req.params.mes)
         .query(querys.getHistorialReparacion);//historialReparacion
         res.json(result.recordset);
       } catch (error) {
@@ -218,6 +272,24 @@ export const getHistReparados = async (req, res) => {
         .request()
         .input("id", req.params.id)
         .input("id2", req.params.id2)
+        .input("Anio", req.params.anio)
+        .query(querys.getHistorialDisponible);//historial dispnible
+        res.json(result.recordset);
+      } catch (error) {
+        res.status(500);
+        res.send(error.message);
+      }
+  };
+
+  export const getHistorialEquipoDisponibleFiltro = async (req, res) => {
+    try {
+        const pool = await getConnection();
+        const result = await pool
+        .request()
+        .input("id", req.params.id)
+        .input("id2", req.params.id2)
+        .input("Anio", req.params.anio)
+        .input("Mes", req.params.mes)
         .query(querys.getHistorialDisponible);//historial dispnible
         res.json(result.recordset);
       } catch (error) {

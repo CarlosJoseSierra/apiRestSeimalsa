@@ -10,12 +10,16 @@ var router = (0, _express.Router)();
 router.get("/historial1/:id/:id2/:anio", _historial.getHistReparados);
 router.get("/historial2/:id/:id2/:anio", _historial.getHistDisponibles);
 router.get("/historial3/:id/:id2/:anio", _historial.getHistEntregados);
-router.get("/historial/:id/:id2", _historial.getTopFiveItems);
+router.get("/historial/:id/:id2:/:anio", _historial.getTopFiveItems);
+router.get("/historialtr/:id/:id2:/anio/:mes", _historial.getTopFiveItemsFiltro);
 router.get("/historials/:anio", _historial.getTotalItemsServ);
 router.get("/historialc/:anio/:mes", _historial.getTotalItemsServFiltro);
-router.get("/historial4/:id/:id2", _historial.getHistorialEquipoEntregado);
-router.get("/historial5/:id/:id2", _historial.getHistorialEquipoReparado);
-router.get("/historial6/:id/:id2", _historial.getHistorialEquipoDisponible);
+router.get("/historial4/:id/:id2/:anio", _historial.getHistorialEquipoEntregado);
+router.get("/historial41/:id/:id2/:anio:/mes", _historial.getHistorialEquipoEntregadoFiltro);
+router.get("/historial5/:id/:id2/:anio", _historial.getHistorialEquipoReparado);
+router.get("/historial51/:id/:id2/:anio:/mes", _historial.getHistorialEquipoReparadoFiltro);
+router.get("/historial6/:id/:id2/:anio", _historial.getHistorialEquipoDisponible);
+router.get("/historial61/:id/:id2/:anio:/mes", _historial.getHistorialEquipoDisponibleFiltro);
 
 //totales de la grafica del area delDashboard
 router.get("/historialx/:anio", _historial.getHistorialTotalEquipoReparado);

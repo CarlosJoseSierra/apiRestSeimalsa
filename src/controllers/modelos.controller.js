@@ -7,7 +7,25 @@ export const getModeloByIdCliente = async (req, res) => {
     .request()
     .input("id", req.params.id)
     .input("id2", req.params.id2)
+    .input("Anio", req.params.anio)
     .query(querys.getTopSevenModelos);
+    res.json(result.recordset);
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};
+
+export const getModeloByIdClienteFiltro = async (req, res) => {
+  try {
+    const pool = await getConnection();
+    const result = await pool
+    .request()
+    .input("id", req.params.id)
+    .input("id2", req.params.id2)
+    .input("Anio", req.params.anio)
+    .input("Mes", req.params.mes)
+    .query(querys.getTopSevenModelosFiltro);
     res.json(result.recordset);
   } catch (error) {
     res.status(500);
