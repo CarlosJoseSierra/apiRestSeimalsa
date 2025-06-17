@@ -10,8 +10,8 @@ var router = (0, _express.Router)();
 router.get("/historial1/:id/:id2/:anio", _historial.getHistReparados); ///
 router.get("/historial2/:id/:id2/:anio", _historial.getHistDisponibles); ///
 router.get("/historial3/:id/:id2/:anio", _historial.getHistEntregados); ///
-router.get("/historial/:id/:id2:/:anio", _historial.getTopFiveItems);
-router.get("/historialtr/:id/:id2:/anio/:mes", _historial.getTopFiveItemsFiltro);
+router.get("/historial/:id/:id2/:anio", _historial.getTopFiveItems);
+router.get("/historialtr/:id/:id2/:anio/:mes", _historial.getTopFiveItemsFiltro);
 router.get("/historials/:anio", _historial.getTotalItemsServ);
 router.get("/historialc/:anio/:mes", _historial.getTotalItemsServFiltro);
 router.get("/historial4/:id/:id2/:anio", _historial.getHistorialEquipoEntregado);
