@@ -43,11 +43,11 @@ router.get("/historialtr/:id/:id2/:anio/:mes", getTopFiveItemsFiltro);
 router.get("/historials/:anio", getTotalItemsServ);
 router.get("/historialc/:anio/:mes", getTotalItemsServFiltro);
 router.get("/historial4/:id/:id2/:anio", getHistorialEquipoEntregado);
-router.get("/historial41/:id/:id2/:anio:/mes", getHistorialEquipoEntregadoFiltro);
+router.get("/historial41/:id/:id2/:anio/:mes", getHistorialEquipoEntregadoFiltro);
 router.get("/historial5/:id/:id2/:anio", getHistorialEquipoReparado);
-router.get("/historial51/:id/:id2/:anio:/mes", getHistorialEquipoReparadoFiltro);
+router.get("/historial51/:id/:id2/:anio/:mes", getHistorialEquipoReparadoFiltro);
 router.get("/historial6/:id/:id2/:anio", getHistorialEquipoDisponible);
-router.get("/historial61/:id/:id2/:anio:/mes", getHistorialEquipoDisponibleFiltro);
+router.get("/historial61/:id/:id2/:anio/:mes", getHistorialEquipoDisponibleFiltro);
 
 //totales de la grafica del area delDashboard
 router.get("/historialx/:anio", getHistorialTotalEquipoReparado);///
