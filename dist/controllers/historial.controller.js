@@ -298,7 +298,7 @@ var getHistorialEquipoEntregadoFiltro = /*#__PURE__*/function () {
         case 3:
           pool = _context9.sent;
           _context9.next = 6;
-          return pool.request().input("id", req.params.id).input("id2", req.params.id2).input("Anio", req.params.anio).input("Mes", req.params.mes).query(_database.querys.getHistorialEntregados);
+          return pool.request().input("id", req.params.id).input("id2", req.params.id2).input("Anio", req.params.anio).input("Mes", req.params.mes).query(_database.querys.getHistorialEntregadosFiltro);
         case 6:
           result = _context9.sent;
           //gistorialentregados
@@ -578,7 +578,7 @@ var getHistorialEquipoReparadoFiltro = /*#__PURE__*/function () {
         case 3:
           pool = _context17.sent;
           _context17.next = 6;
-          return pool.request().input("id", req.params.id).input("id2", req.params.id2).input("Anio", req.params.anio).input("Mes", req.params.mes).query(_database.querys.getHistorialReparacion);
+          return pool.request().input("id", req.params.id).input("id2", req.params.id2).input("Anio", req.params.anio).input("Mes", req.params.mes).query(_database.querys.getHistorialReparacionFiltro);
         case 6:
           result = _context17.sent;
           //historialReparacion
@@ -648,7 +648,7 @@ var getHistorialEquipoDisponibleFiltro = /*#__PURE__*/function () {
         case 3:
           pool = _context19.sent;
           _context19.next = 6;
-          return pool.request().input("id", req.params.id).input("id2", req.params.id2).input("Anio", req.params.anio).input("Mes", req.params.mes).query(_database.querys.getHistorialDisponible);
+          return pool.request().input("id", req.params.id).input("id2", req.params.id2).input("Anio", req.params.anio).input("Mes", req.params.mes).query(_database.querys.getHistorialDisponibleFiltro);
         case 6:
           result = _context19.sent;
           //historial dispnible

@@ -137,7 +137,7 @@ export const getHistReparados = async (req, res) => {
         .input("id2", req.params.id2)
         .input("Anio", req.params.anio)
         .input("Mes", req.params.mes)
-        .query(querys.getHistorialEntregados);//gistorialentregados
+        .query(querys.getHistorialEntregadosFiltro);//gistorialentregados
         res.json(result.recordset);
       } catch (error) {
         res.status(500);
@@ -257,7 +257,7 @@ export const getHistReparados = async (req, res) => {
         .input("id2", req.params.id2)
         .input("Anio", req.params.anio)
         .input("Mes", req.params.mes)
-        .query(querys.getHistorialReparacion);//historialReparacion
+        .query(querys.getHistorialReparacionFiltro);//historialReparacion
         res.json(result.recordset);
       } catch (error) {
         res.status(500);
@@ -290,7 +290,7 @@ export const getHistReparados = async (req, res) => {
         .input("id2", req.params.id2)
         .input("Anio", req.params.anio)
         .input("Mes", req.params.mes)
-        .query(querys.getHistorialDisponible);//historial dispnible
+        .query(querys.getHistorialDisponibleFiltro);//historial dispnible
         res.json(result.recordset);
       } catch (error) {
         res.status(500);
