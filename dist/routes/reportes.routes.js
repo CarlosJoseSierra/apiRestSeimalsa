@@ -11,5 +11,6 @@ router.get("/reporte", _reportes.getReporteSabana);
 router.get("/reportex", _reportes.getReporteCTsinOT);
 router.get("/reportey", _reportes.getReporteOT);
 router.get("/reporteurg", _reportes.getReporteMentenimiento);
+router.get("/reportez/:serie", _reportes.getReporteMantenimientoPorSerie);
 var _default = router;
 exports["default"] = _default;
