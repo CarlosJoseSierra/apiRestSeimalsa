@@ -13,6 +13,6 @@ router.get("/reporte", getReporteSabana);
 router.get("/reportex", getReporteCTsinOT);
 router.get("/reportey", getReporteOT);
 router.get("/reporte/a", getReporteMentenimiento);
-router.get("/reportez/:serie", getReporteMantenimientoPorSerie);
+router.get("/reporte/z/:serie", getReporteMantenimientoPorSerie);
 
 export default router;
