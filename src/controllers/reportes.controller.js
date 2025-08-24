@@ -47,11 +47,10 @@ export const getReporteMentenimiento = async (req, res) => {
 
 export const getReporteMantenimientoPorSerie = async (req, res) => {
   try {
-    console.log(req.params.serie);
     const pool = await getConnection();
     const result = await pool.request()
     .input("serie", req.params.serie)
-    .query(querys.getMentenimientoEquiposUrgente);
+    .query(querys.getEquiposUrgentePorSerie);
     res.json(result.recordset);
   } catch (error) {
     res.status(500);
