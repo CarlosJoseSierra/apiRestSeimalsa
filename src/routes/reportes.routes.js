@@ -12,7 +12,7 @@ const router = Router();
 router.get("/reporte", getReporteSabana);
 router.get("/reportex", getReporteCTsinOT);
 router.get("/reportey", getReporteOT);
-router.get("/reportea", getReporteMentenimiento);
+router.get("/reporte/a", getReporteMentenimiento);
 router.get("/reportez/:serie", getReporteMantenimientoPorSerie);
 
 export default router;
