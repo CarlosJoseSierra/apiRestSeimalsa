@@ -47,6 +47,7 @@ export const getReporteMentenimiento = async (req, res) => {
 
 export const getReporteMantenimientoPorSerie = async (req, res) => {
   try {
+    console.log(req.params.serie);
     const pool = await getConnection();
     const result = await pool.request()
     .input("serie", req.params.serie)

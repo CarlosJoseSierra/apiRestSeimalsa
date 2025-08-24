@@ -152,27 +152,28 @@ var getReporteMantenimientoPorSerie = /*#__PURE__*/function () {
       while (1) switch (_context5.prev = _context5.next) {
         case 0:
           _context5.prev = 0;
-          _context5.next = 3;
+          console.log(req.params.serie);
+          _context5.next = 4;
           return (0, _database.getConnection)();
-        case 3:
+        case 4:
           pool = _context5.sent;
-          _context5.next = 6;
+          _context5.next = 7;
           return pool.request().input("serie", req.params.serie).query(_database.querys.getMentenimientoEquiposUrgente);
-        case 6:
+        case 7:
           result = _context5.sent;
           res.json(result.recordset);
-          _context5.next = 14;
+          _context5.next = 15;
           break;
-        case 10:
-          _context5.prev = 10;
+        case 11:
+          _context5.prev = 11;
           _context5.t0 = _context5["catch"](0);
           res.status(500);
           res.send(_context5.t0.message);
-        case 14:
+        case 15:
         case "end":
           return _context5.stop();
       }
-    }, _callee5, null, [[0, 10]]);
+    }, _callee5, null, [[0, 11]]);
   }));
   return function getReporteMantenimientoPorSerie(_x9, _x10) {
     return _ref5.apply(this, arguments);
