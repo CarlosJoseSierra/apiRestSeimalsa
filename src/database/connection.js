@@ -6,12 +6,14 @@ export const dbSettings = {
   password: config.dbPassword,
   server: config.dbServer,
   database: config.dbDatabase, */
-  user: "sa",
+  //user: "sa",
+ user: "server",
   password: "Solomon2011",
-  server: "181.198.20.179",
+  //server: "181.198.20.179",
   //server: "192.168.15.6",
   //server: "DESKTOP-DQQ2201",
   //database: "PRODUCCIONPRUEBA",
+ server: "seimalsa.cwh4s6o4w0t4.us-east-1.rds.amazonaws.com",
   database: "PRODUCCION",
   options: {
     encrypt: false, // for azure
