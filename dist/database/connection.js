@@ -22,9 +22,11 @@ var dbSettings = {
    password: config.dbPassword,
    server: config.dbServer,
    database: config.dbDatabase, */
-  user: "sa",
+  //user: "sa",
+  user: "server",
   password: "Solomon2011",
-  server: "181.198.20.179",
+  //server: "181.198.20.179",
+  server: "seimalsa.cwh4s6o4w0t4.us-east-1.rds.amazonaws.com",
   //server: "192.168.15.6",
   //server: "DESKTOP-DQQ2201",
   //database: "PRODUCCIONPRUEBA",
