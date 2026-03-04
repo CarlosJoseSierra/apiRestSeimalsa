@@ -26,6 +26,7 @@ import employeeRoutes from "./routes/employee.router.js";
 import manoobraRoutes from "./routes/manoobra.router.js";
 import materiaprimaRoutes from "./routes/materiaprima.routes.js";
 import productoensambleRoutes from "./routes/productoensamble.router.js";
+import cifRoutes from "./routes/cif.router.js";
 
 //import morgan from "morgan";
 //import config from "./config.js";

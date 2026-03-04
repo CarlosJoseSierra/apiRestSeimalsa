@@ -31,6 +31,7 @@ var _employeeRouter = _interopRequireDefault(require("./routes/employee.router.j
 var _manoobraRouter = _interopRequireDefault(require("./routes/manoobra.router.js"));
 var _materiaprimaRoutes = _interopRequireDefault(require("./routes/materiaprima.routes.js"));
 var _productoensambleRouter = _interopRequireDefault(require("./routes/productoensamble.router.js"));
+var _cifRouter = _interopRequireDefault(require("./routes/cif.router.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 //const cors = require("cors");
 
@@ -70,7 +71,7 @@ app.use("/api", _corteinventarioRoutes["default"]);
 app.use("/api", _reportesRoutes["default"]);
 app.use("/api", _correoRoutes["default"]);
 app.use("/api", _awsRoutes["default"]);
-app.use("/api", cifRoutes);
+app.use("/api", _cifRouter["default"]);
 app.use("/api", _employeeRouter["default"]);
 app.use("/api", _manoobraRouter["default"]);
 app.use("/api", _materiaprimaRoutes["default"]);
