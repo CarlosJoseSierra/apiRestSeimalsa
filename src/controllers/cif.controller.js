@@ -46,7 +46,7 @@ export const getAllCIF = async (req, res) => {
     }
   };
 
-  export const updateMO = async (req, res) => {
+  export const updateCIF = async (req, res) => {
     try {
         const { id } = req.params;
         const employee = req.body;
