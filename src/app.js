@@ -21,6 +21,12 @@ import kardexRoutes from "./routes/kardex.routes.js";
 import corteInventarioRoutes from "./routes/corteinventario.routes.js";
 import reporteRoutes from "./routes/reportes.routes.js";
 import correoRoutes from "./routes/correo.routes.js";
+import awsRoutes from "./routes/aws.routes.js";
+import employeeRoutes from "./routes/employee.router.js";
+import manoobraRoutes from "./routes/manoobra.router.js";
+import materiaprimaRoutes from "./routes/materiaprima.routes.js";
+import productoensambleRoutes from "./routes/productoensamble.router.js";
+
 //import morgan from "morgan";
 //import config from "./config.js";
 
@@ -54,6 +60,12 @@ app.use("/api", kardexRoutes);
 app.use("/api", corteInventarioRoutes);
 app.use("/api", reporteRoutes);
 app.use("/api", correoRoutes);
+app.use("/api", awsRoutes);
+app.use("/api", cifRoutes);
+app.use("/api", employeeRoutes);
+app.use("/api", manoobraRoutes);
+app.use("/api", materiaprimaRoutes);
+app.use("/api", productoensambleRoutes);
 app.use((req,res,next)=>{
     res.status(404).json({
         message: 'endpoint not found'
