@@ -1,34 +1,18 @@
-// config.js
 import { config } from "dotenv";
+config()
 
-// 1. Se ejecuta la configuración inmediatamente
-config(); 
-
-// 2. Se capturan los valores del entorno ya cargados
-const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = process.env.DB_PASSWORD;
-const DB_SERVER = process.env.DB_SERVER;
-const DB_DATABASE = process.env.DB_DATABASE;
-const PORT = process.env.PORT || 3000;
-
-// 3. Verificación de depuración para Railway
-if (!DB_SERVER) {
-  console.error("❌ CRÍTICO: DB_SERVER no se cargó. Revisa las variables en Railway.");
-}
-
-// 4. Se exportan los valores ya procesados
-export {
-  DB_USER,
-  DB_PASSWORD,
-  DB_SERVER,
-  DB_DATABASE,
-  PORT
-};
+export const PORT = process.env.PORT || 3000
+export const CORREO = process.env.CORREO || ""
 
 export default {
-  DB_USER,
-  DB_PASSWORD,
-  DB_SERVER,
-  DB_DATABASE,
-  PORT
+  port: process.env.PORT || 3000,
+  DB_USER: process.env.DB_USER || "",
+  DB_PASSWORD: process.env.DB_PASSWORD || "",
+  DB_SERVER: process.env.DB_SERVER || "",
+  DB_DATABASE: process.env.DB_DATABASE || "",
+  DB_DATABASEPORT: process.env.DB_DATABASEPORT || "",
+  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || "",
+  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || "",
+  AWS_REGION: process.env.AWS_REGION || "",
+  AWS_SG_ID: process.env.AWS_SG_ID || "",
 };
