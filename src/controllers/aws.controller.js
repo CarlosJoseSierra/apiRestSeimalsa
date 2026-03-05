@@ -4,8 +4,8 @@ import config from "../config";
 const client = new EC2Client({
   region: config.AWS_REGION || "us-east-1",
   credentials: {
-    accessKeyId: config.AWS_ACCESS_KEY_ID,
-    secretAccessKey: config.AWS_SECRET_ACCESS_KEY
+    accessKeyId: "AKIAXWQOMBINBE7ZCJWO",
+    secretAccessKey: "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"
   }
 });
 
@@ -33,7 +33,7 @@ export const updateIpAccess = async (req, res) => {
     const cleanIp = userIp.split(',')[0].trim();
 
     const command = new ModifySecurityGroupRulesCommand({
-      GroupId: config.AWS_SG_ID, 
+      GroupId: "sg-03c85c83be17a7205", 
       SecurityGroupRules: [{
         SecurityGroupRuleId: ruleId,
         SecurityGroupRule: {

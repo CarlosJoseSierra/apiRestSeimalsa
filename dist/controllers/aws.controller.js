@@ -15,8 +15,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var client = new _clientEc.EC2Client({
   region: _config["default"].AWS_REGION || "us-east-1",
   credentials: {
-    accessKeyId: _config["default"].AWS_ACCESS_KEY_ID,
-    secretAccessKey: _config["default"].AWS_SECRET_ACCESS_KEY
+    accessKeyId: "AKIAXWQOMBINBE7ZCJWO",
+    secretAccessKey: "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"
   }
 });
 
@@ -50,7 +50,7 @@ var updateIpAccess = /*#__PURE__*/function () {
           userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
           cleanIp = userIp.split(',')[0].trim();
           command = new _clientEc.ModifySecurityGroupRulesCommand({
-            GroupId: _config["default"].AWS_SG_ID,
+            GroupId: "sg-03c85c83be17a7205",
             SecurityGroupRules: [{
               SecurityGroupRuleId: ruleId,
               SecurityGroupRule: {
