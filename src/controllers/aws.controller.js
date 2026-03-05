@@ -1,11 +1,11 @@
 import { EC2Client, ModifySecurityGroupRulesCommand } from "@aws-sdk/client-ec2";
-import config from "../config";
+import {AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION,AWS_SG_ID} from "../config";
 // Configuración del cliente AWS usando variables de entorno en Railway
 const client = new EC2Client({
-  region: config.AWS_REGION || "us-east-1",
+  region: AWS_REGION || "us-east-1",
   credentials: {
-    accessKeyId: "AKIAXWQOMBINBE7ZCJWO",
-    secretAccessKey: "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"
+    accessKeyId: AWS_ACCESS_KEY_ID,
+    secretAccessKey: AWS_SECRET_ACCESS_KEY
   }
 });
 
@@ -21,9 +21,8 @@ const SECURITY_RULES = {
 
 export const updateIpAccess = async (req, res) => {
   try {
-    const { userName } = req.body;
+    const  userName  = req.params.name;
     const ruleId = SECURITY_RULES[userName?.toUpperCase()];
-
     if (!ruleId) {
       return res.status(400).json({ message: "Usuario no configurado en AWS" });
     }
@@ -31,9 +30,9 @@ export const updateIpAccess = async (req, res) => {
     // Detectar la IP real a través del proxy de Railway
     const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     const cleanIp = userIp.split(',')[0].trim();
-
+   
     const command = new ModifySecurityGroupRulesCommand({
-      GroupId: "sg-03c85c83be17a7205", 
+      GroupId: AWS_SG_ID, 
       SecurityGroupRules: [{
         SecurityGroupRuleId: ruleId,
         SecurityGroupRule: {
@@ -41,7 +40,7 @@ export const updateIpAccess = async (req, res) => {
           FromPort: 1433,
           ToPort: 1433,
           CidrIpv4: `${cleanIp}/32`,
-          Description: `Web Auth: ${userName}`
+          Description: `${userName}`
         }
       }]
     });

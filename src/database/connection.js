@@ -1,34 +1,29 @@
+// src/database/connection.js
 import sql from "mssql";
-import {config} from "../config";
+import { DB_USER, DB_PASSWORD, DB_SERVER, DB_DATABASE } from "../config";
 
 export const dbSettings = {
-  //user:config.DB_USER,
-  user:"server",
-  //password:config.DB_PASSWORD,
-  password:"Solomon2011",
-  //server: config.DB_SERVER,
-  server:"seimalsa.cwh4s6o4w0t4.us-east-1.rds.amazonaws.com",
-  //database:config.DB_DATABASE,
-  database:"PRODUCCION",
+  user: DB_USER,
+  password: DB_PASSWORD,
+  server: DB_SERVER,
+  database: DB_DATABASE,
   options: {
-    encrypt: false, // for azure
-    trustServerCertificate: true, // change to true for local dev / self-signed certs
+    encrypt: false,
+    trustServerCertificate: true,
   },
 };
 
-
 export const getConnection = async () => {
   try {
-    if (!dbSettings.server) {
-      throw new Error("La configuración del servidor (DB_SERVER) está vacía. "+ dbSettings.server);
+    // Verificación de depuración en logs de Railway
+    if (!DB_SERVER) {
+      console.error("❌ ERROR: DB_SERVER no está cargado.");
+      return null;
     }
-    
     const pool = await sql.connect(dbSettings);
     return pool;
   } catch (error) {
-    console.error("❌ Error detallado de conexión SQL:", error.message);
-    throw error; 
+    console.error("❌ Error SQL:", error.message);
+    throw error;
   }
 };
-
-export { sql };

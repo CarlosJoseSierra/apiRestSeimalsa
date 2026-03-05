@@ -5,12 +5,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getConnection = exports.dbSettings = void 0;
-Object.defineProperty(exports, "sql", {
-  enumerable: true,
-  get: function get() {
-    return _mssql["default"];
-  }
-});
 var _mssql = _interopRequireDefault(require("mssql"));
 var _config = require("../config");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -18,18 +12,13 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var dbSettings = {
-  //user:config.DB_USER,
-  user: "server",
-  //password:config.DB_PASSWORD,
-  password: "Solomon2011",
-  //server: config.DB_SERVER,
-  server: "seimalsa.cwh4s6o4w0t4.us-east-1.rds.amazonaws.com",
-  //database:config.DB_DATABASE,
-  database: "PRODUCCION",
+  user: _config.DB_USER,
+  password: _config.DB_PASSWORD,
+  server: _config.DB_SERVER,
+  database: _config.DB_DATABASE,
   options: {
     encrypt: false,
-    // for azure
-    trustServerCertificate: true // change to true for local dev / self-signed certs
+    trustServerCertificate: true
   }
 };
 exports.dbSettings = dbSettings;
@@ -40,27 +29,28 @@ var getConnection = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
-          if (dbSettings.server) {
-            _context.next = 3;
+          if (_config.DB_SERVER) {
+            _context.next = 4;
             break;
           }
-          throw new Error("La configuración del servidor (DB_SERVER) está vacía. " + dbSettings.server);
-        case 3:
-          _context.next = 5;
+          console.error("❌ ERROR: DB_SERVER no está cargado.");
+          return _context.abrupt("return", null);
+        case 4:
+          _context.next = 6;
           return _mssql["default"].connect(dbSettings);
-        case 5:
+        case 6:
           pool = _context.sent;
           return _context.abrupt("return", pool);
-        case 9:
-          _context.prev = 9;
+        case 10:
+          _context.prev = 10;
           _context.t0 = _context["catch"](0);
-          console.error("❌ Error detallado de conexión SQL:", _context.t0.message);
+          console.error("❌ Error SQL:", _context.t0.message);
           throw _context.t0;
-        case 13:
+        case 14:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 9]]);
+    }, _callee, null, [[0, 10]]);
   }));
   return function getConnection() {
     return _ref.apply(this, arguments);

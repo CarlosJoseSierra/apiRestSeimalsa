@@ -9,6 +9,6 @@ var _aws = require("../controllers/aws.controller");
 var router = (0, _express.Router)();
 
 // Esta es la ruta que llamará tu Angular: /api/aws/update-ip
-router.post("/aws/update-ip", _aws.updateIpAccess);
+router.post("/aws/update-ip/:name", _aws.updateIpAccess);
 var _default = router;
 exports["default"] = _default;

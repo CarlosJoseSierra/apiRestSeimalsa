@@ -98,6 +98,7 @@ Content-Type: application/json
 }
 
 
+
 ### add a product
 POST http://localhost:3000/api/areaservicio
 Content-Type: application/json
@@ -177,3 +178,6 @@ Content-Type: application/json
 
 @api2011 = http://localhost:3000/api/kardex
 {{api2011}}
+
+### add a product
+POST http://localhost:3000/api/aws/update-ip/CARLOS
