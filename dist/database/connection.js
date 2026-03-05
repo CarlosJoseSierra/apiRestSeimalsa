@@ -12,10 +12,11 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var dbSettings = {
-  user: _config.DB_USER,
-  password: _config.DB_PASSWORD,
-  server: _config.DB_SERVER,
-  database: _config.DB_DATABASE,
+  //user: DB_USER,
+  user: "server",
+  password: "Solomon2011",
+  server: "seimalsa.cwh4s6o4w0t4.us-east-1.rds.amazonaws.com",
+  database: "PRODUCCION",
   options: {
     encrypt: false,
     trustServerCertificate: true
@@ -29,28 +30,21 @@ var getConnection = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
-          if (_config.DB_SERVER) {
-            _context.next = 4;
-            break;
-          }
-          console.error("❌ ERROR: DB_SERVER no está cargado.");
-          return _context.abrupt("return", null);
-        case 4:
-          _context.next = 6;
+          _context.next = 3;
           return _mssql["default"].connect(dbSettings);
-        case 6:
+        case 3:
           pool = _context.sent;
           return _context.abrupt("return", pool);
-        case 10:
-          _context.prev = 10;
+        case 7:
+          _context.prev = 7;
           _context.t0 = _context["catch"](0);
           console.error("❌ Error SQL:", _context.t0.message);
           throw _context.t0;
-        case 14:
+        case 11:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 10]]);
+    }, _callee, null, [[0, 7]]);
   }));
   return function getConnection() {
     return _ref.apply(this, arguments);

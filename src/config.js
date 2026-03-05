@@ -1,6 +1,8 @@
 // src/config.js
 import { config } from "dotenv";
-config();
+if (process.env.RAILWAY_ENVIRONMENT === undefined) {
+    config();
+  }
 
 export const DB_USER = process.env.DB_USER || "";
 export const DB_PASSWORD = process.env.DB_PASSWORD || "";

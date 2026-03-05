@@ -7,7 +7,9 @@ exports.PORT = exports.DB_USER = exports.DB_SERVER = exports.DB_PASSWORD = expor
 var _dotenv = require("dotenv");
 // src/config.js
 
-(0, _dotenv.config)();
+if (process.env.RAILWAY_ENVIRONMENT === undefined) {
+  (0, _dotenv.config)();
+}
 var DB_USER = process.env.DB_USER || "";
 exports.DB_USER = DB_USER;
 var DB_PASSWORD = process.env.DB_PASSWORD || "";
