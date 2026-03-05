@@ -1,11 +1,11 @@
 import { EC2Client, ModifySecurityGroupRulesCommand } from "@aws-sdk/client-ec2";
-
+import config from "../config";
 // Configuración del cliente AWS usando variables de entorno en Railway
 const client = new EC2Client({
-  region: process.env.AWS_REGION || "us-east-1",
+  region: config.AWS_REGION || "us-east-1",
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    accessKeyId: config.AWS_ACCESS_KEY_ID,
+    secretAccessKey: config.AWS_SECRET_ACCESS_KEY
   }
 });
 
@@ -33,7 +33,7 @@ export const updateIpAccess = async (req, res) => {
     const cleanIp = userIp.split(',')[0].trim();
 
     const command = new ModifySecurityGroupRulesCommand({
-      GroupId: process.env.AWS_SG_ID, // sg-03c85c83be17a7205
+      GroupId: config.AWS_SG_ID, 
       SecurityGroupRules: [{
         SecurityGroupRuleId: ruleId,
         SecurityGroupRule: {

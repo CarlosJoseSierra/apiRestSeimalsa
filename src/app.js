@@ -29,7 +29,7 @@ import productoensambleRoutes from "./routes/productoensamble.router.js";
 import cifRoutes from "./routes/cif.router.js";
 
 //import morgan from "morgan";
-import config from "./config.js";
+//import config from "./config.js";
 
 const app = express();
 

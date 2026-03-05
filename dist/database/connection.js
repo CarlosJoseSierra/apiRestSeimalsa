@@ -18,15 +18,10 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var dbSettings = {
-  //user:process.env.DB_USER,
-  user: "server",
-  //password: process.env.DB_PASSWORD,
-  password: "Solomon2011",
-  //server:process.env.DB_SERVER,
-  server: "seimalsa.cwh4s6o4w0t4.us-east-1.rds.amazonaws.com",
-  //server: "DESKTOP-DQQ2201",
-  //database: process.env.DB_DATABASE,
-  database: "PRODUCCION",
+  user: _config["default"].dbUser,
+  password: _config["default"].dbPassword,
+  server: _config["default"].dbServer,
+  database: _config["default"].dbDatabase,
   options: {
     encrypt: false,
     // for azure

@@ -32,11 +32,11 @@ var _manoobraRouter = _interopRequireDefault(require("./routes/manoobra.router.j
 var _materiaprimaRoutes = _interopRequireDefault(require("./routes/materiaprima.routes.js"));
 var _productoensambleRouter = _interopRequireDefault(require("./routes/productoensamble.router.js"));
 var _cifRouter = _interopRequireDefault(require("./routes/cif.router.js"));
-var _config = _interopRequireDefault(require("./config.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 //const cors = require("cors");
 
 //import morgan from "morgan";
+//import config from "./config.js";
 
 var app = (0, _express["default"])();
 
