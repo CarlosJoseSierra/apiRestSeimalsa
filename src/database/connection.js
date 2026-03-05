@@ -2,10 +2,10 @@ import sql from "mssql";
 import config from "../config";
 
 export const dbSettings = {
-  DB_USER:config.DB_USER,
-  DB_PASSWORD:config.DB_PASSWORD,
-  DB_SERVER: config.DB_SERVER,
-  DB_DATABASE:config.DB_DATABASE,
+  user:config.DB_USER,
+  password:config.DB_PASSWORD,
+  server: config.DB_SERVER,
+  database:config.DB_DATABASE,
   options: {
     encrypt: false, // for azure
     trustServerCertificate: true, // change to true for local dev / self-signed certs
@@ -15,8 +15,8 @@ export const dbSettings = {
 
 export const getConnection = async () => {
   try {
-    if (!dbSettings.DB_SERVER) {
-      throw new Error("La configuración del servidor (DB_SERVER) está vacía. "+ dbSettings.DB_SERVER + " server");
+    if (!dbSettings.server) {
+      throw new Error("La configuración del servidor (DB_SERVER) está vacía. "+ dbSettings.server + " server");
     }
     
     const pool = await sql.connect(dbSettings);

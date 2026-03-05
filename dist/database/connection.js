@@ -18,10 +18,10 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var dbSettings = {
-  DB_USER: _config["default"].DB_USER,
-  DB_PASSWORD: _config["default"].DB_PASSWORD,
-  DB_SERVER: _config["default"].DB_SERVER,
-  DB_DATABASE: _config["default"].DB_DATABASE,
+  user: _config["default"].DB_USER,
+  password: _config["default"].DB_PASSWORD,
+  server: _config["default"].DB_SERVER,
+  database: _config["default"].DB_DATABASE,
   options: {
     encrypt: false,
     // for azure
@@ -36,11 +36,11 @@ var getConnection = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
-          if (dbSettings.DB_SERVER) {
+          if (dbSettings.server) {
             _context.next = 3;
             break;
           }
-          throw new Error("La configuración del servidor (DB_SERVER) está vacía. " + dbSettings.DB_SERVER + " server");
+          throw new Error("La configuración del servidor (DB_SERVER) está vacía. " + dbSettings.server + " server");
         case 3:
           _context.next = 5;
           return _mssql["default"].connect(dbSettings);
