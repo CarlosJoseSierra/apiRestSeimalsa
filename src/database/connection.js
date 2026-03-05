@@ -20,15 +20,14 @@ export const dbSettings = {
 export const getConnection = async () => {
   try {
     if (!dbSettings.server) {
-      throw new Error("La configuración del servidor (DB_SERVER) está vacía. "+ dbSettings.server + " server");
+      throw new Error("La configuración del servidor (DB_SERVER) está vacía. "+ dbSettings.server);
     }
     
     const pool = await sql.connect(dbSettings);
     return pool;
   } catch (error) {
-    // Esto aparecerá en los logs de Railway para decirte exactamente qué falló
     console.error("❌ Error detallado de conexión SQL:", error.message);
-    throw error; // Re-lanzar es vital para que el login sepa que falló
+    throw error; 
   }
 };
 

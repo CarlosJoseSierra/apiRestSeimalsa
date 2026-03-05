@@ -44,7 +44,7 @@ var getConnection = /*#__PURE__*/function () {
             _context.next = 3;
             break;
           }
-          throw new Error("La configuración del servidor (DB_SERVER) está vacía. " + dbSettings.server + " server");
+          throw new Error("La configuración del servidor (DB_SERVER) está vacía. " + dbSettings.server);
         case 3:
           _context.next = 5;
           return _mssql["default"].connect(dbSettings);
@@ -54,7 +54,6 @@ var getConnection = /*#__PURE__*/function () {
         case 9:
           _context.prev = 9;
           _context.t0 = _context["catch"](0);
-          // Esto aparecerá en los logs de Railway para decirte exactamente qué falló
           console.error("❌ Error detallado de conexión SQL:", _context.t0.message);
           throw _context.t0;
         case 13:
