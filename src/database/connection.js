@@ -16,7 +16,8 @@ export const dbSettings = {
 export const getConnection = async () => {
   try {
     // Validación preventiva
-    if (!dbSettings.server) {
+    if (!dbSettings.DB_SERVER) {
+      console.log(dbSettings.DB_SERVER);
       throw new Error("La configuración del servidor (DB_SERVER) está vacía.");
     }
     

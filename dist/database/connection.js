@@ -36,28 +36,29 @@ var getConnection = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
-          if (dbSettings.server) {
-            _context.next = 3;
+          if (dbSettings.DB_SERVER) {
+            _context.next = 4;
             break;
           }
+          console.log(dbSettings.DB_SERVER);
           throw new Error("La configuración del servidor (DB_SERVER) está vacía.");
-        case 3:
-          _context.next = 5;
+        case 4:
+          _context.next = 6;
           return _mssql["default"].connect(dbSettings);
-        case 5:
+        case 6:
           pool = _context.sent;
           return _context.abrupt("return", pool);
-        case 9:
-          _context.prev = 9;
+        case 10:
+          _context.prev = 10;
           _context.t0 = _context["catch"](0);
           // Esto aparecerá en los logs de Railway para decirte exactamente qué falló
           console.error("❌ Error detallado de conexión SQL:", _context.t0.message);
           throw _context.t0;
-        case 13:
+        case 14:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 9]]);
+    }, _callee, null, [[0, 10]]);
   }));
   return function getConnection() {
     return _ref.apply(this, arguments);
