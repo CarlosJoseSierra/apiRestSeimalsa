@@ -2,10 +2,10 @@ import sql from "mssql";
 import config from "../config";
 
 export const dbSettings = {
-  user:config.dbUser,
-  password:config.dbPassword,
-  server: config.dbServer,
-  database:config.dbDatabase,
+  user:config.DB_USER,
+  password:config.DB_PASSWORD,
+  server: config.DB_SERVER,
+  database:config.DB_DATABASE,
   options: {
     encrypt: false, // for azure
     trustServerCertificate: true, // change to true for local dev / self-signed certs

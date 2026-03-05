@@ -6,11 +6,11 @@ export const CORREO = process.env.CORREO || ""
 
 export default {
   port: process.env.PORT || 3000,
-  dbUser: process.env.DB_USER || "",
-  dbPassword: process.env.DB_PASSWORD || "",
-  dbServer: process.env.DB_SERVER || "",
-  dbDatabase: process.env.DB_DATABASE || "",
-  dbDatabasePort: process.env.DB_DATABASEPORT || "",
+  DB_USER: process.env.DB_USER || "",
+  DB_PASSWORD: process.env.DB_PASSWORD || "",
+  DB_SERVER: process.env.DB_SERVER || "",
+  DB_DATABASE: process.env.DB_DATABASE || "",
+  DB_DATABASEPORT: process.env.DB_DATABASEPORT || "",
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || "",
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || "",
   AWS_REGION: process.env.AWS_REGION || "",
