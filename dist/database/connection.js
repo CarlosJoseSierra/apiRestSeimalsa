@@ -36,11 +36,11 @@ var getConnection = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
+          console.log(dbSettings.DB_SERVER);
           if (dbSettings.DB_SERVER) {
             _context.next = 4;
             break;
           }
-          console.log(dbSettings.DB_SERVER);
           throw new Error("La configuración del servidor (DB_SERVER) está vacía.");
         case 4:
           _context.next = 6;
