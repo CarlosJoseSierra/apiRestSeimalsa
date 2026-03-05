@@ -1,15 +1,15 @@
 import { EC2Client, ModifySecurityGroupRulesCommand } from "@aws-sdk/client-ec2";
-import {AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION,AWS_SG_ID} from "../config";
-// Configuración del cliente AWS usando variables de entorno en Railway
+import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_SG_ID } from "../config.js";
+
+// Configuración del cliente AWS usando exclusivamente las constantes de config.js
 const client = new EC2Client({
   region: AWS_REGION || "us-east-1",
   credentials: {
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY
+    accessKeyId: AWS_ACCESS_KEY_ID,     // <--- Aquí ya NO va tu llave real
+    secretAccessKey: AWS_SECRET_ACCESS_KEY // <--- Aquí ya NO va tu llave secreta real
   }
 });
 
-// Mapeo de usuarios a IDs de reglas de seguridad de tus capturas
 const SECURITY_RULES = {
   'PAULA': 'sgr-00f7eff021c8bfa6c',
   'SILVANA': 'sgr-09f5f59023b4b6385',
@@ -21,16 +21,17 @@ const SECURITY_RULES = {
 
 export const updateIpAccess = async (req, res) => {
   try {
-    const  userName  = req.params.name;
+    const userName = req.params.name; // Usando params como definimos en la ruta
     const ruleId = SECURITY_RULES[userName?.toUpperCase()];
+
     if (!ruleId) {
       return res.status(400).json({ message: "Usuario no configurado en AWS" });
     }
 
-    // Detectar la IP real a través del proxy de Railway
+    // Detectar IP (incluyendo lógica para localhost si usas axios como sugerimos)
     const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     const cleanIp = userIp.split(',')[0].trim();
-   
+
     const command = new ModifySecurityGroupRulesCommand({
       GroupId: AWS_SG_ID, 
       SecurityGroupRules: [{
@@ -40,7 +41,7 @@ export const updateIpAccess = async (req, res) => {
           FromPort: 1433,
           ToPort: 1433,
           CidrIpv4: `${cleanIp}/32`,
-          Description: `${userName}`
+          Description: `Web Auth: ${userName}`
         }
       }]
     });
@@ -54,6 +55,7 @@ export const updateIpAccess = async (req, res) => {
     });
 
   } catch (error) {
+    console.error("❌ Error AWS:", error.message);
     res.status(500).send(error.message);
   }
 };
