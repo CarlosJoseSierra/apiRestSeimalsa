@@ -15,9 +15,8 @@ export const dbSettings = {
 
 export const getConnection = async () => {
   try {
-    console.log(dbSettings.DB_SERVER);
     if (!dbSettings.DB_SERVER) {
-      throw new Error("La configuración del servidor (DB_SERVER) está vacía.");
+      throw new Error("La configuración del servidor (DB_SERVER) está vacía. "+ dbSettings.DB_SERVER + " server");
     }
     
     const pool = await sql.connect(dbSettings);
