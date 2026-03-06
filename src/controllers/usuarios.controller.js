@@ -1,4 +1,7 @@
-import { getConnection, querys, sql } from "../database";
+import { getConnection } from "../database/connection";
+import sql from "mssql"; // <--- ESTA ES LA LÍNEA CLAVE
+import { querys } from "../database/querys";
+
 const jwt = require('jsonwebtoken');
 
 export const getUsuarios = async (req, res) => {
@@ -38,6 +41,9 @@ export const getByUserPass = async (req, res) => {
   
     try {
       const pool = await getConnection();
+      if (!pool) {
+        return res.status(500).json({ status: "500", msg: "No se pudo conectar a la base de datos", token: 0 });
+    }
       const result = await pool
         .request()
         .input("USU_usuario", sql.VarChar, USU_usuario)
@@ -62,8 +68,11 @@ export const getByUserPass = async (req, res) => {
       }
     } catch (error) {
       //res.status(500);
-      res.send(error.message);
-      return res.status(500).json({ status: "500", msg: res.send(error.message),token:0  });
+      //res.send(error.message);
+      //return res.status(500).json({ status: "500", msg: res.send(error.message),token:0  });
+      if (!res.headersSent) {
+        return res.status(500).json({ status: "500", msg: error.message, token: 0 });
+    }
     }
 };
 

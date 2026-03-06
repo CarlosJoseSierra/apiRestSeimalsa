@@ -26,14 +26,6 @@ Content-Type: application/json
     "USU_clave": "csierra"
 }
 
-###
-POST {{api10}}/login
-Content-Type: application/json
-
-{
-    "USU_usuario": "csierra",
-    "USU_clave": "csierra"
-}
 
 ### delete product 
 DELETE {{api}}/772
