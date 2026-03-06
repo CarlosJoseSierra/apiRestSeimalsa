@@ -180,4 +180,5 @@ Content-Type: application/json
 {{api2011}}
 
 ### add a product
-POST http://localhost:3000/api/aws/update-ip/CARLOS
+//POST http://localhost:3000/api/aws/update-ip/CARLOS
+POST https://apirestseimalsa-production.up.railway.app/api/aws/update-ip/CARLOS

@@ -29,8 +29,17 @@ export const updateIpAccess = async (req, res) => {
     }
 
     // Detectar IP (incluyendo lógica para localhost si usas axios como sugerimos)
-    const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    const cleanIp = userIp.split(',')[0].trim();
+    //const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    //const cleanIp = userIp.split(',')[0].trim();
+
+    let userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+    // Si viene con el prefijo IPv6 de localhost, lo limpiamos
+    if (userIp.includes('::ffff:')) {
+      userIp = userIp.split(':').reverse()[0];
+}
+
+const cleanIp = userIp.trim();
 
     const command = new ModifySecurityGroupRulesCommand({
       GroupId: AWS_SG_ID, 
@@ -41,7 +50,7 @@ export const updateIpAccess = async (req, res) => {
           FromPort: 1433,
           ToPort: 1433,
           CidrIpv4: `${cleanIp}/32`,
-          Description: `Web Auth: ${userName}`
+          Description: `${userName}`
         }
       }]
     });

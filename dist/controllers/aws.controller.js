@@ -46,8 +46,13 @@ var updateIpAccess = /*#__PURE__*/function () {
           }));
         case 5:
           // Detectar IP (incluyendo lógica para localhost si usas axios como sugerimos)
-          userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-          cleanIp = userIp.split(',')[0].trim();
+          //const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+          //const cleanIp = userIp.split(',')[0].trim();
+          userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress; // Si viene con el prefijo IPv6 de localhost, lo limpiamos
+          if (userIp.includes('::ffff:')) {
+            userIp = userIp.split(':').reverse()[0];
+          }
+          cleanIp = userIp.trim();
           command = new _clientEc.ModifySecurityGroupRulesCommand({
             GroupId: _config.AWS_SG_ID,
             SecurityGroupRules: [{
@@ -57,30 +62,30 @@ var updateIpAccess = /*#__PURE__*/function () {
                 FromPort: 1433,
                 ToPort: 1433,
                 CidrIpv4: "".concat(cleanIp, "/32"),
-                Description: "Web Auth: ".concat(userName)
+                Description: "".concat(userName)
               }
             }]
           });
-          _context.next = 10;
+          _context.next = 11;
           return client.send(command);
-        case 10:
+        case 11:
           res.json({
             success: true,
             message: "Acceso habilitado para ".concat(userName),
             ip: cleanIp
           });
-          _context.next = 17;
+          _context.next = 18;
           break;
-        case 13:
-          _context.prev = 13;
+        case 14:
+          _context.prev = 14;
           _context.t0 = _context["catch"](0);
           console.error("❌ Error AWS:", _context.t0.message);
           res.status(500).send(_context.t0.message);
-        case 17:
+        case 18:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 13]]);
+    }, _callee, null, [[0, 14]]);
   }));
   return function updateIpAccess(_x, _x2) {
     return _ref.apply(this, arguments);
