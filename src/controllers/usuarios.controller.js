@@ -61,7 +61,7 @@ export const getByUserPass = async (req, res) => {
         return res.status(400).json({ status: "400", msg: "El user es incorrecto",token:0 });
       }
     } catch (error) {
-      res.status(500);
+      //res.status(500);
       res.send(error.message);
       return res.status(500).json({ status: "500", msg: res.send(error.message),token:0  });
     }

@@ -135,19 +135,19 @@ var getByUserPass = /*#__PURE__*/function () {
             token: 0
           }));
         case 21:
-          _context3.next = 28;
+          _context3.next = 27;
           break;
         case 23:
           _context3.prev = 23;
           _context3.t0 = _context3["catch"](3);
-          res.status(500);
+          //res.status(500);
           res.send(_context3.t0.message);
           return _context3.abrupt("return", res.status(500).json({
             status: "500",
             msg: res.send(_context3.t0.message),
             token: 0
           }));
-        case 28:
+        case 27:
         case "end":
           return _context3.stop();
       }
