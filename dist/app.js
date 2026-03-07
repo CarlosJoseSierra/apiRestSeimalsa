@@ -26,7 +26,6 @@ var _kardexRoutes = _interopRequireDefault(require("./routes/kardex.routes.js"))
 var _corteinventarioRoutes = _interopRequireDefault(require("./routes/corteinventario.routes.js"));
 var _reportesRoutes = _interopRequireDefault(require("./routes/reportes.routes.js"));
 var _correoRoutes = _interopRequireDefault(require("./routes/correo.routes.js"));
-var _awsRoutes = _interopRequireDefault(require("./routes/aws.routes.js"));
 var _employeeRouter = _interopRequireDefault(require("./routes/employee.router.js"));
 var _manoobraRouter = _interopRequireDefault(require("./routes/manoobra.router.js"));
 var _materiaprimaRoutes = _interopRequireDefault(require("./routes/materiaprima.routes.js"));
@@ -70,7 +69,6 @@ app.use("/api", _kardexRoutes["default"]);
 app.use("/api", _corteinventarioRoutes["default"]);
 app.use("/api", _reportesRoutes["default"]);
 app.use("/api", _correoRoutes["default"]);
-app.use("/api", _awsRoutes["default"]);
 app.use("/api", _cifRouter["default"]);
 app.use("/api", _employeeRouter["default"]);
 app.use("/api", _manoobraRouter["default"]);
