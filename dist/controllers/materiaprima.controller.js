@@ -89,7 +89,7 @@ var createMP = /*#__PURE__*/function () {
         case 4:
           pool = _context3.sent;
           _context3.next = 7;
-          return pool.request().input('MP_descripcion', _database.sql.VarChar(500), _materia.name).input('MP_medida', _database.sql.VarChar(50), _materia.unit).input('MP_costo', _database.sql.Decimal(18, 2), _materia.unitCost).input('MP_categoria', _database.sql.VarChar(100), _materia.category).query(_database.querys.createMP);
+          return pool.request().input('MP_descripcion', _database.sql.VarChar(500), _materia.Descripcion).input('MP_medida', _database.sql.VarChar(50), _materia.Medida).input('MP_costo', _database.sql.Decimal(18, 2), _materia.Costo).input('MP_categoria', _database.sql.VarChar(100), _materia.Categoria).query(_database.querys.createMP);
         case 7:
           result = _context3.sent;
           if (!(result.rowsAffected == 1)) {
@@ -140,7 +140,7 @@ var updateMP = /*#__PURE__*/function () {
         case 5:
           pool = _context4.sent;
           _context4.next = 8;
-          return pool.request().input("id", id).input('MP_descripcion', _database.sql.VarChar(500), materia.name).input('MP_medida', _database.sql.VarChar(50), materia.unit).input('MP_costo', _database.sql.Decimal(18, 2), materia.unitCost).input('MP_categoria', _database.sql.VarChar(100), materia.category).query(_database.querys.updateMP);
+          return pool.request().input("id", id).input('MP_descripcion', _database.sql.VarChar(500), materia.Descripcion).input('MP_medida', _database.sql.VarChar(50), materia.Medida).input('MP_costo', _database.sql.Decimal(18, 2), materia.Costo).input('MP_categoria', _database.sql.VarChar(100), materia.Categoria).query(_database.querys.updateMP);
         case 8:
           result = _context4.sent;
           if (!(result.rowsAffected == 1)) {

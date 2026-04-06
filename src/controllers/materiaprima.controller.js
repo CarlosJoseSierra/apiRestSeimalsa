@@ -31,10 +31,10 @@ export const getAllMP = async (req, res) => {
         const materia = req.body;
         const pool = await getConnection();
         const result = await pool.request()
-        .input('MP_descripcion', sql.VarChar(500), materia.name)
-        .input('MP_medida', sql.VarChar(50), materia.unit)
-        .input('MP_costo', sql.Decimal(18, 2), materia.unitCost)
-        .input('MP_categoria', sql.VarChar(100), materia.category)
+        .input('MP_descripcion', sql.VarChar(500), materia.Descripcion)
+        .input('MP_medida', sql.VarChar(50), materia.Medida)
+        .input('MP_costo', sql.Decimal(18, 2), materia.Costo)
+        .input('MP_categoria', sql.VarChar(100), materia.Categoria)
         .query(querys.createMP);
         if(result.rowsAffected==1){
           return res.status(200).json({ status: "ok", msg: "Registro exitoso" ,token:0});
@@ -56,10 +56,10 @@ export const getAllMP = async (req, res) => {
         const result = await pool
         .request()
         .input("id", id)
-        .input('MP_descripcion', sql.VarChar(500), materia.name)
-        .input('MP_medida', sql.VarChar(50), materia.unit)
-        .input('MP_costo', sql.Decimal(18, 2), materia.unitCost)
-        .input('MP_categoria', sql.VarChar(100), materia.category)
+        .input('MP_descripcion', sql.VarChar(500), materia.Descripcion)
+        .input('MP_medida', sql.VarChar(50), materia.Medida)
+        .input('MP_costo', sql.Decimal(18, 2), materia.Costo)
+        .input('MP_categoria', sql.VarChar(100), materia.Categoria)
         .query(querys.updateMP);
      if(result.rowsAffected==1){
       return res.status(200).json({ status: "ok", msg: "Actualizacion exitosa" ,token:0});
