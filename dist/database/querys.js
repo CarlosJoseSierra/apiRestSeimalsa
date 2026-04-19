@@ -155,6 +155,10 @@ var querys = {
   getAllCIF: "SELECT CI_id AS id,CI_descripcion AS description, CI_valor AS defaultAmount FROM COSTO_INDIRECTO",
   getCIFById: "SELECT CI_id AS id,CI_descripcion AS description, CI_valor AS defaultAmount FROM COSTO_INDIRECTO WHERE CI_id = @id",
   createCIF: "INSERT INTO COSTO_INDIRECTO (CI_descripcion) VALUES (@CI_descripcion)",
-  updateCIF: "UPDATE COSTO_INDIRECTO SET CI_descripcion = @CI_descripcion WHERE CI_id = @id"
+  updateCIF: "UPDATE COSTO_INDIRECTO SET CI_descripcion = @CI_descripcion WHERE CI_id = @id",
+  getAllEnsambles: "SELECT PROD_id,PROD_codigo,PROD_nombre,PROD_medida,PROD_costoUnitario,PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,PROD_precioMinimoH,PROD_pvpH,PROD_image,PROD_TotalMP,PROD_TotalMO,PROD_TotalCIF,PROD_TotalFInal,PROD_utilidad,PROD_estado FROM PRODUCTO",
+  getEnsambleById: "SELECT PROD_id,PROD_codigo,PROD_nombre,PROD_medida,PROD_costoUnitario,PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,PROD_precioMinimoH,PROD_pvpH,PROD_image,PROD_TotalMP,PROD_TotalMO,PROD_TotalCIF,PROD_TotalFInal,PROD_utilidad,PROD_estado  FROM PRODUCTO WHERE PROD_id = @id",
+  createEnsamble: "INSERT INTO PRODUCTO (PROD_codigo,PROD_nombre,PROD_medida,PROD_costoUnitario,PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,PROD_precioMinimoH,PROD_pvpH,PROD_image,PROD_TotalMP,PROD_TotalMO,PROD_TotalCIF,PROD_TotalFInal,PROD_utilidad,PROD_estado) VALUES (@PROD_codigo,@PROD_nombre,@PROD_medida,@PROD_costoUnitario,@PROD_precioMinimo,@PROD_pvp,@PROD_item,@PROD_costoUnitarioH,@PROD_precioMinimoH,@PROD_pvpH,@PROD_image,@PROD_TotalMP,@PROD_TotalMO,@PROD_TotalCIF,@PROD_TotalFInal,@PROD_utilidad,1)",
+  updateEnsamble: "UPDATE PRODUCTO SET CI_descripcion = @CI_descripcion WHERE CI_id = @id"
 };
 exports.querys = querys;
