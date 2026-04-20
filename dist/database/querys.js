@@ -148,7 +148,7 @@ var querys = {
   getMPById: "SELECT MP_id AS id,MP_descripcion AS name,MP_medida AS unit,MP_costo AS unitCost,MP_categoria AS category FROM MATERIA_PRIMA WHERE MP_id = @id",
   createMP: "INSERT INTO MATERIA_PRIMA (MP_descripcion,MP_medida,MP_costo,MP_categoria) VALUES (@MP_descripcion,@MP_medida,@MP_costo,@MP_categoria)",
   updateMP: "UPDATE MATERIA_PRIMA SET MP_descripcion = @MP_descripcion, MP_medida = @MP_medida,MP_costo = @MP_costo,MP_categoria = @MP_categoria WHERE MP_id = @id",
-  getAllMO: "SELECT MO_id,MO_descripcion FROM MANO_OBRA",
+  getAllMO: "SELECT MO_id,MO_descripcion, MO_costo, MO_observcion FROM MANO_OBRA",
   getMOById: "SELECT MO_id AS id,MO_descripcion, MO_costo,MO_observacion FROM MANO_OBRA WHERE MO_id = @id",
   createMO: "INSERT INTO MANO_OBRA (MO_descripcion) VALUES (@MP_descripcion)",
   updateMO: "UPDATE MANO_OBRA SET MO_descripcion = @MO_descripcion WHERE MO_id = @id",
