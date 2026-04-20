@@ -169,13 +169,13 @@ getDataHIstorialPorSerieInterno: "SELECT * FROM (SELECT HIST_AS_id,HIST_AS_fecha
   createMP:"INSERT INTO MATERIA_PRIMA (MP_descripcion,MP_medida,MP_costo,MP_categoria) VALUES (@MP_descripcion,@MP_medida,@MP_costo,@MP_categoria)",
   updateMP:"UPDATE MATERIA_PRIMA SET MP_descripcion = @MP_descripcion, MP_medida = @MP_medida,MP_costo = @MP_costo,MP_categoria = @MP_categoria WHERE MP_id = @id",
 
-  getAllMO:"SELECT MO_id,MO_descripcion, MO_costo, MO_observcion FROM MANO_OBRA",
-  getMOById:"SELECT MO_id AS id,MO_descripcion, MO_costo,MO_observacion FROM MANO_OBRA WHERE MO_id = @id",
+  getAllMO:"SELECT MO_id,MO_descripcion, MO_costo, MO_observacion FROM MANO_OBRA",
+  getMOById:"SELECT MO_id,MO_descripcion, MO_costo,MO_observacion FROM MANO_OBRA WHERE MO_id = @id",
   createMO:"INSERT INTO MANO_OBRA (MO_descripcion) VALUES (@MP_descripcion)",
   updateMO:"UPDATE MANO_OBRA SET MO_descripcion = @MO_descripcion WHERE MO_id = @id",
 
-  getAllCIF:"SELECT CI_id,CI_descripcion, CI_valor FROM COSTO_INDIRECTO",
-  getCIFById:"SELECT CI_id AS id,CI_descripcion AS description, CI_valor AS defaultAmount FROM COSTO_INDIRECTO WHERE CI_id = @id",
+  getAllCIF:"SELECT CI_id,CI_descripcion, CI_valor, CI_Observacion FROM COSTO_INDIRECTO",
+  getCIFById:"SELECT CI_id,CI_descripcion, CI_valor,CI_Observacion FROM COSTO_INDIRECTO WHERE CI_id = @id",
   createCIF:"INSERT INTO COSTO_INDIRECTO (CI_descripcion) VALUES (@CI_descripcion)",
   updateCIF:"UPDATE COSTO_INDIRECTO SET CI_descripcion = @CI_descripcion WHERE CI_id = @id",
 
