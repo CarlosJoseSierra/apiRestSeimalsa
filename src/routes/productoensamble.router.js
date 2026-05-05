@@ -8,7 +8,7 @@ import {
 } from "../controllers/productoensamble.controller";
 
 const router = Router();
-router.get("/ensamble/", getAllEnsambles);
+router.get("/ensamble", getAllEnsambles);
 router.get("/ensamble/:id", getEnsambleById);
 router.post("ensamble", createEnsamble);
 router.put("/ensamble/:id", updateEnsamble);

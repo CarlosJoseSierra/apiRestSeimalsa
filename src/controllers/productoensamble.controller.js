@@ -5,15 +5,28 @@ export const getAllEnsambles = async (req, res) => {
       const pool = await getConnection();
       //const result = await pool.request().query(querys.getAllEnsambles);
       const result = await pool.request().execute('sp_Produccion_GetAllEnsambles');
-      const jsonResult = result.recordset
-            .map(row => Object.values(row).join(''))
-            .join('');
+      if (!result.recordset || result.recordset.length === 0) {
+        console.log("No se encontraron filas en SQL");
+        return res.json([]); 
+      }
+      
+    //  const jsonResult = result.recordset
+      //      .map(row => Object.values(row).join(''))
+        //    .join('');
 
-        if (!jsonResult) {
-            return res.json({ products: [] });
-        }
-        const data = JSON.parse(jsonResult);
-        res.json(data.products);
+
+      const jsonResult = result.recordset
+      .map(row => {
+        return Object.values(row)[0]; 
+      })
+      .join('');
+
+    if (!jsonResult) {
+      return res.json([]);
+    }
+    const data = JSON.parse(jsonResult);
+    const finalArray = data.products ? data.products : data;
+    res.json(finalArray);
     } catch (error) {
         res.status(500).send({
         message: "Error interno del servidor al procesar la solicitud.",
