@@ -3,11 +3,22 @@ import { getConnection, querys, sql } from "../database";
 export const getAllEnsambles = async (req, res) => {
     try {
       const pool = await getConnection();
-      const result = await pool.request().query(querys.getAllEnsambles);
-      res.json(result.recordset);
+      //const result = await pool.request().query(querys.getAllEnsambles);
+      const result = await pool.request().execute('sp_Produccion_GetAllEnsambles');
+      const jsonResult = result.recordset
+            .map(row => Object.values(row).join(''))
+            .join('');
+
+        if (!jsonResult) {
+            return res.json({ products: [] });
+        }
+        const data = JSON.parse(jsonResult);
+        res.json(data.products);
     } catch (error) {
-      res.status(500);
-      res.send(error.message);
+        res.status(500).send({
+        message: "Error interno del servidor al procesar la solicitud.",
+        error: error.message
+      });
     }
   };
 

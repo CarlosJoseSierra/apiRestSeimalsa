@@ -11,7 +11,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var getAllEnsambles = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
-    var pool, result;
+    var pool, result, jsonResult, data;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -21,22 +21,36 @@ var getAllEnsambles = /*#__PURE__*/function () {
         case 3:
           pool = _context.sent;
           _context.next = 6;
-          return pool.request().query(_database.querys.getAllEnsambles);
+          return pool.request().execute('sp_Produccion_GetAllEnsambles');
         case 6:
           result = _context.sent;
-          res.json(result.recordset);
-          _context.next = 14;
-          break;
+          jsonResult = result.recordset.map(function (row) {
+            return Object.values(row).join('');
+          }).join('');
+          if (jsonResult) {
+            _context.next = 10;
+            break;
+          }
+          return _context.abrupt("return", res.json({
+            products: []
+          }));
         case 10:
-          _context.prev = 10;
-          _context.t0 = _context["catch"](0);
-          res.status(500);
-          res.send(_context.t0.message);
+          data = JSON.parse(jsonResult);
+          res.json(data.products);
+          _context.next = 17;
+          break;
         case 14:
+          _context.prev = 14;
+          _context.t0 = _context["catch"](0);
+          res.status(500).send({
+            message: "Error interno del servidor al procesar la solicitud.",
+            error: _context.t0.message
+          });
+        case 17:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 10]]);
+    }, _callee, null, [[0, 14]]);
   }));
   return function getAllEnsambles(_x, _x2) {
     return _ref.apply(this, arguments);
