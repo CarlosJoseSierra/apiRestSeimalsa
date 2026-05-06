@@ -33,7 +33,7 @@ export const getAllMP = async (req, res) => {
         const result = await pool.request()
         .input('MP_descripcion', sql.VarChar(500), materia.Descripcion)
         .input('MP_medida', sql.VarChar(50), materia.Medida)
-        .input('MP_costo', sql.Decimal(18, 2), materia.Costo)
+        .input('MP_costo', sql.Decimal(18, 4), materia.Costo)
         .input('MP_categoria', sql.VarChar(100), materia.Categoria)
         .query(querys.createMP);
         if(result.rowsAffected==1){
