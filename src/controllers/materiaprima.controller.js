@@ -28,14 +28,17 @@ export const getAllMP = async (req, res) => {
   
   export const createMP = async (req, res) => {
     try {
-        const materia = req.body;
+        //const materia = req.body;
+        const { Descripcion, Medida, Costo, Categoria } = req.body;
+        console.log(req.body);
         const pool = await getConnection();
         const result = await pool.request()
-        .input('MP_descripcion', sql.VarChar, materia.Descripcion)
-        .input('MP_medida', sql.VarChar, materia.Medida)
-        .input('MP_costo', sql.Decimal(18, 4), materia.Costo)
-        .input('MP_categoria', sql.VarChar, materia.Categoria)
+        .input('MP_descripcion', sql.VarChar, Descripcion)
+        .input('MP_medida', sql.VarChar, Medida)
+        .input('MP_costo', sql.Decimal(18, 4), Costo)
+        .input('MP_categoria', sql.VarChar, Categoria)
         .query(querys.createMP);
+        console.log(result);
         if(result.rowsAffected==1){
           return res.status(200).json({ status: "ok", msg: "Registro exitoso" ,token:0});
         }else{
