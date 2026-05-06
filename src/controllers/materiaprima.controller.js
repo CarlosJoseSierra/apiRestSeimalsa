@@ -30,12 +30,13 @@ export const getAllMP = async (req, res) => {
     try {
         //const materia = req.body;
         const { Descripcion, Medida, Costo, Categoria } = req.body;
+        const costoNumerico = parseFloat(Costo);
         console.log(req.body);
         const pool = await getConnection();
         const result = await pool.request()
         .input('MP_descripcion', sql.VarChar, Descripcion)
         .input('MP_medida', sql.VarChar, Medida)
-        .input('MP_costo', sql.Decimal(18, 4), Costo)
+        .input('MP_costo', sql.Decimal(18, 4), costoNumerico)
         .input('MP_categoria', sql.VarChar, Categoria)
         .query(querys.createMP);
         console.log(result);

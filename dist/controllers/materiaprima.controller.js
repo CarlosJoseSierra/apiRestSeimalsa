@@ -78,25 +78,26 @@ var getMPById = /*#__PURE__*/function () {
 exports.getMPById = getMPById;
 var createMP = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var _req$body, Descripcion, Medida, Costo, Categoria, pool, result;
+    var _req$body, Descripcion, Medida, Costo, Categoria, costoNumerico, pool, result;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           _context3.prev = 0;
           //const materia = req.body;
           _req$body = req.body, Descripcion = _req$body.Descripcion, Medida = _req$body.Medida, Costo = _req$body.Costo, Categoria = _req$body.Categoria;
+          costoNumerico = parseFloat(Costo);
           console.log(req.body);
-          _context3.next = 5;
+          _context3.next = 6;
           return (0, _database.getConnection)();
-        case 5:
+        case 6:
           pool = _context3.sent;
-          _context3.next = 8;
-          return pool.request().input('MP_descripcion', _database.sql.VarChar, Descripcion).input('MP_medida', _database.sql.VarChar, Medida).input('MP_costo', _database.sql.Decimal(18, 4), Costo).input('MP_categoria', _database.sql.VarChar, Categoria).query(_database.querys.createMP);
-        case 8:
+          _context3.next = 9;
+          return pool.request().input('MP_descripcion', _database.sql.VarChar, Descripcion).input('MP_medida', _database.sql.VarChar, Medida).input('MP_costo', _database.sql.Decimal(18, 4), costoNumerico).input('MP_categoria', _database.sql.VarChar, Categoria).query(_database.querys.createMP);
+        case 9:
           result = _context3.sent;
           console.log(result);
           if (!(result.rowsAffected == 1)) {
-            _context3.next = 14;
+            _context3.next = 15;
             break;
           }
           return _context3.abrupt("return", res.status(200).json({
@@ -104,25 +105,25 @@ var createMP = /*#__PURE__*/function () {
             msg: "Registro exitoso",
             token: 0
           }));
-        case 14:
+        case 15:
           return _context3.abrupt("return", res.status(400).json({
             status: "400",
             msg: "No se pudo registrar, consulte al administrador",
             token: 0
           }));
-        case 15:
-          _context3.next = 21;
+        case 16:
+          _context3.next = 22;
           break;
-        case 17:
-          _context3.prev = 17;
+        case 18:
+          _context3.prev = 18;
           _context3.t0 = _context3["catch"](0);
           res.status(500);
           res.send(_context3.t0.message);
-        case 21:
+        case 22:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[0, 17]]);
+    }, _callee3, null, [[0, 18]]);
   }));
   return function createMP(_x5, _x6) {
     return _ref3.apply(this, arguments);
