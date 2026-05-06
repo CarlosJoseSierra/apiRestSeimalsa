@@ -25,41 +25,37 @@ var getAllEnsambles = /*#__PURE__*/function () {
         case 6:
           result = _context.sent;
           if (!(!result.recordset || result.recordset.length === 0)) {
-            _context.next = 10;
+            _context.next = 9;
             break;
           }
-          console.log("No se encontraron filas en SQL");
           return _context.abrupt("return", res.json([]));
-        case 10:
-          //  const jsonResult = result.recordset
-          //      .map(row => Object.values(row).join(''))
-          //    .join('');
+        case 9:
           jsonResult = result.recordset.map(function (row) {
             return Object.values(row)[0];
           }).join('');
           if (jsonResult) {
-            _context.next = 13;
+            _context.next = 12;
             break;
           }
           return _context.abrupt("return", res.json([]));
-        case 13:
+        case 12:
           data = JSON.parse(jsonResult);
           finalArray = data.products ? data.products : data;
           res.json(finalArray);
-          _context.next = 21;
+          _context.next = 20;
           break;
-        case 18:
-          _context.prev = 18;
+        case 17:
+          _context.prev = 17;
           _context.t0 = _context["catch"](0);
           res.status(500).send({
             message: "Error interno del servidor al procesar la solicitud.",
             error: _context.t0.message
           });
-        case 21:
+        case 20:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 18]]);
+    }, _callee, null, [[0, 17]]);
   }));
   return function getAllEnsambles(_x, _x2) {
     return _ref.apply(this, arguments);

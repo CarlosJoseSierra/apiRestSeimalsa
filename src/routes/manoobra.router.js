@@ -9,7 +9,7 @@ import {
 const router = Router();
 router.get("/obra", getAllMO);
 router.get("/obra/:id", getMOById);
-router.post("/obra", createMO);
-router.put("/obra/:id", updateMO);
+router.post("/obra/new", createMO);
+router.put("/obra/x/:id", updateMO);
 
 export default router;

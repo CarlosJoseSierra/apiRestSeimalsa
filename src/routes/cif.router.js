@@ -9,7 +9,7 @@ import {
 const router = Router();
 router.get("/cif/", getAllCIF);
 router.get("/cif/:id", getCIFById);
-router.post("/cif", createCIF);
-router.put("/cif/:id", updateCIF);
+router.post("/cif/new", createCIF);
+router.put("/cif/x/:id", updateCIF);
 
 export default router;
