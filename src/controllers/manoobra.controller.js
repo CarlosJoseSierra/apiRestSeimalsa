@@ -49,6 +49,7 @@ export const getAllMO = async (req, res) => {
   export const updateMO = async (req, res) => {
     try {
         const { id } = req.params;
+        const materia = req.body;
         const pool = await getConnection();
         const result = await pool
         .request()

@@ -78,18 +78,18 @@ var getMOById = /*#__PURE__*/function () {
 exports.getMOById = getMOById;
 var createMO = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var _materia, pool, result;
+    var materia, pool, result;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           _context3.prev = 0;
-          _materia = req.body;
+          materia = req.body;
           _context3.next = 4;
           return (0, _database.getConnection)();
         case 4:
           pool = _context3.sent;
           _context3.next = 7;
-          return pool.request().input('MO_descripcion', _database.sql.VarChar, _materia.Descripcion).input('MO_observacion', _database.sql.VarChar, _materia.Observacion).query(_database.querys.createMO);
+          return pool.request().input('MO_descripcion', _database.sql.VarChar, materia.Descripcion).input('MO_observacion', _database.sql.VarChar, materia.Observacion).query(_database.querys.createMO);
         case 7:
           result = _context3.sent;
           if (!(result.rowsAffected == 1)) {
@@ -128,22 +128,23 @@ var createMO = /*#__PURE__*/function () {
 exports.createMO = createMO;
 var updateMO = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
-    var id, pool, result;
+    var id, materia, pool, result;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
           _context4.prev = 0;
           id = req.params.id;
-          _context4.next = 4;
+          materia = req.body;
+          _context4.next = 5;
           return (0, _database.getConnection)();
-        case 4:
+        case 5:
           pool = _context4.sent;
-          _context4.next = 7;
+          _context4.next = 8;
           return pool.request().input("id", id).input('MO_descripcion', _database.sql.VarChar, materia.Descripcion).input('MO_observacion', _database.sql.VarChar, materia.Observacion).query(_database.querys.updateMO);
-        case 7:
+        case 8:
           result = _context4.sent;
           if (!(result.rowsAffected == 1)) {
-            _context4.next = 12;
+            _context4.next = 13;
             break;
           }
           return _context4.abrupt("return", res.status(200).json({
@@ -151,25 +152,25 @@ var updateMO = /*#__PURE__*/function () {
             msg: "Actualizacion exitosa",
             token: 0
           }));
-        case 12:
+        case 13:
           return _context4.abrupt("return", res.status(400).json({
             status: "400",
             msg: "No se pudo actualizar, consulte al administrador",
             token: 0
           }));
-        case 13:
-          _context4.next = 19;
+        case 14:
+          _context4.next = 20;
           break;
-        case 15:
-          _context4.prev = 15;
+        case 16:
+          _context4.prev = 16;
           _context4.t0 = _context4["catch"](0);
           res.status(500);
           res.send(_context4.t0.message);
-        case 19:
+        case 20:
         case "end":
           return _context4.stop();
       }
-    }, _callee4, null, [[0, 15]]);
+    }, _callee4, null, [[0, 16]]);
   }));
   return function updateMO(_x7, _x8) {
     return _ref4.apply(this, arguments);

@@ -94,7 +94,7 @@ var createCIF = /*#__PURE__*/function () {
         case 5:
           pool = _context3.sent;
           _context3.next = 8;
-          return pool.request().input('CI_descripcion', _database.sql.VarChar, _materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), costoFinal || 0).input('CI_Observacion', _database.sql.Decimal(18, 4), _materia.Observacion || 0).query(_database.querys.createCIF);
+          return pool.request().input('CI_descripcion', _database.sql.VarChar, _materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), costoFinal || 0).input('CI_Observacion', _database.sql.VarChar, _materia.Observacion || 0).query(_database.querys.createCIF);
         case 8:
           result = _context3.sent;
           if (!(result.rowsAffected == 1)) {
