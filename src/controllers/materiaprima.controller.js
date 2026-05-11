@@ -59,9 +59,10 @@ export const getAllMP = async (req, res) => {
   export const updateMP = async (req, res) => {
     try {
         const { id } = req.params;
+        const materia = req.body;
         let costoFinal;
-        if (typeof Costo === 'string') {
-          costoFinal = parseFloat(Costo.replace(',', '.'));
+        if (typeof materia.Costo === 'string') {
+          costoFinal = parseFloat(materia.Costo.replace(',', '.'));
       } else {
           costoFinal = Costo;
       }

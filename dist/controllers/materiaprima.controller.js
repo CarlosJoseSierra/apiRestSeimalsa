@@ -133,27 +133,28 @@ var createMP = /*#__PURE__*/function () {
 exports.createMP = createMP;
 var updateMP = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
-    var id, costoFinal, pool, result;
+    var id, materia, costoFinal, pool, result;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
           _context4.prev = 0;
           id = req.params.id;
-          if (typeof Costo === 'string') {
-            costoFinal = parseFloat(Costo.replace(',', '.'));
+          materia = req.body;
+          if (typeof materia.Costo === 'string') {
+            costoFinal = parseFloat(materia.Costo.replace(',', '.'));
           } else {
             costoFinal = Costo;
           }
-          _context4.next = 5;
+          _context4.next = 6;
           return (0, _database.getConnection)();
-        case 5:
+        case 6:
           pool = _context4.sent;
-          _context4.next = 8;
+          _context4.next = 9;
           return pool.request().input("id", id).input("MP_descripcion", _database.sql.VarChar, materia.Descripcion).input("MP_medida", _database.sql.VarChar, materia.Medida).input("MP_costo", _database.sql.Decimal(18, 4), costoFinal).input("MP_categoria", _database.sql.VarChar, materia.Categoria).query(_database.querys.updateMP);
-        case 8:
+        case 9:
           result = _context4.sent;
           if (!(result.rowsAffected == 1)) {
-            _context4.next = 13;
+            _context4.next = 14;
             break;
           }
           return _context4.abrupt("return", res.status(200).json({
@@ -161,25 +162,25 @@ var updateMP = /*#__PURE__*/function () {
             msg: "Actualizacion exitosa",
             token: 0
           }));
-        case 13:
+        case 14:
           return _context4.abrupt("return", res.status(400).json({
             status: "400",
             msg: "No se pudo actualizar, consulte al administrador",
             token: 0
           }));
-        case 14:
-          _context4.next = 20;
+        case 15:
+          _context4.next = 21;
           break;
-        case 16:
-          _context4.prev = 16;
+        case 17:
+          _context4.prev = 17;
           _context4.t0 = _context4["catch"](0);
           res.status(500);
           res.send(_context4.t0.message);
-        case 20:
+        case 21:
         case "end":
           return _context4.stop();
       }
-    }, _callee4, null, [[0, 16]]);
+    }, _callee4, null, [[0, 17]]);
   }));
   return function updateMP(_x7, _x8) {
     return _ref4.apply(this, arguments);
