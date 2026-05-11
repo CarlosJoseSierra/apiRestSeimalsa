@@ -150,7 +150,7 @@ var updateCIF = /*#__PURE__*/function () {
         case 6:
           pool = _context4.sent;
           _context4.next = 9;
-          return pool.request().input("id", id).input('CI_descripcion', _database.sql.VarChar, materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), costoFinal || 0).input('CI_Observacion', _database.sql.VarChar, materia.Observacion).query(_database.querys.updateMO);
+          return pool.request().input("id", id).input('CI_descripcion', _database.sql.VarChar, materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), costoFinal || 0).input('CI_Observacion', _database.sql.VarChar, materia.Observacion).query(_database.querys.updateCIF);
         case 9:
           result = _context4.sent;
           if (!(result.rowsAffected == 1)) {

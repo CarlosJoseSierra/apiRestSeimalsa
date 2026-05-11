@@ -70,7 +70,7 @@ export const getAllCIF = async (req, res) => {
         .input('CI_descripcion', sql.VarChar, materia.Descripcion)
         .input('CI_valor', sql.Decimal(18, 4), costoFinal || 0)
         .input('CI_Observacion', sql.VarChar, materia.Observacion)
-        .query(querys.updateMO);
+        .query(querys.updateCIF);
      if(result.rowsAffected==1){
       return res.status(200).json({ status: "ok", msg: "Actualizacion exitosa" ,token:0});
     }else{
