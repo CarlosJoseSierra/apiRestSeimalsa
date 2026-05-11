@@ -94,7 +94,7 @@ var createCIF = /*#__PURE__*/function () {
         case 5:
           pool = _context3.sent;
           _context3.next = 8;
-          return pool.request().input('CI_descripcion', _database.sql.VarChar, materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), costoFinal || 0).input('CI_Observacion', _database.sql.VarChar, materia.Observacion || 0).query(_database.querys.createCIF);
+          return pool.request().input('CI_descripcion', _database.sql.VarChar, materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), costoFinal || 0).input('CI_Observacion', _database.sql.VarChar, materia.Observacion).query(_database.querys.createCIF);
         case 8:
           result = _context3.sent;
           if (!(result.rowsAffected == 1)) {
@@ -150,7 +150,7 @@ var updateCIF = /*#__PURE__*/function () {
         case 6:
           pool = _context4.sent;
           _context4.next = 9;
-          return pool.request().input("id", id).input('CI_descripcion', _database.sql.VarChar, materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), materia.CI_valor || 0).input('CI_Observacion', _database.sql.Decimal(18, 4), materia.CI_Observacion || 0).query(_database.querys.updateMO);
+          return pool.request().input("id", id).input('CI_descripcion', _database.sql.VarChar, materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), costoFinal || 0).input('CI_Observacion', _database.sql.VarChar, materia.Observacion).query(_database.querys.updateMO);
         case 9:
           result = _context4.sent;
           if (!(result.rowsAffected == 1)) {

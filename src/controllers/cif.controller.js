@@ -39,7 +39,7 @@ export const getAllCIF = async (req, res) => {
         const result = await pool.request()
         .input('CI_descripcion', sql.VarChar, materia.Descripcion)
         .input('CI_valor', sql.Decimal(18, 4), costoFinal || 0)
-        .input('CI_Observacion', sql.VarChar, materia.Observacion || 0)
+        .input('CI_Observacion', sql.VarChar, materia.Observacion)
         .query(querys.createCIF);
         if(result.rowsAffected==1){
           return res.status(200).json({ status: "ok", msg: "Registro exitoso" ,token:0});
@@ -68,8 +68,8 @@ export const getAllCIF = async (req, res) => {
         .request()
         .input("id", id)
         .input('CI_descripcion', sql.VarChar, materia.Descripcion)
-        .input('CI_valor', sql.Decimal(18, 4), materia.CI_valor || 0)
-        .input('CI_Observacion', sql.Decimal(18, 4), materia.CI_Observacion || 0)
+        .input('CI_valor', sql.Decimal(18, 4), costoFinal || 0)
+        .input('CI_Observacion', sql.VarChar, materia.Observacion)
         .query(querys.updateMO);
      if(result.rowsAffected==1){
       return res.status(200).json({ status: "ok", msg: "Actualizacion exitosa" ,token:0});
