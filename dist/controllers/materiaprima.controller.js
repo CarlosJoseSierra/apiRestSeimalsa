@@ -78,16 +78,16 @@ var getMPById = /*#__PURE__*/function () {
 exports.getMPById = getMPById;
 var createMP = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var _req$body, Descripcion, Medida, _Costo, Categoria, costoFinal, pool, result;
+    var _req$body, Descripcion, Medida, Costo, Categoria, costoFinal, pool, result;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           _context3.prev = 0;
-          _req$body = req.body, Descripcion = _req$body.Descripcion, Medida = _req$body.Medida, _Costo = _req$body.Costo, Categoria = _req$body.Categoria;
-          if (typeof _Costo === 'string') {
-            costoFinal = parseFloat(_Costo.replace(',', '.'));
+          _req$body = req.body, Descripcion = _req$body.Descripcion, Medida = _req$body.Medida, Costo = _req$body.Costo, Categoria = _req$body.Categoria;
+          if (typeof Costo === 'string') {
+            costoFinal = parseFloat(Costo.replace(',', '.'));
           } else {
-            costoFinal = _Costo;
+            costoFinal = Costo;
           }
           _context3.next = 5;
           return (0, _database.getConnection)();
@@ -143,7 +143,7 @@ var updateMP = /*#__PURE__*/function () {
           if (typeof materia.Costo === 'string') {
             costoFinal = parseFloat(materia.Costo.replace(',', '.'));
           } else {
-            costoFinal = Costo;
+            costoFinal = materia.Costo;
           }
           _context4.next = 6;
           return (0, _database.getConnection)();
