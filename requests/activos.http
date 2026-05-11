@@ -28,17 +28,14 @@ Content-Type: application/json
 http://localhost:3000/api/activos/VLTJ33CA
 
 ### add a product
-POST https://api-seimalsa.herokuapp.com/api/activosI
+POST http://localhost:3000/api/materia/new
 Content-Type: application/json
 
-{   
-    "EQC_serie":"1235",
-    "EQC_placa":"4321",
-    "EQC_EQUIP_id":1,
-    "EQC_CLI_id":1,
-    "EQC_USU_ing":18,
-    "EQC_codTag":"77777",
-    "EQC_LOGO_id":1
+{
+  "Descripcion": "nueva",
+  "Medida": "Litro (l)",
+  "Costo": "2,5",
+  "Categoria": "plastico"
 }
 
 ### get product

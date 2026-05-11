@@ -16,11 +16,7 @@ export const dbSettings = {
 
 export const getConnection = async () => {
   try {
-    // Verificación de depuración en logs de Railway
-    //if (!DB_SERVER) {
-      //console.error("❌ ERROR: DB_SERVER no está cargado.");
-      //return null;
-    //}
+   
     const pool = await sql.connect(dbSettings);
     return pool;
   } catch (error) {
@@ -28,3 +24,5 @@ export const getConnection = async () => {
     throw error;
   }
 };
+
+export { sql };

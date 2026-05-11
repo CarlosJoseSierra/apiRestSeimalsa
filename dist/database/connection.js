@@ -5,6 +5,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getConnection = exports.dbSettings = void 0;
+Object.defineProperty(exports, "sql", {
+  enumerable: true,
+  get: function get() {
+    return _mssql["default"];
+  }
+});
 var _mssql = _interopRequireDefault(require("mssql"));
 var _config = require("../config");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
