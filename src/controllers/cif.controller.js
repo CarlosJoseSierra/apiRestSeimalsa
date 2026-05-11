@@ -56,6 +56,13 @@ export const getAllCIF = async (req, res) => {
   export const updateCIF = async (req, res) => {
     try {
         const { id } = req.params;
+        const materia = req.body;
+        let costoFinal;
+        if (typeof materia.Costo === 'string') {
+          costoFinal = parseFloat(materia.Costo.replace(',', '.'));
+        } else {
+          costoFinal = materia.Costo;
+        }
         const pool = await getConnection();
         const result = await pool
         .request()

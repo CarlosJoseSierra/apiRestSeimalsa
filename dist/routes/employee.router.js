@@ -11,7 +11,6 @@ var router = (0, _express.Router)();
 router.get("/empleado", _employee.getAllEmployees);
 router.get("/empleado/:id", _employee.getEmployeeById);
 router.post("/empleado", _employee.createEmployee);
-router.put("/empleado/:id", _employee.updateEmployee);
-router.put("/empleado/x/:id", _employee.deleteEmployee);
+router.put("/empleado/x/:id", _employee.updateEmployee);
 var _default = router;
 exports["default"] = _default;
