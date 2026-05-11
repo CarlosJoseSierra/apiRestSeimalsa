@@ -10,7 +10,7 @@ import {
 const router = Router();
 router.get("/empleado", getAllEmployees);
 router.get("/empleado/:id", getEmployeeById);
-router.post("/empleado", createEmployee);
+router.post("/empleado/new", createEmployee);
 router.put("/empleado/x/:id", updateEmployee);
 
 export default router;
