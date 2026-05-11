@@ -89,7 +89,7 @@ var createCIF = /*#__PURE__*/function () {
         case 4:
           pool = _context3.sent;
           _context3.next = 7;
-          return pool.request().input('CI_descripcion', _database.sql.VarChar(500), _materia.description).input('CI_valor', _database.sql.Decimal(18, 2), _materia.defaultAmount || 0).query(_database.querys.createCIF);
+          return pool.request().input('CI_descripcion', _database.sql.VarChar, _materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), _materia.CI_valor || 0).input('CI_Observacion', _database.sql.Decimal(18, 4), _materia.CI_Observacion || 0).query(_database.querys.createCIF);
         case 7:
           result = _context3.sent;
           if (!(result.rowsAffected == 1)) {
@@ -128,23 +128,22 @@ var createCIF = /*#__PURE__*/function () {
 exports.createCIF = createCIF;
 var updateCIF = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
-    var id, employee, pool, result;
+    var id, pool, result;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
           _context4.prev = 0;
           id = req.params.id;
-          employee = req.body;
-          _context4.next = 5;
+          _context4.next = 4;
           return (0, _database.getConnection)();
-        case 5:
+        case 4:
           pool = _context4.sent;
-          _context4.next = 8;
-          return pool.request().input("id", id).input('CI_descripcion', _database.sql.VarChar(500), materia.description).input('CI_valor', _database.sql.Decimal(18, 2), materia.defaultAmount || 0).query(_database.querys.updateMO);
-        case 8:
+          _context4.next = 7;
+          return pool.request().input("id", id).input('CI_descripcion', _database.sql.VarChar, materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), materia.CI_valor || 0).input('CI_Observacion', _database.sql.Decimal(18, 4), materia.CI_Observacion || 0).query(_database.querys.updateMO);
+        case 7:
           result = _context4.sent;
           if (!(result.rowsAffected == 1)) {
-            _context4.next = 13;
+            _context4.next = 12;
             break;
           }
           return _context4.abrupt("return", res.status(200).json({
@@ -152,25 +151,25 @@ var updateCIF = /*#__PURE__*/function () {
             msg: "Actualizacion exitosa",
             token: 0
           }));
-        case 13:
+        case 12:
           return _context4.abrupt("return", res.status(400).json({
             status: "400",
             msg: "No se pudo actualizar, consulte al administrador",
             token: 0
           }));
-        case 14:
-          _context4.next = 20;
+        case 13:
+          _context4.next = 19;
           break;
-        case 16:
-          _context4.prev = 16;
+        case 15:
+          _context4.prev = 15;
           _context4.t0 = _context4["catch"](0);
           res.status(500);
           res.send(_context4.t0.message);
-        case 20:
+        case 19:
         case "end":
           return _context4.stop();
       }
-    }, _callee4, null, [[0, 16]]);
+    }, _callee4, null, [[0, 15]]);
   }));
   return function updateCIF(_x7, _x8) {
     return _ref4.apply(this, arguments);

@@ -31,7 +31,8 @@ export const getAllMO = async (req, res) => {
         const materia = req.body;
         const pool = await getConnection();
         const result = await pool.request()
-        .input('MO_descripcion', sql.VarChar(500), materia.description)
+        .input('MO_descripcion', sql.VarChar, materia.Descripcion)
+        .input('MO_observacion', sql.VarChar, materia.Observacion)
         .query(querys.createMO);
         if(result.rowsAffected==1){
           return res.status(200).json({ status: "ok", msg: "Registro exitoso" ,token:0});
@@ -48,12 +49,12 @@ export const getAllMO = async (req, res) => {
   export const updateMO = async (req, res) => {
     try {
         const { id } = req.params;
-        const employee = req.body;
         const pool = await getConnection();
         const result = await pool
         .request()
         .input("id", id)
-        .input('MO_descripcion', sql.VarChar(500), materia.description)
+        .input('MO_descripcion', sql.VarChar, materia.Description)
+        .input('MO_observacion', sql.VarChar, materia.Observacion)
         .query(querys.updateMO);
      if(result.rowsAffected==1){
       return res.status(200).json({ status: "ok", msg: "Actualizacion exitosa" ,token:0});
