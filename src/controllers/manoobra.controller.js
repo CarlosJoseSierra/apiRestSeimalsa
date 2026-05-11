@@ -53,7 +53,7 @@ export const getAllMO = async (req, res) => {
         const result = await pool
         .request()
         .input("id", id)
-        .input('MO_descripcion', sql.VarChar, materia.Description)
+        .input('MO_descripcion', sql.VarChar, materia.Descripcion)
         .input('MO_observacion', sql.VarChar, materia.Observacion)
         .query(querys.updateMO);
      if(result.rowsAffected==1){

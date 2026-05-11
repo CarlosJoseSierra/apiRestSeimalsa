@@ -29,11 +29,17 @@ export const getAllCIF = async (req, res) => {
   export const createCIF = async (req, res) => {
     try {
         const materia = req.body;
+        let costoFinal;
+        if (typeof materia.Costo === 'string') {
+          costoFinal = parseFloat(materia.Costo.replace(',', '.'));
+        } else {
+          costoFinal = materia.Costo;
+        }
         const pool = await getConnection();
         const result = await pool.request()
         .input('CI_descripcion', sql.VarChar, materia.Descripcion)
-        .input('CI_valor', sql.Decimal(18, 4), materia.CI_valor || 0)
-        .input('CI_Observacion', sql.Decimal(18, 4), materia.CI_Observacion || 0)
+        .input('CI_valor', sql.Decimal(18, 4), costoFinal || 0)
+        .input('CI_Observacion', sql.Decimal(18, 4), materia.Observacion || 0)
         .query(querys.createCIF);
         if(result.rowsAffected==1){
           return res.status(200).json({ status: "ok", msg: "Registro exitoso" ,token:0});

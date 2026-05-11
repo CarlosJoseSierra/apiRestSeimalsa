@@ -171,7 +171,7 @@ getDataHIstorialPorSerieInterno: "SELECT * FROM (SELECT HIST_AS_id,HIST_AS_fecha
 
   getAllMO:"SELECT MO_id,MO_descripcion, MO_costo, MO_observacion FROM MANO_OBRA",
   getMOById:"SELECT MO_id,MO_descripcion, MO_costo,MO_observacion FROM MANO_OBRA WHERE MO_id = @id",
-  createMO:"INSERT INTO MANO_OBRA (MO_descripcion, MO_observacion, MO_costo) VALUES (@MP_descripcion,@MO_observacion,0)",
+  createMO:"INSERT INTO MANO_OBRA (MO_descripcion, MO_observacion, MO_costo) VALUES (@MO_descripcion,@MO_observacion,0)",
   updateMO:"UPDATE MANO_OBRA SET MO_descripcion = @MO_descripcion, MO_observacion = @MO_observacion WHERE MO_id = @id",
 
   getAllCIF:"SELECT CI_id,CI_descripcion, CI_valor, CI_Observacion FROM COSTO_INDIRECTO",

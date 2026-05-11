@@ -78,22 +78,27 @@ var getCIFById = /*#__PURE__*/function () {
 exports.getCIFById = getCIFById;
 var createCIF = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var _materia, pool, result;
+    var _materia, costoFinal, pool, result;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           _context3.prev = 0;
           _materia = req.body;
-          _context3.next = 4;
+          if (typeof _materia.Costo === 'string') {
+            costoFinal = parseFloat(_materia.Costo.replace(',', '.'));
+          } else {
+            costoFinal = _materia.Costo;
+          }
+          _context3.next = 5;
           return (0, _database.getConnection)();
-        case 4:
+        case 5:
           pool = _context3.sent;
-          _context3.next = 7;
-          return pool.request().input('CI_descripcion', _database.sql.VarChar, _materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), _materia.CI_valor || 0).input('CI_Observacion', _database.sql.Decimal(18, 4), _materia.CI_Observacion || 0).query(_database.querys.createCIF);
-        case 7:
+          _context3.next = 8;
+          return pool.request().input('CI_descripcion', _database.sql.VarChar, _materia.Descripcion).input('CI_valor', _database.sql.Decimal(18, 4), costoFinal || 0).input('CI_Observacion', _database.sql.Decimal(18, 4), _materia.Observacion || 0).query(_database.querys.createCIF);
+        case 8:
           result = _context3.sent;
           if (!(result.rowsAffected == 1)) {
-            _context3.next = 12;
+            _context3.next = 13;
             break;
           }
           return _context3.abrupt("return", res.status(200).json({
@@ -101,25 +106,25 @@ var createCIF = /*#__PURE__*/function () {
             msg: "Registro exitoso",
             token: 0
           }));
-        case 12:
+        case 13:
           return _context3.abrupt("return", res.status(400).json({
             status: "400",
             msg: "No se pudo registrar, consulte al administrador",
             token: 0
           }));
-        case 13:
-          _context3.next = 19;
+        case 14:
+          _context3.next = 20;
           break;
-        case 15:
-          _context3.prev = 15;
+        case 16:
+          _context3.prev = 16;
           _context3.t0 = _context3["catch"](0);
           res.status(500);
           res.send(_context3.t0.message);
-        case 19:
+        case 20:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[0, 15]]);
+    }, _callee3, null, [[0, 16]]);
   }));
   return function createCIF(_x5, _x6) {
     return _ref3.apply(this, arguments);

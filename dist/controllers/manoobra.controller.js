@@ -139,7 +139,7 @@ var updateMO = /*#__PURE__*/function () {
         case 4:
           pool = _context4.sent;
           _context4.next = 7;
-          return pool.request().input("id", id).input('MO_descripcion', _database.sql.VarChar, materia.Description).input('MO_observacion', _database.sql.VarChar, materia.Observacion).query(_database.querys.updateMO);
+          return pool.request().input("id", id).input('MO_descripcion', _database.sql.VarChar, materia.Descripcion).input('MO_observacion', _database.sql.VarChar, materia.Observacion).query(_database.querys.updateMO);
         case 7:
           result = _context4.sent;
           if (!(result.rowsAffected == 1)) {
