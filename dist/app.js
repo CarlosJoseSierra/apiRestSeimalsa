@@ -34,6 +34,7 @@ var _cifRouter = _interopRequireDefault(require("./routes/cif.router.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 //const cors = require("cors");
 
+var cloudinary = require("cloudinary").v2;
 //import morgan from "morgan";
 //import config from "./config.js";
 
