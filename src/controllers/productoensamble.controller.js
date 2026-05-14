@@ -46,9 +46,20 @@ export const getAllEnsambles = async (req, res) => {
     try {
       const {
         PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario,
-        PROD_TotalMP, PROD_TotalMO, PROD_TotalCIF, PROD_TotalFInal,
+        PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,
+        PROD_precioMinimoH,PROD_pvpH,PROD_TotalMP, PROD_TotalMO,
+        PROD_TotalCIF, PROD_TotalFInal,PROD_utilidad,
         PROD_itemsXhora, PROD_mp, PROD_mo, PROD_cif
     } = req.body;
+    let imageruta= '';
+      if(req.files.length>0)
+      {
+        if(req.files[0]!=undefined)
+        {
+            const img = await cloudinary.uploader.upload(req.files[0].path);
+            imageruta = img.secure_url; 
+        }
+      }
         const materiales = JSON.parse(PROD_mp);
         const manoObra = JSON.parse(PROD_mo);
         const cif = JSON.parse(PROD_cif);
@@ -58,44 +69,68 @@ export const getAllEnsambles = async (req, res) => {
         .input('PROD_codigo', sql.VarChar, PROD_codigo)
             .input('PROD_nombre', sql.VarChar, PROD_nombre)
             .input('PROD_medida', sql.VarChar, PROD_medida)
-            .input('PROD_costoUnitario', sql.Decimal(18, 4), PROD_costoUnitario)
-            .input('PROD_TotalMP', sql.Decimal(18, 4), PROD_TotalMP)
-            .input('PROD_TotalMO', sql.Decimal(18, 4), PROD_TotalMO)
-            .input('PROD_TotalCIF', sql.Decimal(18, 4), PROD_TotalCIF)
-            .input('PROD_TotalFInal', sql.Decimal(18, 4), PROD_TotalFInal)
+            .input('PROD_costoUnitario', sql.Decimal(18, 2), PROD_costoUnitario)
+            .input('PROD_precioMinimo', sql.Decimal(18, 2), PROD_precioMinimo)
+            .input('PROD_pvp', sql.Decimal(18, 2), PROD_pvp)
+            .input('PROD_item', sql.VarChar, PROD_item)
+            .input('PROD_costoUnitarioH', sql.Decimal(18, 2), PROD_costoUnitarioH)
+            .input('PROD_precioMinimoH', sql.Decimal(18, 2), PROD_precioMinimoH)
+            .input('PROD_pvpH', sql.Decimal(18, 2), PROD_pvpH)
+            .input("PROD_image", sql.VarChar, imageruta)
+            .input('PROD_TotalMP', sql.Decimal(18, 2), PROD_TotalMP)
+            .input('PROD_TotalMO', sql.Decimal(18, 2), PROD_TotalMO)
+            .input('PROD_TotalCIF', sql.Decimal(18, 2), PROD_TotalCIF)
+            .input('PROD_TotalFInal', sql.Decimal(18, 2), PROD_TotalFInal)
+            .input('PROD_utilidad', sql.Decimal(18, 2), PROD_utilidad)
             .input('PROD_itemsXhora', sql.Int, PROD_itemsXhora)
-            .query(`INSERT INTO PRODUCTO (PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario, PROD_TotalMP, PROD_TotalMO, PROD_TotalCIF, PROD_TotalFInal, PROD_itemsXhora, PROD_item) 
-                    VALUES (@PROD_codigo, @PROD_nombre, @PROD_medida, @PROD_costoUnitario, @PROD_TotalMP, @PROD_TotalMO, @PROD_TotalCIF, @PROD_TotalFInal, @PROD_itemsXhora, 'PRODUCCION');
-                    SELECT SCOPE_IDENTITY() AS id;`);
-      const PROD_id = resultHeader.recordset[0].id;
+            .query(`INSERT INTO PRODUCTO2 (PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario,PROD_precioMinimo,
+              PROD_pvp,PROD_item,PROD_costoUnitarioH,PROD_precioMinimoH,PROD_image,PROD_TotalMP, PROD_TotalMO, PROD_TotalCIF, 
+              PROD_TotalFInal, PROD_utilidad,PROD_itemsXhora) 
+              VALUES (@PROD_codigo, @PROD_nombre, @PROD_medida, @PROD_costoUnitario,@PROD_precioMinimo,@PROD_pvp,@PROD_item,
+              @PROD_costoUnitarioH,@PROD_precioMinimoH,@PROD_image,@PROD_TotalMP, @PROD_TotalMO, @PROD_TotalCIF,
+              @PROD_TotalFInal, @PROD_utilidad,@PROD_itemsXhora, 'PRODUCCION');
+              SELECT SCOPE_IDENTITY() AS id;`);
+      const PROD_id = result.recordset[0].id;
       for (const m of materiales) {
         await new sql.Request(transaction)
-            .input('PROD_id', sql.Int, PROD_id)
-            .input('MP_id', sql.Int, m.MP_id)
+            .input('PROD_id', sql.Decimal(18,0), PROD_id)
+            .input('MP_id', sql.Decimal(18,0), m.MP_id)
             .input('cantidad', sql.Decimal(18, 4), m.cantidad)
             .input('costo', sql.Decimal(18, 4), m.MP_costo)
-            .query(`INSERT INTO PRODUCTO_DET_MP (PROD_DETMP_PROD_id, PROD_DETMP_MP_id, PROD_DETMP_MP_cantidad, PROD_DETMP_MP_costo) 
+            .query(`INSERT INTO PRODUCTO_DET_MP (PROD_DETMP_PROD_id, PROD_DETMP_MP_id, PROD_DETMP_MP_cantidad,
+               PROD_DETMP_MP_costo) 
                     VALUES (@PROD_id, @MP_id, @cantidad, @costo)`);
       }
       for (const mo of manoObra) {
         const resultMO = await new sql.Request(transaction)
-            .input('PROD_id', sql.Int, PROD_id)
-            .input('MO_id', sql.Int, mo.MO_id)
-            .input('costoHora', sql.Decimal(18, 4), mo.cantidad) // cantidad es suma salarios en tu front
-            .query(`INSERT INTO PRODUCTO_DET_MO (PROD_DETMO_PROD_id, PROD_DETMO_MO_id, PROD_DETMO_MO_costoHora) 
-                    VALUES (@PROD_id, @MO_id, @costoHora);
+            .input('PROD_id', sql.Decimal(18,0), PROD_id)
+            .input('MO_id', sql.Decimal(18,0), mo.MO_id)
+            .input('costoHora', sql.Decimal(18, 4), mo.cantidad) 
+            .input('horaItem', sql.Decimal(18, 4), PROD_itemsXhora) 
+            .input('total', sql.Decimal(18, 4), mo.cantidad/mo.cantidad) 
+            .query(`INSERT INTO PRODUCTO_DET_MO (PROD_DETMO_PROD_id, PROD_DETMO_MO_id, PROD_DETMO_MO_costoHora,
+              PROD_DETMO_HoraItem,PROD_DETMO_MO_total) 
+                    VALUES (@PROD_id, @MO_id, @costoHora,@horaItem,@total);
                     SELECT SCOPE_IDENTITY() AS mo_det_id;`);
 
         const mo_det_id = resultMO.recordset[0].mo_det_id;
 
-        // Insertar empleados asignados a esta mano de obra
         for (const emp of mo.empleadosSeleccionados) {
             await new sql.Request(transaction)
-                .input('mo_det_id', sql.Int, mo_det_id)
-                .input('EMP_id', sql.Int, emp.EMP_id)
-                .query(`INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id, EMP_MO_EMP_id) 
-                        VALUES (@mo_det_id, @EMP_id)`);
+                .input('mo_det_id', sql.Decimal(18, 0), mo_det_id)
+                .input('costoHora', sql.Decimal(18, 4), emp.EMP_sueldoHora)
+                .input('EMP_id', sql.Decimal(18, 0), emp.EMP_id)
+                .query(`INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id,EMP_MO_costoHora, EMP_MO_EMP_id) 
+                        VALUES (@mo_det_id, @costoHora,@EMP_id)`);
         }
+    }
+    for (const m of cif) {
+      await new sql.Request(transaction)
+          .input('PROD_id', sql.Decimal(18,0), PROD_id)
+          .input('CIF_id', sql.Decimal(18,0), m.CI_id)
+          .input('costo', sql.Decimal(18, 4), m.CI_valor)
+          .query(`INSERT INTO PRODUCTO_DET_CIF (PROD_DETCIF_PROD_id, PROD_DETCIF_CIF_id, PROD_DETCIF_CIF_costo) 
+                  VALUES (@PROD_id, @CIF_id, @costo)`);
     }
     await transaction.commit();
     return res.status(200).json({ status: "ok", msg: "Producto creado con éxito" ,token:0});
