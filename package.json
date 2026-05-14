@@ -24,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "mssql": "^7.3.5",
+    "multer": "^2.1.1",
     "nodemailer": "^6.9.14",
     "nodemon": "^2.0.20",
     "uuid": "^9.0.0"

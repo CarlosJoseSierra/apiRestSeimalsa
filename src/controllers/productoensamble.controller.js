@@ -2,7 +2,7 @@ import { getConnection, querys, sql } from "../database";
 const cloudinary = require("../libs/cloudinary");
 const path = require('path');
 const upload = require ('../libs/multer');
-import storage from '../libs/multer.js';
+const storage = require('../libs/multer');
 
 export const getAllEnsambles = async (req, res) => {
     try {
