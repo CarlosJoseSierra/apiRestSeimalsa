@@ -11,7 +11,7 @@ const router = Router();
 router.get("/ensamble", getAllEnsambles);
 router.get("/ensamble/:id", getEnsambleById);
 //router.post("ensamble/new", createEnsamble);
-router.post("/ensamble/new",storage.array('image',1), createEnsamble);
+router.post("/ensamble/new",storage.single('image'), createEnsamble);
 router.put("/ensamble/x/:id", updateEnsamble);
 
 export default router;
