@@ -48,6 +48,7 @@ export const getAllEnsambles = async (req, res) => {
   
   export const createEnsamble = async (req, res) => {
     try {
+      let transaction;
       const {
         PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario,
         PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,
@@ -133,10 +134,13 @@ export const getAllEnsambles = async (req, res) => {
         const materiales = JSON.parse(PROD_mp);
         const manoObra = JSON.parse(PROD_mo);
         const cif = JSON.parse(PROD_cif);
-        await transaction.begin();
+        
         console.log('1');
         const pool = await getConnection();
-        const result = await pool.request()
+        transaction = new sql.Transaction(pool);
+        await transaction.begin();
+        const requestCabecera = new sql.Request(transaction);
+        const result = await requestCabecera
         .input('PROD_codigo', sql.VarChar, PROD_codigo)
             .input('PROD_nombre', sql.VarChar, PROD_nombre)
             .input('PROD_medida', sql.VarChar, PROD_medida)
@@ -168,7 +172,7 @@ export const getAllEnsambles = async (req, res) => {
         if (typeof m.cantidad === 'string') {
           cantidad = parseFloat(m.cantidad.replace(',', '.'));
         } else {
-          costo = m.cantidad;
+          cantidad = m.cantidad;
         }
         if (typeof m.MP_costo === 'string') {
           costo = parseFloat(m.MP_costo.replace(',', '.'));
@@ -244,7 +248,9 @@ export const getAllEnsambles = async (req, res) => {
      res.status(200).json({ status: "ok", msg: "Producto creado con éxito" ,token:0});
 
       } catch (error) {
-        await transaction.rollback();
+        if (transaction) {
+          await transaction.rollback();
+      }
         console.error(error);
          res.status(500).send("Error al procesar el registro: " + error.message);
     }    
