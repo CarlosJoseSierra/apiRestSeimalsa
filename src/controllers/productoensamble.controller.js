@@ -86,13 +86,13 @@ export const getAllEnsambles = async (req, res) => {
             .input('PROD_TotalCIF', sql.Decimal(18, 2), PROD_TotalCIF)
             .input('PROD_TotalFInal', sql.Decimal(18, 2), PROD_TotalFInal)
             .input('PROD_utilidad', sql.Decimal(18, 2), PROD_utilidad)
-            .input('PROD_itemsXhora', sql.Int, PROD_itemsXhora)
+            .input('PROD_itemsXhora', sql.Decimal(18, 2), PROD_itemsXhora)
             .query(`INSERT INTO PRODUCTO2 (PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario,PROD_precioMinimo,
               PROD_pvp,PROD_item,PROD_costoUnitarioH,PROD_precioMinimoH,PROD_image,PROD_TotalMP, PROD_TotalMO, PROD_TotalCIF, 
-              PROD_TotalFInal, PROD_utilidad,PROD_itemsXhora) 
+              PROD_TotalFInal, PROD_utilidad,PROD_itemsXhora,PROD_estado) 
               VALUES (@PROD_codigo, @PROD_nombre, @PROD_medida, @PROD_costoUnitario,@PROD_precioMinimo,@PROD_pvp,@PROD_item,
               @PROD_costoUnitarioH,@PROD_precioMinimoH,@PROD_image,@PROD_TotalMP, @PROD_TotalMO, @PROD_TotalCIF,
-              @PROD_TotalFInal, @PROD_utilidad,@PROD_itemsXhora, 'PRODUCCION');
+              @PROD_TotalFInal, @PROD_utilidad,@PROD_itemsXhora, 1);
               SELECT SCOPE_IDENTITY() AS id;`);
       const PROD_id = result.recordset[0].id;
       for (const m of materiales) {
