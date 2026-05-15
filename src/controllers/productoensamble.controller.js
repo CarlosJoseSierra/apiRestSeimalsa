@@ -56,6 +56,72 @@ export const getAllEnsambles = async (req, res) => {
         PROD_itemsXhora, PROD_mp, PROD_mo, PROD_cif
     } = req.body;
     let imageruta= '';
+    let vc_PROD_costoUnitario,vc_PROD_precioMinimo,vc_PROD_pvp,vc_PROD_costoUnitarioH,vc_PROD_precioMinimoH;
+    let vc_PROD_pvpH,vc_PROD_TotalMP,vc_PROD_TotalMO,vc_PROD_TotalCIF,vc_PROD_TotalFInal,vc_PROD_utilidad;
+    let vc_PROD_itemsXhora;
+        if (typeof PROD_costoUnitario === 'string') {
+          vc_PROD_costoUnitario = parseFloat(PROD_costoUnitario.replace(',', '.'));
+        } else {
+          vc_PROD_costoUnitario = PROD_costoUnitario;
+        }
+        if (typeof PROD_precioMinimo === 'string') {
+          vc_PROD_precioMinimo = parseFloat(PROD_precioMinimo.replace(',', '.'));
+        } else {
+          vc_PROD_precioMinimo = PROD_precioMinimo;
+        }
+        if (typeof PROD_pvp === 'string') {
+          vc_PROD_pvp = parseFloat(PROD_pvp.replace(',', '.'));
+        } else {
+          vc_PROD_pvp = PROD_pvp;
+        }
+        if (typeof PROD_costoUnitarioH === 'string') {
+          vc_PROD_costoUnitarioH = parseFloat(PROD_costoUnitarioH.replace(',', '.'));
+        } else {
+          vc_PROD_costoUnitarioH = PROD_costoUnitarioH;
+        }
+        if (typeof PROD_precioMinimoH === 'string') {
+          vc_PROD_precioMinimoH = parseFloat(PROD_precioMinimoH.replace(',', '.'));
+        } else {
+          vc_PROD_precioMinimoH = PROD_precioMinimoH;
+        }
+        if (typeof PROD_pvpH === 'string') {
+          vc_PROD_pvpH = parseFloat(PROD_pvpH.replace(',', '.'));
+        } else {
+          vc_PROD_pvpH = PROD_pvpH;
+        }
+        //
+        if (typeof PROD_TotalMP === 'string') {
+          vc_PROD_TotalMP = parseFloat(PROD_TotalMP.replace(',', '.'));
+        } else {
+          vc_PROD_TotalMP = PROD_TotalMP;
+        }
+        if (typeof PROD_TotalMO === 'string') {
+          vc_PROD_TotalMO = parseFloat(PROD_TotalMO.replace(',', '.'));
+        } else {
+          vc_PROD_TotalMO = PROD_TotalMO;
+        }
+        if (typeof PROD_TotalCIF === 'string') {
+          vc_PROD_TotalCIF = parseFloat(PROD_TotalCIF.replace(',', '.'));
+        } else {
+          vc_PROD_TotalCIF = PROD_TotalCIF;
+        }
+        if (typeof PROD_TotalFInal === 'string') {
+          vc_PROD_TotalFInal = parseFloat(PROD_TotalFInal.replace(',', '.'));
+        } else {
+          vc_PROD_TotalFInal = PROD_TotalFInal;
+        }
+       
+        if (typeof PROD_utilidad === 'string') {
+          vc_PROD_utilidad = parseFloat(PROD_utilidad.replace(',', '.'));
+        } else {
+          vc_PROD_utilidad = PROD_utilidad;
+        }
+        if (typeof PROD_itemsXhora === 'string') {
+          vc_PROD_itemsXhora = parseFloat(PROD_itemsXhora.replace(',', '.'));
+        } else {
+          vc_PROD_itemsXhora = PROD_itemsXhora;
+        }
+        //
       if(req.files.length>0)
       {
         if(req.files[0]!=undefined)
@@ -73,20 +139,20 @@ export const getAllEnsambles = async (req, res) => {
         .input('PROD_codigo', sql.VarChar, PROD_codigo)
             .input('PROD_nombre', sql.VarChar, PROD_nombre)
             .input('PROD_medida', sql.VarChar, PROD_medida)
-            .input('PROD_costoUnitario', sql.Decimal(18, 2), PROD_costoUnitario)
-            .input('PROD_precioMinimo', sql.Decimal(18, 2), PROD_precioMinimo)
-            .input('PROD_pvp', sql.Decimal(18, 2), PROD_pvp)
+            .input('PROD_costoUnitario', sql.Decimal(18, 2), vc_PROD_costoUnitario)
+            .input('PROD_precioMinimo', sql.Decimal(18, 2), vc_PROD_precioMinimo)
+            .input('PROD_pvp', sql.Decimal(18, 2), vc_PROD_pvp)
             .input('PROD_item', sql.VarChar, PROD_item)
-            .input('PROD_costoUnitarioH', sql.Decimal(18, 2), PROD_costoUnitarioH)
-            .input('PROD_precioMinimoH', sql.Decimal(18, 2), PROD_precioMinimoH)
-            .input('PROD_pvpH', sql.Decimal(18, 2), PROD_pvpH)
+            .input('PROD_costoUnitarioH', sql.Decimal(18, 2), vc_PROD_costoUnitarioH)
+            .input('PROD_precioMinimoH', sql.Decimal(18, 2), vc_PROD_precioMinimoH)
+            .input('PROD_pvpH', sql.Decimal(18, 2), vc_PROD_pvpH)
             .input("PROD_image", sql.VarChar, imageruta)
-            .input('PROD_TotalMP', sql.Decimal(18, 2), PROD_TotalMP)
-            .input('PROD_TotalMO', sql.Decimal(18, 2), PROD_TotalMO)
-            .input('PROD_TotalCIF', sql.Decimal(18, 2), PROD_TotalCIF)
-            .input('PROD_TotalFInal', sql.Decimal(18, 2), PROD_TotalFInal)
-            .input('PROD_utilidad', sql.Decimal(18, 2), PROD_utilidad)
-            .input('PROD_itemsXhora', sql.Decimal(18, 2), PROD_itemsXhora)
+            .input('PROD_TotalMP', sql.Decimal(18, 2), vc_PROD_TotalMP)
+            .input('PROD_TotalMO', sql.Decimal(18, 2), vc_PROD_TotalMO)
+            .input('PROD_TotalCIF', sql.Decimal(18, 2), vc_PROD_TotalCIF)
+            .input('PROD_TotalFInal', sql.Decimal(18, 2), vc_PROD_TotalFInal)
+            .input('PROD_utilidad', sql.Decimal(18, 2), vc_PROD_utilidad)
+            .input('PROD_itemsXhora', sql.Decimal(18, 2), vc_PROD_itemsXhora)
             .query(`INSERT INTO PRODUCTO2 (PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario,PROD_precioMinimo,
               PROD_pvp,PROD_item,PROD_costoUnitarioH,PROD_precioMinimoH,PROD_image,PROD_TotalMP, PROD_TotalMO, PROD_TotalCIF, 
               PROD_TotalFInal, PROD_utilidad,PROD_itemsXhora,PROD_estado) 
