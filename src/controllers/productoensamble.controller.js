@@ -134,6 +134,7 @@ export const getAllEnsambles = async (req, res) => {
         const manoObra = JSON.parse(PROD_mo);
         const cif = JSON.parse(PROD_cif);
         await transaction.begin();
+        console.log('1');
         const pool = await getConnection();
         const result = await pool.request()
         .input('PROD_codigo', sql.VarChar, PROD_codigo)
@@ -161,6 +162,7 @@ export const getAllEnsambles = async (req, res) => {
               @PROD_TotalFInal, @PROD_utilidad,@PROD_itemsXhora, 1);
               SELECT SCOPE_IDENTITY() AS id;`);
       const PROD_id = result.recordset[0].id;
+      console.log('2');
       for (const m of materiales) {
         let cantidad,costo;
         if (typeof m.cantidad === 'string') {
@@ -173,6 +175,7 @@ export const getAllEnsambles = async (req, res) => {
         } else {
           costo = m.MP_costo;
         }
+        console.log('3');
         await new sql.Request(transaction)
             .input('PROD_id', sql.Decimal(18,0), PROD_id)
             .input('MP_id', sql.Decimal(18,0), m.MP_id)
@@ -182,7 +185,9 @@ export const getAllEnsambles = async (req, res) => {
                PROD_DETMP_MP_costo) 
                     VALUES (@PROD_id, @MP_id, @cantidad, @costo)`);
       }
+      console.log('4');
       for (const mo of manoObra) {
+        console.log('5');
         let total = 0;
         let cantidad;
         if (typeof mo.cantidad === 'string') {
@@ -205,6 +210,7 @@ export const getAllEnsambles = async (req, res) => {
         const mo_det_id = resultMO.recordset[0].mo_det_id;
 
         for (const emp of mo.empleadosSeleccionados) {
+          console.log('6');
           let sueldo;
           if (typeof emp.EMP_sueldoHora === 'string') {
             sueldo = parseFloat(emp.EMP_sueldoHora.replace(',', '.'));
@@ -219,6 +225,7 @@ export const getAllEnsambles = async (req, res) => {
                         VALUES (@mo_det_id, @costoHora,@EMP_id)`);
         }
     }
+    console.log('7');
     for (const m of cif) {
       let valor;
           if (typeof m.CI_valor === 'string') {
@@ -234,12 +241,12 @@ export const getAllEnsambles = async (req, res) => {
                   VALUES (@PROD_id, @CIF_id, @costo)`);
     }
     await transaction.commit();
-    return res.status(200).json({ status: "ok", msg: "Producto creado con éxito" ,token:0});
+     res.status(200).json({ status: "ok", msg: "Producto creado con éxito" ,token:0});
 
       } catch (error) {
         await transaction.rollback();
         console.error(error);
-        return res.status(500).send("Error al procesar el registro: " + error.message);
+         res.status(500).send("Error al procesar el registro: " + error.message);
     }    
   }
         
