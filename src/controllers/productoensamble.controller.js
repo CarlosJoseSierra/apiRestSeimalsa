@@ -162,22 +162,41 @@ export const getAllEnsambles = async (req, res) => {
               SELECT SCOPE_IDENTITY() AS id;`);
       const PROD_id = result.recordset[0].id;
       for (const m of materiales) {
+        let cantidad,costo;
+        if (typeof m.cantidad === 'string') {
+          cantidad = parseFloat(m.cantidad.replace(',', '.'));
+        } else {
+          costo = m.cantidad;
+        }
+        if (typeof m.MP_costo === 'string') {
+          costo = parseFloat(m.MP_costo.replace(',', '.'));
+        } else {
+          costo = m.MP_costo;
+        }
         await new sql.Request(transaction)
             .input('PROD_id', sql.Decimal(18,0), PROD_id)
             .input('MP_id', sql.Decimal(18,0), m.MP_id)
-            .input('cantidad', sql.Decimal(18, 4), m.cantidad)
-            .input('costo', sql.Decimal(18, 4), m.MP_costo)
+            .input('cantidad', sql.Decimal(18, 4), cantidad)
+            .input('costo', sql.Decimal(18, 4), costo)
             .query(`INSERT INTO PRODUCTO_DET_MP (PROD_DETMP_PROD_id, PROD_DETMP_MP_id, PROD_DETMP_MP_cantidad,
                PROD_DETMP_MP_costo) 
                     VALUES (@PROD_id, @MP_id, @cantidad, @costo)`);
       }
       for (const mo of manoObra) {
+        let total = 0;
+        let cantidad;
+        if (typeof mo.cantidad === 'string') {
+          cantidad = parseFloat(mo.cantidad.replace(',', '.'));
+        } else {
+          cantidad = mo.cantidad;
+        }
+        total = mo.cantidad/vc_PROD_itemsXhora;
         const resultMO = await new sql.Request(transaction)
             .input('PROD_id', sql.Decimal(18,0), PROD_id)
             .input('MO_id', sql.Decimal(18,0), mo.MO_id)
-            .input('costoHora', sql.Decimal(18, 4), mo.cantidad) 
-            .input('horaItem', sql.Decimal(18, 4), PROD_itemsXhora) 
-            .input('total', sql.Decimal(18, 4), mo.cantidad/mo.cantidad) 
+            .input('costoHora', sql.Decimal(18, 4), cantidad) 
+            .input('horaItem', sql.Decimal(18, 4), vc_PROD_itemsXhora) 
+            .input('total', sql.Decimal(18, 4), total) 
             .query(`INSERT INTO PRODUCTO_DET_MO (PROD_DETMO_PROD_id, PROD_DETMO_MO_id, PROD_DETMO_MO_costoHora,
               PROD_DETMO_HoraItem,PROD_DETMO_MO_total) 
                     VALUES (@PROD_id, @MO_id, @costoHora,@horaItem,@total);
@@ -186,19 +205,31 @@ export const getAllEnsambles = async (req, res) => {
         const mo_det_id = resultMO.recordset[0].mo_det_id;
 
         for (const emp of mo.empleadosSeleccionados) {
+          let sueldo;
+          if (typeof emp.EMP_sueldoHora === 'string') {
+            sueldo = parseFloat(emp.EMP_sueldoHora.replace(',', '.'));
+          } else {
+            sueldo = emp.EMP_sueldoHora;
+          }
             await new sql.Request(transaction)
                 .input('mo_det_id', sql.Decimal(18, 0), mo_det_id)
-                .input('costoHora', sql.Decimal(18, 4), emp.EMP_sueldoHora)
+                .input('costoHora', sql.Decimal(18, 4), sueldo)
                 .input('EMP_id', sql.Decimal(18, 0), emp.EMP_id)
                 .query(`INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id,EMP_MO_costoHora, EMP_MO_EMP_id) 
                         VALUES (@mo_det_id, @costoHora,@EMP_id)`);
         }
     }
     for (const m of cif) {
+      let valor;
+          if (typeof m.CI_valor === 'string') {
+            valor = parseFloat(m.CI_valor.replace(',', '.'));
+          } else {
+            valor = m.CI_valor;
+          }
       await new sql.Request(transaction)
           .input('PROD_id', sql.Decimal(18,0), PROD_id)
           .input('CIF_id', sql.Decimal(18,0), m.CI_id)
-          .input('costo', sql.Decimal(18, 4), m.CI_valor)
+          .input('costo', sql.Decimal(18, 4), valor)
           .query(`INSERT INTO PRODUCTO_DET_CIF (PROD_DETCIF_PROD_id, PROD_DETCIF_CIF_id, PROD_DETCIF_CIF_costo) 
                   VALUES (@PROD_id, @CIF_id, @costo)`);
     }

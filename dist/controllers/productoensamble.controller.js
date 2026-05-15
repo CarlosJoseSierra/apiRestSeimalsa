@@ -104,7 +104,7 @@ var getEnsambleById = /*#__PURE__*/function () {
 exports.getEnsambleById = getEnsambleById;
 var createEnsamble = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var _req$body, PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario, PROD_precioMinimo, PROD_pvp, PROD_item, PROD_costoUnitarioH, PROD_precioMinimoH, PROD_pvpH, PROD_TotalMP, PROD_TotalMO, PROD_TotalCIF, PROD_TotalFInal, PROD_utilidad, PROD_itemsXhora, PROD_mp, PROD_mo, PROD_cif, imageruta, vc_PROD_costoUnitario, vc_PROD_precioMinimo, vc_PROD_pvp, vc_PROD_costoUnitarioH, vc_PROD_precioMinimoH, vc_PROD_pvpH, vc_PROD_TotalMP, vc_PROD_TotalMO, vc_PROD_TotalCIF, vc_PROD_TotalFInal, vc_PROD_utilidad, vc_PROD_itemsXhora, img, materiales, manoObra, cif, pool, result, PROD_id, _iterator, _step, m, _iterator2, _step2, mo, resultMO, mo_det_id, _iterator4, _step4, emp, _iterator3, _step3, _m;
+    var _req$body, PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario, PROD_precioMinimo, PROD_pvp, PROD_item, PROD_costoUnitarioH, PROD_precioMinimoH, PROD_pvpH, PROD_TotalMP, PROD_TotalMO, PROD_TotalCIF, PROD_TotalFInal, PROD_utilidad, PROD_itemsXhora, PROD_mp, PROD_mo, PROD_cif, imageruta, vc_PROD_costoUnitario, vc_PROD_precioMinimo, vc_PROD_pvp, vc_PROD_costoUnitarioH, vc_PROD_precioMinimoH, vc_PROD_pvpH, vc_PROD_TotalMP, vc_PROD_TotalMO, vc_PROD_TotalCIF, vc_PROD_TotalFInal, vc_PROD_utilidad, vc_PROD_itemsXhora, img, materiales, manoObra, cif, pool, result, PROD_id, _iterator, _step, m, cantidad, costo, _iterator2, _step2, mo, total, _cantidad, resultMO, mo_det_id, _iterator4, _step4, emp, sueldo, _iterator3, _step3, _m, valor;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
@@ -207,128 +207,159 @@ var createEnsamble = /*#__PURE__*/function () {
           _iterator.s();
         case 36:
           if ((_step = _iterator.n()).done) {
-            _context3.next = 42;
+            _context3.next = 45;
             break;
           }
           m = _step.value;
-          _context3.next = 40;
-          return new _database.sql.Request(transaction).input('PROD_id', _database.sql.Decimal(18, 0), PROD_id).input('MP_id', _database.sql.Decimal(18, 0), m.MP_id).input('cantidad', _database.sql.Decimal(18, 4), m.cantidad).input('costo', _database.sql.Decimal(18, 4), m.MP_costo).query("INSERT INTO PRODUCTO_DET_MP (PROD_DETMP_PROD_id, PROD_DETMP_MP_id, PROD_DETMP_MP_cantidad,\n               PROD_DETMP_MP_costo) \n                    VALUES (@PROD_id, @MP_id, @cantidad, @costo)");
-        case 40:
+          cantidad = void 0, costo = void 0;
+          if (typeof m.cantidad === 'string') {
+            cantidad = parseFloat(m.cantidad.replace(',', '.'));
+          } else {
+            costo = m.cantidad;
+          }
+          if (typeof m.MP_costo === 'string') {
+            costo = parseFloat(m.MP_costo.replace(',', '.'));
+          } else {
+            costo = m.MP_costo;
+          }
+          _context3.next = 43;
+          return new _database.sql.Request(transaction).input('PROD_id', _database.sql.Decimal(18, 0), PROD_id).input('MP_id', _database.sql.Decimal(18, 0), m.MP_id).input('cantidad', _database.sql.Decimal(18, 4), cantidad).input('costo', _database.sql.Decimal(18, 4), costo).query("INSERT INTO PRODUCTO_DET_MP (PROD_DETMP_PROD_id, PROD_DETMP_MP_id, PROD_DETMP_MP_cantidad,\n               PROD_DETMP_MP_costo) \n                    VALUES (@PROD_id, @MP_id, @cantidad, @costo)");
+        case 43:
           _context3.next = 36;
           break;
-        case 42:
-          _context3.next = 47;
+        case 45:
+          _context3.next = 50;
           break;
-        case 44:
-          _context3.prev = 44;
-          _context3.t0 = _context3["catch"](34);
-          _iterator.e(_context3.t0);
         case 47:
           _context3.prev = 47;
-          _iterator.f();
-          return _context3.finish(47);
+          _context3.t0 = _context3["catch"](34);
+          _iterator.e(_context3.t0);
         case 50:
-          _iterator2 = _createForOfIteratorHelper(manoObra);
-          _context3.prev = 51;
-          _iterator2.s();
+          _context3.prev = 50;
+          _iterator.f();
+          return _context3.finish(50);
         case 53:
+          _iterator2 = _createForOfIteratorHelper(manoObra);
+          _context3.prev = 54;
+          _iterator2.s();
+        case 56:
           if ((_step2 = _iterator2.n()).done) {
-            _context3.next = 78;
+            _context3.next = 87;
             break;
           }
           mo = _step2.value;
-          _context3.next = 57;
-          return new _database.sql.Request(transaction).input('PROD_id', _database.sql.Decimal(18, 0), PROD_id).input('MO_id', _database.sql.Decimal(18, 0), mo.MO_id).input('costoHora', _database.sql.Decimal(18, 4), mo.cantidad).input('horaItem', _database.sql.Decimal(18, 4), PROD_itemsXhora).input('total', _database.sql.Decimal(18, 4), mo.cantidad / mo.cantidad).query("INSERT INTO PRODUCTO_DET_MO (PROD_DETMO_PROD_id, PROD_DETMO_MO_id, PROD_DETMO_MO_costoHora,\n              PROD_DETMO_HoraItem,PROD_DETMO_MO_total) \n                    VALUES (@PROD_id, @MO_id, @costoHora,@horaItem,@total);\n                    SELECT SCOPE_IDENTITY() AS mo_det_id;");
-        case 57:
+          total = 0;
+          _cantidad = void 0;
+          if (typeof mo.cantidad === 'string') {
+            _cantidad = parseFloat(mo.cantidad.replace(',', '.'));
+          } else {
+            _cantidad = mo.cantidad;
+          }
+          total = mo.cantidad / vc_PROD_itemsXhora;
+          _context3.next = 64;
+          return new _database.sql.Request(transaction).input('PROD_id', _database.sql.Decimal(18, 0), PROD_id).input('MO_id', _database.sql.Decimal(18, 0), mo.MO_id).input('costoHora', _database.sql.Decimal(18, 4), _cantidad).input('horaItem', _database.sql.Decimal(18, 4), vc_PROD_itemsXhora).input('total', _database.sql.Decimal(18, 4), total).query("INSERT INTO PRODUCTO_DET_MO (PROD_DETMO_PROD_id, PROD_DETMO_MO_id, PROD_DETMO_MO_costoHora,\n              PROD_DETMO_HoraItem,PROD_DETMO_MO_total) \n                    VALUES (@PROD_id, @MO_id, @costoHora,@horaItem,@total);\n                    SELECT SCOPE_IDENTITY() AS mo_det_id;");
+        case 64:
           resultMO = _context3.sent;
           mo_det_id = resultMO.recordset[0].mo_det_id;
           _iterator4 = _createForOfIteratorHelper(mo.empleadosSeleccionados);
-          _context3.prev = 60;
+          _context3.prev = 67;
           _iterator4.s();
-        case 62:
+        case 69:
           if ((_step4 = _iterator4.n()).done) {
-            _context3.next = 68;
+            _context3.next = 77;
             break;
           }
           emp = _step4.value;
-          _context3.next = 66;
-          return new _database.sql.Request(transaction).input('mo_det_id', _database.sql.Decimal(18, 0), mo_det_id).input('costoHora', _database.sql.Decimal(18, 4), emp.EMP_sueldoHora).input('EMP_id', _database.sql.Decimal(18, 0), emp.EMP_id).query("INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id,EMP_MO_costoHora, EMP_MO_EMP_id) \n                        VALUES (@mo_det_id, @costoHora,@EMP_id)");
-        case 66:
-          _context3.next = 62;
+          sueldo = void 0;
+          if (typeof emp.EMP_sueldoHora === 'string') {
+            sueldo = parseFloat(emp.EMP_sueldoHora.replace(',', '.'));
+          } else {
+            sueldo = emp.EMP_sueldoHora;
+          }
+          _context3.next = 75;
+          return new _database.sql.Request(transaction).input('mo_det_id', _database.sql.Decimal(18, 0), mo_det_id).input('costoHora', _database.sql.Decimal(18, 4), sueldo).input('EMP_id', _database.sql.Decimal(18, 0), emp.EMP_id).query("INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id,EMP_MO_costoHora, EMP_MO_EMP_id) \n                        VALUES (@mo_det_id, @costoHora,@EMP_id)");
+        case 75:
+          _context3.next = 69;
           break;
-        case 68:
-          _context3.next = 73;
+        case 77:
+          _context3.next = 82;
           break;
-        case 70:
-          _context3.prev = 70;
-          _context3.t1 = _context3["catch"](60);
+        case 79:
+          _context3.prev = 79;
+          _context3.t1 = _context3["catch"](67);
           _iterator4.e(_context3.t1);
-        case 73:
-          _context3.prev = 73;
+        case 82:
+          _context3.prev = 82;
           _iterator4.f();
-          return _context3.finish(73);
-        case 76:
-          _context3.next = 53;
+          return _context3.finish(82);
+        case 85:
+          _context3.next = 56;
           break;
-        case 78:
-          _context3.next = 83;
+        case 87:
+          _context3.next = 92;
           break;
-        case 80:
-          _context3.prev = 80;
-          _context3.t2 = _context3["catch"](51);
-          _iterator2.e(_context3.t2);
-        case 83:
-          _context3.prev = 83;
-          _iterator2.f();
-          return _context3.finish(83);
-        case 86:
-          _iterator3 = _createForOfIteratorHelper(cif);
-          _context3.prev = 87;
-          _iterator3.s();
         case 89:
+          _context3.prev = 89;
+          _context3.t2 = _context3["catch"](54);
+          _iterator2.e(_context3.t2);
+        case 92:
+          _context3.prev = 92;
+          _iterator2.f();
+          return _context3.finish(92);
+        case 95:
+          _iterator3 = _createForOfIteratorHelper(cif);
+          _context3.prev = 96;
+          _iterator3.s();
+        case 98:
           if ((_step3 = _iterator3.n()).done) {
-            _context3.next = 95;
+            _context3.next = 106;
             break;
           }
           _m = _step3.value;
-          _context3.next = 93;
-          return new _database.sql.Request(transaction).input('PROD_id', _database.sql.Decimal(18, 0), PROD_id).input('CIF_id', _database.sql.Decimal(18, 0), _m.CI_id).input('costo', _database.sql.Decimal(18, 4), _m.CI_valor).query("INSERT INTO PRODUCTO_DET_CIF (PROD_DETCIF_PROD_id, PROD_DETCIF_CIF_id, PROD_DETCIF_CIF_costo) \n                  VALUES (@PROD_id, @CIF_id, @costo)");
-        case 93:
-          _context3.next = 89;
+          valor = void 0;
+          if (typeof _m.CI_valor === 'string') {
+            valor = parseFloat(_m.CI_valor.replace(',', '.'));
+          } else {
+            valor = _m.CI_valor;
+          }
+          _context3.next = 104;
+          return new _database.sql.Request(transaction).input('PROD_id', _database.sql.Decimal(18, 0), PROD_id).input('CIF_id', _database.sql.Decimal(18, 0), _m.CI_id).input('costo', _database.sql.Decimal(18, 4), valor).query("INSERT INTO PRODUCTO_DET_CIF (PROD_DETCIF_PROD_id, PROD_DETCIF_CIF_id, PROD_DETCIF_CIF_costo) \n                  VALUES (@PROD_id, @CIF_id, @costo)");
+        case 104:
+          _context3.next = 98;
           break;
-        case 95:
-          _context3.next = 100;
+        case 106:
+          _context3.next = 111;
           break;
-        case 97:
-          _context3.prev = 97;
-          _context3.t3 = _context3["catch"](87);
+        case 108:
+          _context3.prev = 108;
+          _context3.t3 = _context3["catch"](96);
           _iterator3.e(_context3.t3);
-        case 100:
-          _context3.prev = 100;
+        case 111:
+          _context3.prev = 111;
           _iterator3.f();
-          return _context3.finish(100);
-        case 103:
-          _context3.next = 105;
+          return _context3.finish(111);
+        case 114:
+          _context3.next = 116;
           return transaction.commit();
-        case 105:
+        case 116:
           return _context3.abrupt("return", res.status(200).json({
             status: "ok",
             msg: "Producto creado con éxito",
             token: 0
           }));
-        case 108:
-          _context3.prev = 108;
+        case 119:
+          _context3.prev = 119;
           _context3.t4 = _context3["catch"](0);
-          _context3.next = 112;
+          _context3.next = 123;
           return transaction.rollback();
-        case 112:
+        case 123:
           console.error(_context3.t4);
           return _context3.abrupt("return", res.status(500).send("Error al procesar el registro: " + _context3.t4.message));
-        case 114:
+        case 125:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[0, 108], [34, 44, 47, 50], [51, 80, 83, 86], [60, 70, 73, 76], [87, 97, 100, 103]]);
+    }, _callee3, null, [[0, 119], [34, 47, 50, 53], [54, 89, 92, 95], [67, 79, 82, 85], [96, 108, 111, 114]]);
   }));
   return function createEnsamble(_x5, _x6) {
     return _ref3.apply(this, arguments);

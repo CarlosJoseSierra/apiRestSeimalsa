@@ -63,9 +63,9 @@ export const getAllMP = async (req, res) => {
         let costoFinal;
         if (typeof materia.Costo === 'string') {
           costoFinal = parseFloat(materia.Costo.replace(',', '.'));
-      } else {
+        } else {
           costoFinal = materia.Costo;
-      }
+        }
         const pool = await getConnection();
         const result = await pool
         .request()
