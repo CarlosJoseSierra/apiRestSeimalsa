@@ -10,8 +10,7 @@ import {
 const router = Router();
 router.get("/ensamble", getAllEnsambles);
 router.get("/ensamble/:id", getEnsambleById);
-//router.post("ensamble/new", createEnsamble);
 router.post("/ensamble/new",storage.array('image',1), createEnsamble);
-router.put("/ensamble/x/:id", updateEnsamble);
+router.put("/ensamble/x/:id", storage.array('image',1), updateEnsamble);
 
 export default router;

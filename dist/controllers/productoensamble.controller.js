@@ -141,7 +141,6 @@ var createEnsamble = /*#__PURE__*/function () {
           } else {
             vc_PROD_pvpH = PROD_pvpH;
           }
-          //
           if (typeof PROD_TotalMP === 'string') {
             vc_PROD_TotalMP = parseFloat(PROD_TotalMP.replace(',', '.'));
           } else {
@@ -172,7 +171,6 @@ var createEnsamble = /*#__PURE__*/function () {
           } else {
             vc_PROD_itemsXhora = PROD_itemsXhora;
           }
-          //
           if (!(req.files.length > 0)) {
             _context3.next = 21;
             break;
@@ -190,28 +188,26 @@ var createEnsamble = /*#__PURE__*/function () {
           materiales = JSON.parse(PROD_mp);
           manoObra = JSON.parse(PROD_mo);
           cif = JSON.parse(PROD_cif);
-          console.log('1');
-          _context3.next = 27;
+          _context3.next = 26;
           return (0, _database.getConnection)();
-        case 27:
+        case 26:
           pool = _context3.sent;
           _transaction = new _database.sql.Transaction(pool);
-          _context3.next = 31;
+          _context3.next = 30;
           return _transaction.begin();
-        case 31:
+        case 30:
           requestCabecera = new _database.sql.Request(_transaction);
-          _context3.next = 34;
-          return requestCabecera.input('PROD_codigo', _database.sql.VarChar, PROD_codigo).input('PROD_nombre', _database.sql.VarChar, PROD_nombre).input('PROD_medida', _database.sql.VarChar, PROD_medida).input('PROD_costoUnitario', _database.sql.Decimal(18, 2), vc_PROD_costoUnitario).input('PROD_precioMinimo', _database.sql.Decimal(18, 2), vc_PROD_precioMinimo).input('PROD_pvp', _database.sql.Decimal(18, 2), vc_PROD_pvp).input('PROD_item', _database.sql.VarChar, PROD_item).input('PROD_costoUnitarioH', _database.sql.Decimal(18, 2), vc_PROD_costoUnitarioH).input('PROD_precioMinimoH', _database.sql.Decimal(18, 2), vc_PROD_precioMinimoH).input('PROD_pvpH', _database.sql.Decimal(18, 2), vc_PROD_pvpH).input("PROD_image", _database.sql.VarChar, imageruta).input('PROD_TotalMP', _database.sql.Decimal(18, 2), vc_PROD_TotalMP).input('PROD_TotalMO', _database.sql.Decimal(18, 2), vc_PROD_TotalMO).input('PROD_TotalCIF', _database.sql.Decimal(18, 2), vc_PROD_TotalCIF).input('PROD_TotalFInal', _database.sql.Decimal(18, 2), vc_PROD_TotalFInal).input('PROD_utilidad', _database.sql.Decimal(18, 2), vc_PROD_utilidad).input('PROD_itemsXhora', _database.sql.Decimal(18, 2), vc_PROD_itemsXhora).query("INSERT INTO PRODUCTO2 (PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario,PROD_precioMinimo,\n              PROD_pvp,PROD_item,PROD_costoUnitarioH,PROD_precioMinimoH,PROD_image,PROD_TotalMP, PROD_TotalMO, PROD_TotalCIF, \n              PROD_TotalFInal, PROD_utilidad,PROD_itemsXhora,PROD_estado) \n              VALUES (@PROD_codigo, @PROD_nombre, @PROD_medida, @PROD_costoUnitario,@PROD_precioMinimo,@PROD_pvp,@PROD_item,\n              @PROD_costoUnitarioH,@PROD_precioMinimoH,@PROD_image,@PROD_TotalMP, @PROD_TotalMO, @PROD_TotalCIF,\n              @PROD_TotalFInal, @PROD_utilidad,@PROD_itemsXhora, 1);\n              SELECT SCOPE_IDENTITY() AS id;");
-        case 34:
+          _context3.next = 33;
+          return requestCabecera.input('PROD_codigo', _database.sql.VarChar, PROD_codigo).input('PROD_nombre', _database.sql.VarChar, PROD_nombre).input('PROD_medida', _database.sql.VarChar, PROD_medida).input('PROD_costoUnitario', _database.sql.Decimal(18, 2), vc_PROD_costoUnitario).input('PROD_precioMinimo', _database.sql.Decimal(18, 2), vc_PROD_precioMinimo).input('PROD_pvp', _database.sql.Decimal(18, 2), vc_PROD_pvp).input('PROD_item', _database.sql.VarChar, PROD_item).input('PROD_costoUnitarioH', _database.sql.Decimal(18, 2), vc_PROD_costoUnitarioH).input('PROD_precioMinimoH', _database.sql.Decimal(18, 2), vc_PROD_precioMinimoH).input('PROD_pvpH', _database.sql.Decimal(18, 2), vc_PROD_pvpH).input("PROD_image", _database.sql.VarChar, imageruta).input('PROD_TotalMP', _database.sql.Decimal(18, 2), vc_PROD_TotalMP).input('PROD_TotalMO', _database.sql.Decimal(18, 2), vc_PROD_TotalMO).input('PROD_TotalCIF', _database.sql.Decimal(18, 2), vc_PROD_TotalCIF).input('PROD_TotalFInal', _database.sql.Decimal(18, 2), vc_PROD_TotalFInal).input('PROD_utilidad', _database.sql.Decimal(18, 2), vc_PROD_utilidad).input('PROD_itemsXhora', _database.sql.Decimal(18, 2), vc_PROD_itemsXhora).query("INSERT INTO PRODUCTO2 (PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario,PROD_precioMinimo,\n              PROD_pvp,PROD_item,PROD_costoUnitarioH,PROD_precioMinimoH,PROD_pvpH,PROD_image,PROD_TotalMP, PROD_TotalMO, PROD_TotalCIF, \n              PROD_TotalFInal, PROD_utilidad,PROD_itemsXhora,PROD_estado) \n              VALUES (@PROD_codigo, @PROD_nombre, @PROD_medida, @PROD_costoUnitario,@PROD_precioMinimo,@PROD_pvp,@PROD_item,\n              @PROD_costoUnitarioH,@PROD_precioMinimoH,@PROD_pvpH,@PROD_image,@PROD_TotalMP, @PROD_TotalMO, @PROD_TotalCIF,\n              @PROD_TotalFInal, @PROD_utilidad,@PROD_itemsXhora, 1);\n              SELECT SCOPE_IDENTITY() AS id;");
+        case 33:
           result = _context3.sent;
           PROD_id = result.recordset[0].id;
-          console.log('2');
           _iterator = _createForOfIteratorHelper(materiales);
-          _context3.prev = 38;
+          _context3.prev = 36;
           _iterator.s();
-        case 40:
+        case 38:
           if ((_step = _iterator.n()).done) {
-            _context3.next = 50;
+            _context3.next = 48;
             break;
           }
           m = _step.value;
@@ -227,34 +223,32 @@ var createEnsamble = /*#__PURE__*/function () {
             costo = m.MP_costo;
           }
           console.log('3');
-          _context3.next = 48;
+          _context3.next = 46;
           return new _database.sql.Request(_transaction).input('PROD_id', _database.sql.Decimal(18, 0), PROD_id).input('MP_id', _database.sql.Decimal(18, 0), m.MP_id).input('cantidad', _database.sql.Decimal(18, 4), cantidad).input('costo', _database.sql.Decimal(18, 4), costo).query("INSERT INTO PRODUCTO_DET_MP (PROD_DETMP_PROD_id, PROD_DETMP_MP_id, PROD_DETMP_MP_cantidad,\n               PROD_DETMP_MP_costo) \n                    VALUES (@PROD_id, @MP_id, @cantidad, @costo)");
+        case 46:
+          _context3.next = 38;
+          break;
         case 48:
-          _context3.next = 40;
+          _context3.next = 53;
           break;
         case 50:
-          _context3.next = 55;
-          break;
-        case 52:
-          _context3.prev = 52;
-          _context3.t0 = _context3["catch"](38);
+          _context3.prev = 50;
+          _context3.t0 = _context3["catch"](36);
           _iterator.e(_context3.t0);
-        case 55:
-          _context3.prev = 55;
+        case 53:
+          _context3.prev = 53;
           _iterator.f();
-          return _context3.finish(55);
-        case 58:
-          console.log('4');
+          return _context3.finish(53);
+        case 56:
           _iterator2 = _createForOfIteratorHelper(manoObra);
-          _context3.prev = 60;
+          _context3.prev = 57;
           _iterator2.s();
-        case 62:
+        case 59:
           if ((_step2 = _iterator2.n()).done) {
-            _context3.next = 95;
+            _context3.next = 90;
             break;
           }
           mo = _step2.value;
-          console.log('5');
           total = 0;
           _cantidad = void 0;
           if (typeof mo.cantidad === 'string') {
@@ -263,65 +257,63 @@ var createEnsamble = /*#__PURE__*/function () {
             _cantidad = mo.cantidad;
           }
           total = mo.cantidad / vc_PROD_itemsXhora;
-          _context3.next = 71;
+          _context3.next = 67;
           return new _database.sql.Request(_transaction).input('PROD_id', _database.sql.Decimal(18, 0), PROD_id).input('MO_id', _database.sql.Decimal(18, 0), mo.MO_id).input('costoHora', _database.sql.Decimal(18, 4), _cantidad).input('horaItem', _database.sql.Decimal(18, 4), vc_PROD_itemsXhora).input('total', _database.sql.Decimal(18, 4), total).query("INSERT INTO PRODUCTO_DET_MO (PROD_DETMO_PROD_id, PROD_DETMO_MO_id, PROD_DETMO_MO_costoHora,\n              PROD_DETMO_HoraItem,PROD_DETMO_MO_total) \n                    VALUES (@PROD_id, @MO_id, @costoHora,@horaItem,@total);\n                    SELECT SCOPE_IDENTITY() AS mo_det_id;");
-        case 71:
+        case 67:
           resultMO = _context3.sent;
           mo_det_id = resultMO.recordset[0].mo_det_id;
           _iterator4 = _createForOfIteratorHelper(mo.empleadosSeleccionados);
-          _context3.prev = 74;
+          _context3.prev = 70;
           _iterator4.s();
-        case 76:
+        case 72:
           if ((_step4 = _iterator4.n()).done) {
-            _context3.next = 85;
+            _context3.next = 80;
             break;
           }
           emp = _step4.value;
-          console.log('6');
           sueldo = void 0;
           if (typeof emp.EMP_sueldoHora === 'string') {
             sueldo = parseFloat(emp.EMP_sueldoHora.replace(',', '.'));
           } else {
             sueldo = emp.EMP_sueldoHora;
           }
-          _context3.next = 83;
+          _context3.next = 78;
           return new _database.sql.Request(_transaction).input('mo_det_id', _database.sql.Decimal(18, 0), mo_det_id).input('costoHora', _database.sql.Decimal(18, 4), sueldo).input('EMP_id', _database.sql.Decimal(18, 0), emp.EMP_id).query("INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id,EMP_MO_costoHora, EMP_MO_EMP_id) \n                        VALUES (@mo_det_id, @costoHora,@EMP_id)");
-        case 83:
-          _context3.next = 76;
+        case 78:
+          _context3.next = 72;
           break;
-        case 85:
-          _context3.next = 90;
+        case 80:
+          _context3.next = 85;
           break;
-        case 87:
-          _context3.prev = 87;
-          _context3.t1 = _context3["catch"](74);
+        case 82:
+          _context3.prev = 82;
+          _context3.t1 = _context3["catch"](70);
           _iterator4.e(_context3.t1);
-        case 90:
-          _context3.prev = 90;
+        case 85:
+          _context3.prev = 85;
           _iterator4.f();
-          return _context3.finish(90);
-        case 93:
-          _context3.next = 62;
+          return _context3.finish(85);
+        case 88:
+          _context3.next = 59;
           break;
-        case 95:
-          _context3.next = 100;
+        case 90:
+          _context3.next = 95;
           break;
-        case 97:
-          _context3.prev = 97;
-          _context3.t2 = _context3["catch"](60);
+        case 92:
+          _context3.prev = 92;
+          _context3.t2 = _context3["catch"](57);
           _iterator2.e(_context3.t2);
-        case 100:
-          _context3.prev = 100;
+        case 95:
+          _context3.prev = 95;
           _iterator2.f();
-          return _context3.finish(100);
-        case 103:
-          console.log('7');
+          return _context3.finish(95);
+        case 98:
           _iterator3 = _createForOfIteratorHelper(cif);
-          _context3.prev = 105;
+          _context3.prev = 99;
           _iterator3.s();
-        case 107:
+        case 101:
           if ((_step3 = _iterator3.n()).done) {
-            _context3.next = 115;
+            _context3.next = 109;
             break;
           }
           _m = _step3.value;
@@ -331,50 +323,50 @@ var createEnsamble = /*#__PURE__*/function () {
           } else {
             valor = _m.CI_valor;
           }
-          _context3.next = 113;
-          return new _database.sql.Request(_transaction).input('PROD_id', _database.sql.Decimal(18, 0), PROD_id).input('CIF_id', _database.sql.Decimal(18, 0), _m.CI_id).input('costo', _database.sql.Decimal(18, 4), valor).query("INSERT INTO PRODUCTO_DET_CIF (PROD_DETCIF_PROD_id, PROD_DETCIF_CIF_id, PROD_DETCIF_CIF_costo) \n                  VALUES (@PROD_id, @CIF_id, @costo)");
-        case 113:
           _context3.next = 107;
+          return new _database.sql.Request(_transaction).input('PROD_id', _database.sql.Decimal(18, 0), PROD_id).input('CIF_id', _database.sql.Decimal(18, 0), _m.CI_id).input('costo', _database.sql.Decimal(18, 4), valor).query("INSERT INTO PRODUCTO_DET_CIF (PROD_DETCIF_PROD_id, PROD_DETCIF_CIF_id, PROD_DETCIF_CIF_costo) \n                  VALUES (@PROD_id, @CIF_id, @costo)");
+        case 107:
+          _context3.next = 101;
           break;
-        case 115:
-          _context3.next = 120;
+        case 109:
+          _context3.next = 114;
           break;
-        case 117:
-          _context3.prev = 117;
-          _context3.t3 = _context3["catch"](105);
+        case 111:
+          _context3.prev = 111;
+          _context3.t3 = _context3["catch"](99);
           _iterator3.e(_context3.t3);
-        case 120:
-          _context3.prev = 120;
+        case 114:
+          _context3.prev = 114;
           _iterator3.f();
-          return _context3.finish(120);
-        case 123:
-          _context3.next = 125;
+          return _context3.finish(114);
+        case 117:
+          _context3.next = 119;
           return _transaction.commit();
-        case 125:
+        case 119:
           res.status(200).json({
             status: "ok",
             msg: "Producto creado con éxito",
             token: 0
           });
-          _context3.next = 135;
+          _context3.next = 129;
           break;
-        case 128:
-          _context3.prev = 128;
+        case 122:
+          _context3.prev = 122;
           _context3.t4 = _context3["catch"](0);
           if (!transaction) {
-            _context3.next = 133;
+            _context3.next = 127;
             break;
           }
-          _context3.next = 133;
+          _context3.next = 127;
           return transaction.rollback();
-        case 133:
+        case 127:
           console.error(_context3.t4);
           res.status(500).send("Error al procesar el registro: " + _context3.t4.message);
-        case 135:
+        case 129:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[0, 128], [38, 52, 55, 58], [60, 97, 100, 103], [74, 87, 90, 93], [105, 117, 120, 123]]);
+    }, _callee3, null, [[0, 122], [36, 50, 53, 56], [57, 92, 95, 98], [70, 82, 85, 88], [99, 111, 114, 117]]);
   }));
   return function createEnsamble(_x5, _x6) {
     return _ref3.apply(this, arguments);
@@ -383,49 +375,309 @@ var createEnsamble = /*#__PURE__*/function () {
 exports.createEnsamble = createEnsamble;
 var updateEnsamble = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
-    var id, employee, pool, result;
+    var id, _transaction2, _req$body2, PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario, PROD_precioMinimo, PROD_pvp, PROD_item, PROD_costoUnitarioH, PROD_precioMinimoH, PROD_pvpH, PROD_TotalMP, PROD_TotalMO, PROD_TotalCIF, PROD_TotalFInal, PROD_utilidad, PROD_itemsXhora, PROD_mp, PROD_mo, PROD_cif, PROD_listaMO, PROD_image, imageruta, vc_PROD_costoUnitario, vc_PROD_precioMinimo, vc_PROD_pvp, vc_PROD_costoUnitarioH, vc_PROD_precioMinimoH, vc_PROD_pvpH, vc_PROD_TotalMP, vc_PROD_TotalMO, vc_PROD_TotalCIF, vc_PROD_TotalFInal, vc_PROD_utilidad, vc_PROD_itemsXhora, img, materiales, manoObra, cif, pool, requestCabecera, result, _iterator5, _step5, m, cantidad, costo, _iterator6, _step6, empAnt, _iterator7, _step7, mo, total, _cantidad2, resultMO, mo_det_id, _iterator9, _step9, emp, sueldo, _iterator8, _step8, _m2, valor;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
           _context4.prev = 0;
           id = req.params.id;
-          employee = req.body;
-          _context4.next = 5;
-          return (0, _database.getConnection)();
-        case 5:
-          pool = _context4.sent;
-          _context4.next = 8;
-          return pool.request().input("id", id).input('PROD_id', _database.sql.Decimal, ensamble.firstName).input('PROD_ENS_codigo', _database.sql.VarChar(50), ensamble.lastName).input('PROD_ENS_nombre', _database.sql.VarChar(200), ensamble.lastName).input('PROD_ENS_descripcion', _database.sql.VarChar(200), employee.documentNumber).input('PROD_ENS_imagen', _database.sql.VarChar(500), ensamble.city).input('PROD_ENS_TotalMP', _database.sql.Decimal(18, 2), ensamble.position).input('PROD_ENS_TotalMO', _database.sql.Decimal(18, 2), ensamble.department).input('PROD_ENS_TotalCIF', _database.sql.Decimal(18, 2), ensamble.contractType).input('PROD_ENS_Total', _database.sql.Decimal(18, 2), ensamble.workSchedule).input('PROD_ENS_utilidad', _database.sql.Decimal(18, 2), ensamble.baseSalary).input('PROD_ENS_PrecioVenta', _database.sql.Decimal(18, 2), ensamble.annualSalary || 0).query(_database.querys.updateEnsamble);
-        case 8:
-          result = _context4.sent;
-          if (!(result.rowsAffected == 1)) {
-            _context4.next = 13;
+          _context4.prev = 2;
+          _req$body2 = req.body, PROD_codigo = _req$body2.PROD_codigo, PROD_nombre = _req$body2.PROD_nombre, PROD_medida = _req$body2.PROD_medida, PROD_costoUnitario = _req$body2.PROD_costoUnitario, PROD_precioMinimo = _req$body2.PROD_precioMinimo, PROD_pvp = _req$body2.PROD_pvp, PROD_item = _req$body2.PROD_item, PROD_costoUnitarioH = _req$body2.PROD_costoUnitarioH, PROD_precioMinimoH = _req$body2.PROD_precioMinimoH, PROD_pvpH = _req$body2.PROD_pvpH, PROD_TotalMP = _req$body2.PROD_TotalMP, PROD_TotalMO = _req$body2.PROD_TotalMO, PROD_TotalCIF = _req$body2.PROD_TotalCIF, PROD_TotalFInal = _req$body2.PROD_TotalFInal, PROD_utilidad = _req$body2.PROD_utilidad, PROD_itemsXhora = _req$body2.PROD_itemsXhora, PROD_mp = _req$body2.PROD_mp, PROD_mo = _req$body2.PROD_mo, PROD_cif = _req$body2.PROD_cif, PROD_listaMO = _req$body2.PROD_listaMO, PROD_image = _req$body2.PROD_image;
+          imageruta = '';
+          if (typeof PROD_costoUnitario === 'string') {
+            vc_PROD_costoUnitario = parseFloat(PROD_costoUnitario.replace(',', '.'));
+          } else {
+            vc_PROD_costoUnitario = PROD_costoUnitario;
+          }
+          if (typeof PROD_precioMinimo === 'string') {
+            vc_PROD_precioMinimo = parseFloat(PROD_precioMinimo.replace(',', '.'));
+          } else {
+            vc_PROD_precioMinimo = PROD_precioMinimo;
+          }
+          if (typeof PROD_pvp === 'string') {
+            vc_PROD_pvp = parseFloat(PROD_pvp.replace(',', '.'));
+          } else {
+            vc_PROD_pvp = PROD_pvp;
+          }
+          if (typeof PROD_costoUnitarioH === 'string') {
+            vc_PROD_costoUnitarioH = parseFloat(PROD_costoUnitarioH.replace(',', '.'));
+          } else {
+            vc_PROD_costoUnitarioH = PROD_costoUnitarioH;
+          }
+          if (typeof PROD_precioMinimoH === 'string') {
+            vc_PROD_precioMinimoH = parseFloat(PROD_precioMinimoH.replace(',', '.'));
+          } else {
+            vc_PROD_precioMinimoH = PROD_precioMinimoH;
+          }
+          if (typeof PROD_pvpH === 'string') {
+            vc_PROD_pvpH = parseFloat(PROD_pvpH.replace(',', '.'));
+          } else {
+            vc_PROD_pvpH = PROD_pvpH;
+          }
+          if (typeof PROD_TotalMP === 'string') {
+            vc_PROD_TotalMP = parseFloat(PROD_TotalMP.replace(',', '.'));
+          } else {
+            vc_PROD_TotalMP = PROD_TotalMP;
+          }
+          if (typeof PROD_TotalMO === 'string') {
+            vc_PROD_TotalMO = parseFloat(PROD_TotalMO.replace(',', '.'));
+          } else {
+            vc_PROD_TotalMO = PROD_TotalMO;
+          }
+          if (typeof PROD_TotalCIF === 'string') {
+            vc_PROD_TotalCIF = parseFloat(PROD_TotalCIF.replace(',', '.'));
+          } else {
+            vc_PROD_TotalCIF = PROD_TotalCIF;
+          }
+          if (typeof PROD_TotalFInal === 'string') {
+            vc_PROD_TotalFInal = parseFloat(PROD_TotalFInal.replace(',', '.'));
+          } else {
+            vc_PROD_TotalFInal = PROD_TotalFInal;
+          }
+          if (typeof PROD_utilidad === 'string') {
+            vc_PROD_utilidad = parseFloat(PROD_utilidad.replace(',', '.'));
+          } else {
+            vc_PROD_utilidad = PROD_utilidad;
+          }
+          if (typeof PROD_itemsXhora === 'string') {
+            vc_PROD_itemsXhora = parseFloat(PROD_itemsXhora.replace(',', '.'));
+          } else {
+            vc_PROD_itemsXhora = PROD_itemsXhora;
+          }
+          if (!(req.files.length > 0)) {
+            _context4.next = 25;
             break;
           }
-          return _context4.abrupt("return", res.status(200).json({
-            status: "ok",
-            msg: "Actualizacion exitosa",
-            token: 0
-          }));
-        case 13:
-          return _context4.abrupt("return", res.status(400).json({
-            status: "400",
-            msg: "No se pudo actualizar, consulte al administrador",
-            token: 0
-          }));
-        case 14:
-          _context4.next = 20;
+          if (!(req.files[0] != undefined)) {
+            _context4.next = 23;
+            break;
+          }
+          _context4.next = 21;
+          return cloudinary.uploader.upload(req.files[0].path);
+        case 21:
+          img = _context4.sent;
+          imageruta = img.secure_url;
+        case 23:
+          _context4.next = 26;
           break;
-        case 16:
-          _context4.prev = 16;
-          _context4.t0 = _context4["catch"](0);
+        case 25:
+          imageruta = PROD_image;
+        case 26:
+          materiales = JSON.parse(PROD_mp);
+          manoObra = JSON.parse(PROD_mo);
+          cif = JSON.parse(PROD_cif);
+          _context4.next = 31;
+          return (0, _database.getConnection)();
+        case 31:
+          pool = _context4.sent;
+          _transaction2 = new _database.sql.Transaction(pool);
+          _context4.next = 35;
+          return _transaction2.begin();
+        case 35:
+          requestCabecera = new _database.sql.Request(_transaction2);
+          _context4.next = 38;
+          return requestCabecera.input("id", req.params.id).input('PROD_codigo', _database.sql.VarChar, PROD_codigo).input('PROD_nombre', _database.sql.VarChar, PROD_nombre).input('PROD_medida', _database.sql.VarChar, PROD_medida).input('PROD_costoUnitario', _database.sql.Decimal(18, 2), vc_PROD_costoUnitario).input('PROD_precioMinimo', _database.sql.Decimal(18, 2), vc_PROD_precioMinimo).input('PROD_pvp', _database.sql.Decimal(18, 2), vc_PROD_pvp).input('PROD_item', _database.sql.VarChar, PROD_item).input('PROD_costoUnitarioH', _database.sql.Decimal(18, 2), vc_PROD_costoUnitarioH).input('PROD_precioMinimoH', _database.sql.Decimal(18, 2), vc_PROD_precioMinimoH).input('PROD_pvpH', _database.sql.Decimal(18, 2), vc_PROD_pvpH).input("PROD_image", _database.sql.VarChar, imageruta).input('PROD_TotalMP', _database.sql.Decimal(18, 2), vc_PROD_TotalMP).input('PROD_TotalMO', _database.sql.Decimal(18, 2), vc_PROD_TotalMO).input('PROD_TotalCIF', _database.sql.Decimal(18, 2), vc_PROD_TotalCIF).input('PROD_TotalFInal', _database.sql.Decimal(18, 2), vc_PROD_TotalFInal).input('PROD_utilidad', _database.sql.Decimal(18, 2), vc_PROD_utilidad).input('PROD_itemsXhora', _database.sql.Decimal(18, 2), vc_PROD_itemsXhora).query("UPDATE PRODUCTO2 SET PROD_codigo=@PROD_codigo, PROD_nombre=@PROD_nombre, PROD_medida=@PROD_medida,\n                 PROD_costoUnitario=@PROD_costoUnitario,PROD_precioMinimo=@PROD_precioMinimo,\n                  PROD_pvp=@PROD_pvp,PROD_costoUnitarioH=@PROD_costoUnitarioH,PROD_precioMinimoH=@PROD_precioMinimoH,\n                  PROD_pvpH=@PROD_pvpH,PROD_image=@PROD_image,PROD_TotalMP=@PROD_TotalMP, PROD_TotalMO=@PROD_TotalMO,\n                   PROD_TotalCIF=@PROD_TotalCIF, PROD_TotalFInal=@PROD_TotalFInal, PROD_utilidad=@PROD_utilidad,\n                   PROD_itemsXhora=@PROD_itemsXhora WHERE PROD_id = @id;\n                   UPDATE PRODUCTO_DET_MP SET PROD_DETMO_MP_estado = 0 WhERE PROD_DETMP_PROD_id = @id;\n                   UPDATE PRODUCTO_DET_MO SET PROD_DETMO_MO_estado = 0 WhERE PROD_DETMO_PROD_id = @id;\n                   UPDATE PRODUCTO_DET_CIF SET PROD_DETCIF_CIF_estado = 0 WhERE PROD_DETCIF_PROD_id = @id;");
+        case 38:
+          result = _context4.sent;
+          _iterator5 = _createForOfIteratorHelper(materiales);
+          _context4.prev = 40;
+          _iterator5.s();
+        case 42:
+          if ((_step5 = _iterator5.n()).done) {
+            _context4.next = 52;
+            break;
+          }
+          m = _step5.value;
+          cantidad = void 0, costo = void 0;
+          if (typeof m.cantidad === 'string') {
+            cantidad = parseFloat(m.cantidad.replace(',', '.'));
+          } else {
+            cantidad = m.cantidad;
+          }
+          if (typeof m.MP_costo === 'string') {
+            costo = parseFloat(m.MP_costo.replace(',', '.'));
+          } else {
+            costo = m.MP_costo;
+          }
+          console.log('3');
+          _context4.next = 50;
+          return new _database.sql.Request(_transaction2).input('PROD_id', _database.sql.Decimal(18, 0), id).input('MP_id', _database.sql.Decimal(18, 0), m.MP_id).input('cantidad', _database.sql.Decimal(18, 4), cantidad).input('costo', _database.sql.Decimal(18, 4), costo).query("INSERT INTO PRODUCTO_DET_MP (PROD_DETMP_PROD_id, PROD_DETMP_MP_id, PROD_DETMP_MP_cantidad,\n                   PROD_DETMP_MP_costo) \n                        VALUES (@PROD_id, @MP_id, @cantidad, @costo)");
+        case 50:
+          _context4.next = 42;
+          break;
+        case 52:
+          _context4.next = 57;
+          break;
+        case 54:
+          _context4.prev = 54;
+          _context4.t0 = _context4["catch"](40);
+          _iterator5.e(_context4.t0);
+        case 57:
+          _context4.prev = 57;
+          _iterator5.f();
+          return _context4.finish(57);
+        case 60:
+          _iterator6 = _createForOfIteratorHelper(PROD_listaMO);
+          _context4.prev = 61;
+          _iterator6.s();
+        case 63:
+          if ((_step6 = _iterator6.n()).done) {
+            _context4.next = 69;
+            break;
+          }
+          empAnt = _step6.value;
+          _context4.next = 67;
+          return new _database.sql.Request(_transaction2).input('id', _database.sql.Decimal, empAnt.PROD_DETMO_id).query("UPDATE EMPLEADO_MANOOBRA SET EMP_MO_estado = 0 WHERE EMP_MO_PROD_DETMO_id =@id");
+        case 67:
+          _context4.next = 63;
+          break;
+        case 69:
+          _context4.next = 74;
+          break;
+        case 71:
+          _context4.prev = 71;
+          _context4.t1 = _context4["catch"](61);
+          _iterator6.e(_context4.t1);
+        case 74:
+          _context4.prev = 74;
+          _iterator6.f();
+          return _context4.finish(74);
+        case 77:
+          _iterator7 = _createForOfIteratorHelper(manoObra);
+          _context4.prev = 78;
+          _iterator7.s();
+        case 80:
+          if ((_step7 = _iterator7.n()).done) {
+            _context4.next = 111;
+            break;
+          }
+          mo = _step7.value;
+          total = 0;
+          _cantidad2 = void 0;
+          if (typeof mo.cantidad === 'string') {
+            _cantidad2 = parseFloat(mo.cantidad.replace(',', '.'));
+          } else {
+            _cantidad2 = mo.cantidad;
+          }
+          total = mo.cantidad / vc_PROD_itemsXhora;
+          _context4.next = 88;
+          return new _database.sql.Request(_transaction2).input('PROD_id', _database.sql.Decimal(18, 0), id).input('MO_id', _database.sql.Decimal(18, 0), mo.MO_id).input('costoHora', _database.sql.Decimal(18, 4), _cantidad2).input('horaItem', _database.sql.Decimal(18, 4), vc_PROD_itemsXhora).input('total', _database.sql.Decimal(18, 4), total).query("INSERT INTO PRODUCTO_DET_MO (PROD_DETMO_PROD_id, PROD_DETMO_MO_id, PROD_DETMO_MO_costoHora,\n                  PROD_DETMO_HoraItem,PROD_DETMO_MO_total) \n                        VALUES (@PROD_id, @MO_id, @costoHora,@horaItem,@total);\n                        SELECT SCOPE_IDENTITY() AS mo_det_id;");
+        case 88:
+          resultMO = _context4.sent;
+          mo_det_id = resultMO.recordset[0].mo_det_id;
+          _iterator9 = _createForOfIteratorHelper(mo.empleadosSeleccionados);
+          _context4.prev = 91;
+          _iterator9.s();
+        case 93:
+          if ((_step9 = _iterator9.n()).done) {
+            _context4.next = 101;
+            break;
+          }
+          emp = _step9.value;
+          sueldo = void 0;
+          if (typeof emp.EMP_sueldoHora === 'string') {
+            sueldo = parseFloat(emp.EMP_sueldoHora.replace(',', '.'));
+          } else {
+            sueldo = emp.EMP_sueldoHora;
+          }
+          _context4.next = 99;
+          return new _database.sql.Request(_transaction2).input('mo_det_id', _database.sql.Decimal(18, 0), mo_det_id).input('costoHora', _database.sql.Decimal(18, 4), sueldo).input('EMP_id', _database.sql.Decimal(18, 0), emp.EMP_id).query("INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id,EMP_MO_costoHora, EMP_MO_EMP_id) \n                            VALUES (@mo_det_id, @costoHora,@EMP_id)");
+        case 99:
+          _context4.next = 93;
+          break;
+        case 101:
+          _context4.next = 106;
+          break;
+        case 103:
+          _context4.prev = 103;
+          _context4.t2 = _context4["catch"](91);
+          _iterator9.e(_context4.t2);
+        case 106:
+          _context4.prev = 106;
+          _iterator9.f();
+          return _context4.finish(106);
+        case 109:
+          _context4.next = 80;
+          break;
+        case 111:
+          _context4.next = 116;
+          break;
+        case 113:
+          _context4.prev = 113;
+          _context4.t3 = _context4["catch"](78);
+          _iterator7.e(_context4.t3);
+        case 116:
+          _context4.prev = 116;
+          _iterator7.f();
+          return _context4.finish(116);
+        case 119:
+          _iterator8 = _createForOfIteratorHelper(cif);
+          _context4.prev = 120;
+          _iterator8.s();
+        case 122:
+          if ((_step8 = _iterator8.n()).done) {
+            _context4.next = 130;
+            break;
+          }
+          _m2 = _step8.value;
+          valor = void 0;
+          if (typeof _m2.CI_valor === 'string') {
+            valor = parseFloat(_m2.CI_valor.replace(',', '.'));
+          } else {
+            valor = _m2.CI_valor;
+          }
+          _context4.next = 128;
+          return new _database.sql.Request(_transaction2).input('PROD_id', _database.sql.Decimal(18, 0), id).input('CIF_id', _database.sql.Decimal(18, 0), _m2.CI_id).input('costo', _database.sql.Decimal(18, 4), valor).query("INSERT INTO PRODUCTO_DET_CIF (PROD_DETCIF_PROD_id, PROD_DETCIF_CIF_id, PROD_DETCIF_CIF_costo) \n                      VALUES (@PROD_id, @CIF_id, @costo)");
+        case 128:
+          _context4.next = 122;
+          break;
+        case 130:
+          _context4.next = 135;
+          break;
+        case 132:
+          _context4.prev = 132;
+          _context4.t4 = _context4["catch"](120);
+          _iterator8.e(_context4.t4);
+        case 135:
+          _context4.prev = 135;
+          _iterator8.f();
+          return _context4.finish(135);
+        case 138:
+          _context4.next = 140;
+          return _transaction2.commit();
+        case 140:
+          res.status(200).json({
+            status: "ok",
+            msg: "Producto actualizado con éxito",
+            token: 0
+          });
+          _context4.next = 150;
+          break;
+        case 143:
+          _context4.prev = 143;
+          _context4.t5 = _context4["catch"](2);
+          if (!transaction) {
+            _context4.next = 148;
+            break;
+          }
+          _context4.next = 148;
+          return transaction.rollback();
+        case 148:
+          console.error(_context4.t5);
+          res.status(500).send("Error al procesar la actualizacion: " + _context4.t5.message);
+        case 150:
+          _context4.next = 156;
+          break;
+        case 152:
+          _context4.prev = 152;
+          _context4.t6 = _context4["catch"](0);
           res.status(500);
-          res.send(_context4.t0.message);
-        case 20:
+          res.send(_context4.t6.message);
+        case 156:
         case "end":
           return _context4.stop();
       }
-    }, _callee4, null, [[0, 16]]);
+    }, _callee4, null, [[0, 152], [2, 143], [40, 54, 57, 60], [61, 71, 74, 77], [78, 113, 116, 119], [91, 103, 106, 109], [120, 132, 135, 138]]);
   }));
   return function updateEnsamble(_x7, _x8) {
     return _ref4.apply(this, arguments);
