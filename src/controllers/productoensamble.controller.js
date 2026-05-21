@@ -251,9 +251,9 @@ export const getAllEnsambles = async (req, res) => {
   }
          
   export const updateEnsamble = async (req, res) => {
+    let transaction;
     try {
         const { id } = req.params;
-        let transaction;
         const {
           PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario,
           PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,
