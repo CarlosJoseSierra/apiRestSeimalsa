@@ -47,8 +47,8 @@ export const getAllEnsambles = async (req, res) => {
   };
   
   export const createEnsamble = async (req, res) => {
+    let transaction;
     try {
-      let transaction;
       const {
         PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario,
         PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,
@@ -183,7 +183,7 @@ export const getAllEnsambles = async (req, res) => {
             .input('costo', sql.Decimal(18, 4), costo)
             .query(`INSERT INTO PRODUCTO_DET_MP (PROD_DETMP_PROD_id, PROD_DETMP_MP_id, PROD_DETMP_MP_cantidad,
                PROD_DETMP_MP_costo,PROD_DETMP_MP_estado,fecha_ingreso,fecha_actualizacion) 
-                    VALUES (@PROD_id, @MP_id, @cantidad, @costo,1,GETDATE(),GETDATE())`);
+                    VALUES (@PROD_id, @MP_id, @cantidad, @costo,1,GETDATE(),GETDATE());`);
       }
       
       for (const mo of manoObra) {
@@ -219,9 +219,9 @@ export const getAllEnsambles = async (req, res) => {
                 .input('mo_det_id', sql.Decimal(18, 0), mo_det_id)
                 .input('costoHora', sql.Decimal(18, 4), sueldo)
                 .input('EMP_id', sql.Decimal(18, 0), emp.EMP_id)
-                .query(`INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id,EMP_MO_costoHora, EMP_MO_EMP_id,EMP_MO_estado,
-                  fecha_ingreso,fecha_actualizacion) 
-                        VALUES (@mo_det_id, @costoHora,@EMP_id,1,GETDATE(),GETDATE())`);
+                .query(`INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id,EMP_MO_costoHora, EMP_MO_EMP_id,
+                  EMP_MO_estado,fecha_ingreso,fecha_actualizacion) 
+                        VALUES (@mo_det_id, @costoHora,@EMP_id,1,GETDATE(),GETDATE());`);
         }
     }
     
@@ -238,7 +238,7 @@ export const getAllEnsambles = async (req, res) => {
           .input('costo', sql.Decimal(18, 4), valor)
           .query(`INSERT INTO PRODUCTO_DET_CIF (PROD_DETCIF_PROD_id, PROD_DETCIF_CIF_id, PROD_DETCIF_CIF_costo,
             PROD_DETCIF_CIF_estado,fecha_ingreso,fecha_actualizacion) 
-                  VALUES (@PROD_id, @CIF_id, @costo,1,GETDATE(),GETDATE())`);
+                  VALUES (@PROD_id, @CIF_id, @costo,1,GETDATE(),GETDATE());`);
     }
     await transaction.commit();
      res.status(200).json({ status: "ok", msg: "Producto creado con éxito" ,token:0});
@@ -394,13 +394,14 @@ export const getAllEnsambles = async (req, res) => {
               .input('cantidad', sql.Decimal(18, 4), cantidad)
               .input('costo', sql.Decimal(18, 4), costo)
               .query(`INSERT INTO PRODUCTO_DET_MP (PROD_DETMP_PROD_id, PROD_DETMP_MP_id, PROD_DETMP_MP_cantidad,
-                  PROD_DETMP_MP_costo,PROD_DETMP_MP_estado,fecha_actualizacion) 
-                      VALUES (@PROD_id, @MP_id, @cantidad, @costo,1,GETDATE())`);
+                  PROD_DETMP_MP_costo,PROD_DETMP_MP_estado,fecha_ingreso,fecha_actualizacion) 
+                      VALUES (@PROD_id, @MP_id, @cantidad, @costo,1,GETDATE(),GETDATE());`);
         }
         for(const empAnt of PROD_listaMO){
+          console.log(empAnt);
             await new sql.Request(transaction)
                 .input('idE', sql.Decimal, empAnt.PROD_DETMO_id)
-                .query(`UPDATE EMPLEADO_MANOOBRA SET EMP_MO_estado = 0, fecha_actualizacion = GETDATE() WHERE EMP_MO_PROD_DETMO_id =@idE`);
+                .query(`UPDATE EMPLEADO_MANOOBRA SET EMP_MO_estado = 0, fecha_actualizacion = GETDATE() WHERE EMP_MO_PROD_DETMO_id =@idE;`);
         }
         
         for (const mo of manoObra) {
@@ -437,7 +438,7 @@ export const getAllEnsambles = async (req, res) => {
                   .input('costoHora', sql.Decimal(18, 4), sueldo)
                   .input('EMP_id', sql.Decimal(18, 0), emp.EMP_id)
                   .query(`INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id,EMP_MO_costoHora, EMP_MO_EMP_id,EMP_MO_estado,fecha_ingreso,fecha_actualizacion) 
-                          VALUES (@mo_det_id, @costoHora,@EMP_id,1,GETDATE(),GETDATE())`);
+                          VALUES (@mo_det_id, @costoHora,@EMP_id,1,GETDATE(),GETDATE());`);
           }
       }
         
@@ -454,7 +455,7 @@ export const getAllEnsambles = async (req, res) => {
             .input('costo', sql.Decimal(18, 4), valor)
             .query(`INSERT INTO PRODUCTO_DET_CIF (PROD_DETCIF_PROD_id, PROD_DETCIF_CIF_id, PROD_DETCIF_CIF_costo,
               PROD_DETCIF_CIF_estado,fecha_ingreso,fecha_actualizacion) 
-                    VALUES (@PROD_id, @CIF_id, @costo,1,GETDATE(),GETDATE())`);
+                    VALUES (@PROD_id, @CIF_id, @costo,1,GETDATE(),GETDATE());`);
       }
       await transaction.commit();
        return res.status(200).json({ status: "ok", msg: "Producto actualizado con éxito" ,token:0});
