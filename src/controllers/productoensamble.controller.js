@@ -370,7 +370,7 @@ export const getAllEnsambles = async (req, res) => {
                 PROD_pvpH=@PROD_pvpH,PROD_image=@PROD_image,PROD_TotalMP=@PROD_TotalMP, PROD_TotalMO=@PROD_TotalMO,
                   PROD_TotalCIF=@PROD_TotalCIF, PROD_TotalFInal=@PROD_TotalFInal, PROD_utilidad=@PROD_utilidad,
                   PROD_itemsXhora=@PROD_itemsXhora WHERE PROD_id = @id;
-                  UPDATE PRODUCTO_DET_MP SET PROD_DETMO_MP_estado = 0 WhERE PROD_DETMP_PROD_id = @id;
+                  UPDATE PRODUCTO_DET_MP SET PROD_DETMP_MP_estado = 0 WhERE PROD_DETMP_PROD_id = @id;
                   UPDATE PRODUCTO_DET_MO SET PROD_DETMO_MO_estado = 0 WhERE PROD_DETMO_PROD_id = @id;
                   UPDATE PRODUCTO_DET_CIF SET PROD_DETCIF_CIF_estado = 0 WhERE PROD_DETCIF_PROD_id = @id;`);
         
