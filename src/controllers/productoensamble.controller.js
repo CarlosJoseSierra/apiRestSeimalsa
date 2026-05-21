@@ -175,7 +175,7 @@ export const getAllEnsambles = async (req, res) => {
         } else {
           costo = m.MP_costo;
         }
-        console.log('3');
+        
         await new sql.Request(transaction)
             .input('PROD_id', sql.Decimal(18,0), PROD_id)
             .input('MP_id', sql.Decimal(18,0), m.MP_id)
@@ -397,7 +397,8 @@ export const getAllEnsambles = async (req, res) => {
                   PROD_DETMP_MP_costo,PROD_DETMP_MP_estado,fecha_ingreso,fecha_actualizacion) 
                       VALUES (@PROD_id, @MP_id, @cantidad, @costo,1,GETDATE(),GETDATE());`);
         }
-        for(const empAnt of PROD_listaMO){
+        const listadoEmp = JSON.parse(PROD_listaMO);
+        for(const empAnt of listadoEmp){
           console.log(empAnt);
             await new sql.Request(transaction)
                 .input('idE', sql.Decimal, empAnt.PROD_DETMO_id)
