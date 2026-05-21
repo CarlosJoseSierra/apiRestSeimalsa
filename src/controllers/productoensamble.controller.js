@@ -398,7 +398,6 @@ export const getAllEnsambles = async (req, res) => {
                       VALUES (@PROD_id, @MP_id, @cantidad, @costo,1,GETDATE())`);
         }
         for(const empAnt of PROD_listaMO){
-          console.log(empAnt);
             await new sql.Request(transaction)
                 .input('idE', sql.Decimal, empAnt.PROD_DETMO_id)
                 .query(`UPDATE EMPLEADO_MANOOBRA SET EMP_MO_estado = 0, fecha_actualizacion = GETDATE() WHERE EMP_MO_PROD_DETMO_id =@idE`);
