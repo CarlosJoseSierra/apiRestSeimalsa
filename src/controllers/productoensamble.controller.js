@@ -454,12 +454,17 @@ export const getAllEnsambles = async (req, res) => {
                     VALUES (@PROD_id, @CIF_id, @costo)`);
       }
       await transaction.commit();
-        res.status(200).json({ status: "ok", msg: "Producto actualizado con éxito" ,token:0});
+       return res.status(200).json({ status: "ok", msg: "Producto actualizado con éxito" ,token:0});
   
       } catch (error) {
         if (transaction) {
-          await transaction.rollback();
+          try {
+              await transaction.rollback();
+          } catch (rollbackError) {
+              console.error("Error ejecutando el rollback:", rollbackError.message);
+          }
         }
+        return res.status(500).json({ status: "error", msg: "Error al actualizar el producto: " + error.message });
       }
   };
 

@@ -644,27 +644,38 @@ var updateEnsamble = /*#__PURE__*/function () {
           _context4.next = 138;
           return transaction.commit();
         case 138:
-          res.status(200).json({
+          return _context4.abrupt("return", res.status(200).json({
             status: "ok",
             msg: "Producto actualizado con éxito",
             token: 0
-          });
-          _context4.next = 146;
-          break;
+          }));
         case 141:
           _context4.prev = 141;
           _context4.t5 = _context4["catch"](0);
           if (!transaction) {
-            _context4.next = 146;
+            _context4.next = 152;
             break;
           }
-          _context4.next = 146;
+          _context4.prev = 144;
+          _context4.next = 147;
           return transaction.rollback();
-        case 146:
+        case 147:
+          _context4.next = 152;
+          break;
+        case 149:
+          _context4.prev = 149;
+          _context4.t6 = _context4["catch"](144);
+          console.error("Error ejecutando el rollback:", _context4.t6.message);
+        case 152:
+          return _context4.abrupt("return", res.status(500).json({
+            status: "error",
+            msg: "Error al actualizar el producto: " + _context4.t5.message
+          }));
+        case 153:
         case "end":
           return _context4.stop();
       }
-    }, _callee4, null, [[0, 141], [39, 52, 55, 58], [59, 69, 72, 75], [76, 111, 114, 117], [89, 101, 104, 107], [118, 130, 133, 136]]);
+    }, _callee4, null, [[0, 141], [39, 52, 55, 58], [59, 69, 72, 75], [76, 111, 114, 117], [89, 101, 104, 107], [118, 130, 133, 136], [144, 149]]);
   }));
   return function updateEnsamble(_x7, _x8) {
     return _ref4.apply(this, arguments);
