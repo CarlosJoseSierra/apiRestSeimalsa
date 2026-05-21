@@ -253,222 +253,214 @@ export const getAllEnsambles = async (req, res) => {
   export const updateEnsamble = async (req, res) => {
     try {
         const { id } = req.params;
-        try {
-          let transaction;
-          const {
-            PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario,
-            PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,
-            PROD_precioMinimoH,PROD_pvpH,PROD_TotalMP, PROD_TotalMO,
-            PROD_TotalCIF, PROD_TotalFInal,PROD_utilidad,
-            PROD_itemsXhora, PROD_mp, PROD_mo, PROD_cif,PROD_listaMO,PROD_image
-        } = req.body;
-        let imageruta= '';
-        let vc_PROD_costoUnitario,vc_PROD_precioMinimo,vc_PROD_pvp,vc_PROD_costoUnitarioH,vc_PROD_precioMinimoH;
-        let vc_PROD_pvpH,vc_PROD_TotalMP,vc_PROD_TotalMO,vc_PROD_TotalCIF,vc_PROD_TotalFInal,vc_PROD_utilidad;
-        let vc_PROD_itemsXhora;
-            if (typeof PROD_costoUnitario === 'string') {
-              vc_PROD_costoUnitario = parseFloat(PROD_costoUnitario.replace(',', '.'));
-            } else {
-              vc_PROD_costoUnitario = PROD_costoUnitario;
-            }
-            if (typeof PROD_precioMinimo === 'string') {
-              vc_PROD_precioMinimo = parseFloat(PROD_precioMinimo.replace(',', '.'));
-            } else {
-              vc_PROD_precioMinimo = PROD_precioMinimo;
-            }
-            if (typeof PROD_pvp === 'string') {
-              vc_PROD_pvp = parseFloat(PROD_pvp.replace(',', '.'));
-            } else {
-              vc_PROD_pvp = PROD_pvp;
-            }
-            if (typeof PROD_costoUnitarioH === 'string') {
-              vc_PROD_costoUnitarioH = parseFloat(PROD_costoUnitarioH.replace(',', '.'));
-            } else {
-              vc_PROD_costoUnitarioH = PROD_costoUnitarioH;
-            }
-            if (typeof PROD_precioMinimoH === 'string') {
-              vc_PROD_precioMinimoH = parseFloat(PROD_precioMinimoH.replace(',', '.'));
-            } else {
-              vc_PROD_precioMinimoH = PROD_precioMinimoH;
-            }
-            if (typeof PROD_pvpH === 'string') {
-              vc_PROD_pvpH = parseFloat(PROD_pvpH.replace(',', '.'));
-            } else {
-              vc_PROD_pvpH = PROD_pvpH;
-            }
-            if (typeof PROD_TotalMP === 'string') {
-              vc_PROD_TotalMP = parseFloat(PROD_TotalMP.replace(',', '.'));
-            } else {
-              vc_PROD_TotalMP = PROD_TotalMP;
-            }
-            if (typeof PROD_TotalMO === 'string') {
-              vc_PROD_TotalMO = parseFloat(PROD_TotalMO.replace(',', '.'));
-            } else {
-              vc_PROD_TotalMO = PROD_TotalMO;
-            }
-            if (typeof PROD_TotalCIF === 'string') {
-              vc_PROD_TotalCIF = parseFloat(PROD_TotalCIF.replace(',', '.'));
-            } else {
-              vc_PROD_TotalCIF = PROD_TotalCIF;
-            }
-            if (typeof PROD_TotalFInal === 'string') {
-              vc_PROD_TotalFInal = parseFloat(PROD_TotalFInal.replace(',', '.'));
-            } else {
-              vc_PROD_TotalFInal = PROD_TotalFInal;
-            }
-           
-            if (typeof PROD_utilidad === 'string') {
-              vc_PROD_utilidad = parseFloat(PROD_utilidad.replace(',', '.'));
-            } else {
-              vc_PROD_utilidad = PROD_utilidad;
-            }
-            if (typeof PROD_itemsXhora === 'string') {
-              vc_PROD_itemsXhora = parseFloat(PROD_itemsXhora.replace(',', '.'));
-            } else {
-              vc_PROD_itemsXhora = PROD_itemsXhora;
-            }
-          if(req.files.length>0)
+        let transaction;
+        const {
+          PROD_codigo, PROD_nombre, PROD_medida, PROD_costoUnitario,
+          PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,
+          PROD_precioMinimoH,PROD_pvpH,PROD_TotalMP, PROD_TotalMO,
+          PROD_TotalCIF, PROD_TotalFInal,PROD_utilidad,
+          PROD_itemsXhora, PROD_mp, PROD_mo, PROD_cif,PROD_listaMO,PROD_image
+      } = req.body;
+      let imageruta= '';
+      let vc_PROD_costoUnitario,vc_PROD_precioMinimo,vc_PROD_pvp,vc_PROD_costoUnitarioH,vc_PROD_precioMinimoH;
+      let vc_PROD_pvpH,vc_PROD_TotalMP,vc_PROD_TotalMO,vc_PROD_TotalCIF,vc_PROD_TotalFInal,vc_PROD_utilidad;
+      let vc_PROD_itemsXhora;
+          if (typeof PROD_costoUnitario === 'string') {
+            vc_PROD_costoUnitario = parseFloat(PROD_costoUnitario.replace(',', '.'));
+          } else {
+            vc_PROD_costoUnitario = PROD_costoUnitario;
+          }
+          if (typeof PROD_precioMinimo === 'string') {
+            vc_PROD_precioMinimo = parseFloat(PROD_precioMinimo.replace(',', '.'));
+          } else {
+            vc_PROD_precioMinimo = PROD_precioMinimo;
+          }
+          if (typeof PROD_pvp === 'string') {
+            vc_PROD_pvp = parseFloat(PROD_pvp.replace(',', '.'));
+          } else {
+            vc_PROD_pvp = PROD_pvp;
+          }
+          if (typeof PROD_costoUnitarioH === 'string') {
+            vc_PROD_costoUnitarioH = parseFloat(PROD_costoUnitarioH.replace(',', '.'));
+          } else {
+            vc_PROD_costoUnitarioH = PROD_costoUnitarioH;
+          }
+          if (typeof PROD_precioMinimoH === 'string') {
+            vc_PROD_precioMinimoH = parseFloat(PROD_precioMinimoH.replace(',', '.'));
+          } else {
+            vc_PROD_precioMinimoH = PROD_precioMinimoH;
+          }
+          if (typeof PROD_pvpH === 'string') {
+            vc_PROD_pvpH = parseFloat(PROD_pvpH.replace(',', '.'));
+          } else {
+            vc_PROD_pvpH = PROD_pvpH;
+          }
+          if (typeof PROD_TotalMP === 'string') {
+            vc_PROD_TotalMP = parseFloat(PROD_TotalMP.replace(',', '.'));
+          } else {
+            vc_PROD_TotalMP = PROD_TotalMP;
+          }
+          if (typeof PROD_TotalMO === 'string') {
+            vc_PROD_TotalMO = parseFloat(PROD_TotalMO.replace(',', '.'));
+          } else {
+            vc_PROD_TotalMO = PROD_TotalMO;
+          }
+          if (typeof PROD_TotalCIF === 'string') {
+            vc_PROD_TotalCIF = parseFloat(PROD_TotalCIF.replace(',', '.'));
+          } else {
+            vc_PROD_TotalCIF = PROD_TotalCIF;
+          }
+          if (typeof PROD_TotalFInal === 'string') {
+            vc_PROD_TotalFInal = parseFloat(PROD_TotalFInal.replace(',', '.'));
+          } else {
+            vc_PROD_TotalFInal = PROD_TotalFInal;
+          }
+          
+          if (typeof PROD_utilidad === 'string') {
+            vc_PROD_utilidad = parseFloat(PROD_utilidad.replace(',', '.'));
+          } else {
+            vc_PROD_utilidad = PROD_utilidad;
+          }
+          if (typeof PROD_itemsXhora === 'string') {
+            vc_PROD_itemsXhora = parseFloat(PROD_itemsXhora.replace(',', '.'));
+          } else {
+            vc_PROD_itemsXhora = PROD_itemsXhora;
+          }
+        if(req.files.length>0)
+        {
+          if(req.files[0]!=undefined)
           {
-            if(req.files[0]!=undefined)
-            {
-                const img = await cloudinary.uploader.upload(req.files[0].path);
-                imageruta = img.secure_url; 
-            }
+              const img = await cloudinary.uploader.upload(req.files[0].path);
+              imageruta = img.secure_url; 
           }
-          else{
-            imageruta = PROD_image; 
-          }
-            const materiales = JSON.parse(PROD_mp);
-            const manoObra = JSON.parse(PROD_mo);
-            const cif = JSON.parse(PROD_cif);
-            
-            const pool = await getConnection();
-            transaction = new sql.Transaction(pool);
-            await transaction.begin();
-            const requestCabecera = new sql.Request(transaction);
-            const result = await requestCabecera
-            .input("id", req.params.id)
-            .input('PROD_codigo', sql.VarChar, PROD_codigo)
-                .input('PROD_nombre', sql.VarChar, PROD_nombre)
-                .input('PROD_medida', sql.VarChar, PROD_medida)
-                .input('PROD_costoUnitario', sql.Decimal(18, 2), vc_PROD_costoUnitario)
-                .input('PROD_precioMinimo', sql.Decimal(18, 2), vc_PROD_precioMinimo)
-                .input('PROD_pvp', sql.Decimal(18, 2), vc_PROD_pvp)
-                .input('PROD_item', sql.VarChar, PROD_item)
-                .input('PROD_costoUnitarioH', sql.Decimal(18, 2), vc_PROD_costoUnitarioH)
-                .input('PROD_precioMinimoH', sql.Decimal(18, 2), vc_PROD_precioMinimoH)
-                .input('PROD_pvpH', sql.Decimal(18, 2), vc_PROD_pvpH)
-                .input("PROD_image", sql.VarChar, imageruta)
-                .input('PROD_TotalMP', sql.Decimal(18, 2), vc_PROD_TotalMP)
-                .input('PROD_TotalMO', sql.Decimal(18, 2), vc_PROD_TotalMO)
-                .input('PROD_TotalCIF', sql.Decimal(18, 2), vc_PROD_TotalCIF)
-                .input('PROD_TotalFInal', sql.Decimal(18, 2), vc_PROD_TotalFInal)
-                .input('PROD_utilidad', sql.Decimal(18, 2), vc_PROD_utilidad)
-                .input('PROD_itemsXhora', sql.Decimal(18, 2), vc_PROD_itemsXhora)
-                .query(`UPDATE PRODUCTO2 SET PROD_codigo=@PROD_codigo, PROD_nombre=@PROD_nombre, PROD_medida=@PROD_medida,
-                 PROD_costoUnitario=@PROD_costoUnitario,PROD_precioMinimo=@PROD_precioMinimo,
-                  PROD_pvp=@PROD_pvp,PROD_costoUnitarioH=@PROD_costoUnitarioH,PROD_precioMinimoH=@PROD_precioMinimoH,
-                  PROD_pvpH=@PROD_pvpH,PROD_image=@PROD_image,PROD_TotalMP=@PROD_TotalMP, PROD_TotalMO=@PROD_TotalMO,
-                   PROD_TotalCIF=@PROD_TotalCIF, PROD_TotalFInal=@PROD_TotalFInal, PROD_utilidad=@PROD_utilidad,
-                   PROD_itemsXhora=@PROD_itemsXhora WHERE PROD_id = @id;
-                   UPDATE PRODUCTO_DET_MP SET PROD_DETMO_MP_estado = 0 WhERE PROD_DETMP_PROD_id = @id;
-                   UPDATE PRODUCTO_DET_MO SET PROD_DETMO_MO_estado = 0 WhERE PROD_DETMO_PROD_id = @id;
-                   UPDATE PRODUCTO_DET_CIF SET PROD_DETCIF_CIF_estado = 0 WhERE PROD_DETCIF_PROD_id = @id;`);
-          
-          for (const m of materiales) {
-            let cantidad,costo;
-            if (typeof m.cantidad === 'string') {
-              cantidad = parseFloat(m.cantidad.replace(',', '.'));
-            } else {
-              cantidad = m.cantidad;
-            }
-            if (typeof m.MP_costo === 'string') {
-              costo = parseFloat(m.MP_costo.replace(',', '.'));
-            } else {
-              costo = m.MP_costo;
-            }
-            console.log('3');
-            await new sql.Request(transaction)
-                .input('PROD_id', sql.Decimal(18,0), id)
-                .input('MP_id', sql.Decimal(18,0), m.MP_id)
-                .input('cantidad', sql.Decimal(18, 4), cantidad)
-                .input('costo', sql.Decimal(18, 4), costo)
-                .query(`INSERT INTO PRODUCTO_DET_MP (PROD_DETMP_PROD_id, PROD_DETMP_MP_id, PROD_DETMP_MP_cantidad,
-                   PROD_DETMP_MP_costo) 
-                        VALUES (@PROD_id, @MP_id, @cantidad, @costo)`);
-          }
-          for(const empAnt of PROD_listaMO){
-              await new sql.Request(transaction)
-                  .input('id', sql.Decimal, empAnt.PROD_DETMO_id)
-                  .query(`UPDATE EMPLEADO_MANOOBRA SET EMP_MO_estado = 0 WHERE EMP_MO_PROD_DETMO_id =@id`);
-          }
-          
-          for (const mo of manoObra) {
-            let total = 0;
-            let cantidad;
-            if (typeof mo.cantidad === 'string') {
-              cantidad = parseFloat(mo.cantidad.replace(',', '.'));
-            } else {
-              cantidad = mo.cantidad;
-            }
-            total = mo.cantidad/vc_PROD_itemsXhora;
-            const resultMO = await new sql.Request(transaction)
-                .input('PROD_id', sql.Decimal(18,0), id)
-                .input('MO_id', sql.Decimal(18,0), mo.MO_id)
-                .input('costoHora', sql.Decimal(18, 4), cantidad) 
-                .input('horaItem', sql.Decimal(18, 4), vc_PROD_itemsXhora) 
-                .input('total', sql.Decimal(18, 4), total) 
-                .query(`INSERT INTO PRODUCTO_DET_MO (PROD_DETMO_PROD_id, PROD_DETMO_MO_id, PROD_DETMO_MO_costoHora,
-                  PROD_DETMO_HoraItem,PROD_DETMO_MO_total) 
-                        VALUES (@PROD_id, @MO_id, @costoHora,@horaItem,@total);
-                        SELECT SCOPE_IDENTITY() AS mo_det_id;`);
-    
-            const mo_det_id = resultMO.recordset[0].mo_det_id;
-    
-            for (const emp of mo.empleadosSeleccionados) {
-              let sueldo;
-              if (typeof emp.EMP_sueldoHora === 'string') {
-                sueldo = parseFloat(emp.EMP_sueldoHora.replace(',', '.'));
-              } else {
-                sueldo = emp.EMP_sueldoHora;
-              }
-                await new sql.Request(transaction)
-                    .input('mo_det_id', sql.Decimal(18, 0), mo_det_id)
-                    .input('costoHora', sql.Decimal(18, 4), sueldo)
-                    .input('EMP_id', sql.Decimal(18, 0), emp.EMP_id)
-                    .query(`INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id,EMP_MO_costoHora, EMP_MO_EMP_id) 
-                            VALUES (@mo_det_id, @costoHora,@EMP_id)`);
-            }
         }
+        else{
+          imageruta = PROD_image; 
+        }
+          const materiales = JSON.parse(PROD_mp);
+          const manoObra = JSON.parse(PROD_mo);
+          const cif = JSON.parse(PROD_cif);
+          
+          const pool = await getConnection();
+          transaction = new sql.Transaction(pool);
+          await transaction.begin();
+          const requestCabecera = new sql.Request(transaction);
+          const result = await requestCabecera
+          .input("id", req.params.id)
+          .input('PROD_codigo', sql.VarChar, PROD_codigo)
+              .input('PROD_nombre', sql.VarChar, PROD_nombre)
+              .input('PROD_medida', sql.VarChar, PROD_medida)
+              .input('PROD_costoUnitario', sql.Decimal(18, 2), vc_PROD_costoUnitario)
+              .input('PROD_precioMinimo', sql.Decimal(18, 2), vc_PROD_precioMinimo)
+              .input('PROD_pvp', sql.Decimal(18, 2), vc_PROD_pvp)
+              .input('PROD_item', sql.VarChar, PROD_item)
+              .input('PROD_costoUnitarioH', sql.Decimal(18, 2), vc_PROD_costoUnitarioH)
+              .input('PROD_precioMinimoH', sql.Decimal(18, 2), vc_PROD_precioMinimoH)
+              .input('PROD_pvpH', sql.Decimal(18, 2), vc_PROD_pvpH)
+              .input("PROD_image", sql.VarChar, imageruta)
+              .input('PROD_TotalMP', sql.Decimal(18, 2), vc_PROD_TotalMP)
+              .input('PROD_TotalMO', sql.Decimal(18, 2), vc_PROD_TotalMO)
+              .input('PROD_TotalCIF', sql.Decimal(18, 2), vc_PROD_TotalCIF)
+              .input('PROD_TotalFInal', sql.Decimal(18, 2), vc_PROD_TotalFInal)
+              .input('PROD_utilidad', sql.Decimal(18, 2), vc_PROD_utilidad)
+              .input('PROD_itemsXhora', sql.Decimal(18, 2), vc_PROD_itemsXhora)
+              .query(`UPDATE PRODUCTO2 SET PROD_codigo=@PROD_codigo, PROD_nombre=@PROD_nombre, PROD_medida=@PROD_medida,
+                PROD_costoUnitario=@PROD_costoUnitario,PROD_precioMinimo=@PROD_precioMinimo,
+                PROD_pvp=@PROD_pvp,PROD_costoUnitarioH=@PROD_costoUnitarioH,PROD_precioMinimoH=@PROD_precioMinimoH,
+                PROD_pvpH=@PROD_pvpH,PROD_image=@PROD_image,PROD_TotalMP=@PROD_TotalMP, PROD_TotalMO=@PROD_TotalMO,
+                  PROD_TotalCIF=@PROD_TotalCIF, PROD_TotalFInal=@PROD_TotalFInal, PROD_utilidad=@PROD_utilidad,
+                  PROD_itemsXhora=@PROD_itemsXhora WHERE PROD_id = @id;
+                  UPDATE PRODUCTO_DET_MP SET PROD_DETMO_MP_estado = 0 WhERE PROD_DETMP_PROD_id = @id;
+                  UPDATE PRODUCTO_DET_MO SET PROD_DETMO_MO_estado = 0 WhERE PROD_DETMO_PROD_id = @id;
+                  UPDATE PRODUCTO_DET_CIF SET PROD_DETCIF_CIF_estado = 0 WhERE PROD_DETCIF_PROD_id = @id;`);
         
-        for (const m of cif) {
-          let valor;
-              if (typeof m.CI_valor === 'string') {
-                valor = parseFloat(m.CI_valor.replace(',', '.'));
-              } else {
-                valor = m.CI_valor;
-              }
+        for (const m of materiales) {
+          let cantidad,costo;
+          if (typeof m.cantidad === 'string') {
+            cantidad = parseFloat(m.cantidad.replace(',', '.'));
+          } else {
+            cantidad = m.cantidad;
+          }
+          if (typeof m.MP_costo === 'string') {
+            costo = parseFloat(m.MP_costo.replace(',', '.'));
+          } else {
+            costo = m.MP_costo;
+          }
           await new sql.Request(transaction)
               .input('PROD_id', sql.Decimal(18,0), id)
-              .input('CIF_id', sql.Decimal(18,0), m.CI_id)
-              .input('costo', sql.Decimal(18, 4), valor)
-              .query(`INSERT INTO PRODUCTO_DET_CIF (PROD_DETCIF_PROD_id, PROD_DETCIF_CIF_id, PROD_DETCIF_CIF_costo) 
-                      VALUES (@PROD_id, @CIF_id, @costo)`);
+              .input('MP_id', sql.Decimal(18,0), m.MP_id)
+              .input('cantidad', sql.Decimal(18, 4), cantidad)
+              .input('costo', sql.Decimal(18, 4), costo)
+              .query(`INSERT INTO PRODUCTO_DET_MP (PROD_DETMP_PROD_id, PROD_DETMP_MP_id, PROD_DETMP_MP_cantidad,
+                  PROD_DETMP_MP_costo) 
+                      VALUES (@PROD_id, @MP_id, @cantidad, @costo)`);
         }
-        await transaction.commit();
-         res.status(200).json({ status: "ok", msg: "Producto actualizado con éxito" ,token:0});
-    
-          } catch (error) {
-            if (transaction) {
-              await transaction.rollback();
+        for(const empAnt of PROD_listaMO){
+            await new sql.Request(transaction)
+                .input('id', sql.Decimal, empAnt.PROD_DETMO_id)
+                .query(`UPDATE EMPLEADO_MANOOBRA SET EMP_MO_estado = 0 WHERE EMP_MO_PROD_DETMO_id =@id`);
+        }
+        
+        for (const mo of manoObra) {
+          let total = 0;
+          let cantidad;
+          if (typeof mo.cantidad === 'string') {
+            cantidad = parseFloat(mo.cantidad.replace(',', '.'));
+          } else {
+            cantidad = mo.cantidad;
           }
-            console.error(error);
-             res.status(500).send("Error al procesar la actualizacion: " + error.message);
+          total = mo.cantidad/vc_PROD_itemsXhora;
+          const resultMO = await new sql.Request(transaction)
+              .input('PROD_id', sql.Decimal(18,0), id)
+              .input('MO_id', sql.Decimal(18,0), mo.MO_id)
+              .input('costoHora', sql.Decimal(18, 4), cantidad) 
+              .input('horaItem', sql.Decimal(18, 4), vc_PROD_itemsXhora) 
+              .input('total', sql.Decimal(18, 4), total) 
+              .query(`INSERT INTO PRODUCTO_DET_MO (PROD_DETMO_PROD_id, PROD_DETMO_MO_id, PROD_DETMO_MO_costoHora,
+                PROD_DETMO_HoraItem,PROD_DETMO_MO_total) 
+                      VALUES (@PROD_id, @MO_id, @costoHora,@horaItem,@total);
+                      SELECT SCOPE_IDENTITY() AS mo_det_id;`);
+  
+          const mo_det_id = resultMO.recordset[0].mo_det_id;
+  
+          for (const emp of mo.empleadosSeleccionados) {
+            let sueldo;
+            if (typeof emp.EMP_sueldoHora === 'string') {
+              sueldo = parseFloat(emp.EMP_sueldoHora.replace(',', '.'));
+            } else {
+              sueldo = emp.EMP_sueldoHora;
+            }
+              await new sql.Request(transaction)
+                  .input('mo_det_id', sql.Decimal(18, 0), mo_det_id)
+                  .input('costoHora', sql.Decimal(18, 4), sueldo)
+                  .input('EMP_id', sql.Decimal(18, 0), emp.EMP_id)
+                  .query(`INSERT INTO EMPLEADO_MANOOBRA (EMP_MO_PROD_DETMO_id,EMP_MO_costoHora, EMP_MO_EMP_id) 
+                          VALUES (@mo_det_id, @costoHora,@EMP_id)`);
+          }
+      }
+        
+      for (const m of cif) {
+        let valor;
+            if (typeof m.CI_valor === 'string') {
+              valor = parseFloat(m.CI_valor.replace(',', '.'));
+            } else {
+              valor = m.CI_valor;
+            }
+        await new sql.Request(transaction)
+            .input('PROD_id', sql.Decimal(18,0), id)
+            .input('CIF_id', sql.Decimal(18,0), m.CI_id)
+            .input('costo', sql.Decimal(18, 4), valor)
+            .query(`INSERT INTO PRODUCTO_DET_CIF (PROD_DETCIF_PROD_id, PROD_DETCIF_CIF_id, PROD_DETCIF_CIF_costo) 
+                    VALUES (@PROD_id, @CIF_id, @costo)`);
+      }
+      await transaction.commit();
+        res.status(200).json({ status: "ok", msg: "Producto actualizado con éxito" ,token:0});
+  
+      } catch (error) {
+        if (transaction) {
+          await transaction.rollback();
         }
-    } catch (error) {
-      res.status(500);
-      res.send(error.message);
-    }
+      }
   };
 
   export const deleteEnsamble = async (req, res) => {
