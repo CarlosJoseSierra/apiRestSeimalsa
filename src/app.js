@@ -25,6 +25,7 @@ import employeeRoutes from "./routes/employee.router.js";
 import manoobraRoutes from "./routes/manoobra.router.js";
 import materiaprimaRoutes from "./routes/materiaprima.routes.js";
 import productoensambleRoutes from "./routes/productoensamble.router.js";
+import orderproduccionRoutes from "./routes/orderproduccion.routes.js";
 import cifRoutes from "./routes/cif.router.js";
 const cloudinary = require("cloudinary").v2
 //import morgan from "morgan";
@@ -65,6 +66,7 @@ app.use("/api", employeeRoutes);
 app.use("/api", manoobraRoutes);
 app.use("/api", materiaprimaRoutes);
 app.use("/api", productoensambleRoutes);
+app.use("/api", orderproduccionRoutes);
 app.use((req,res,next)=>{
     res.status(404).json({
         message: 'endpoint not found'
