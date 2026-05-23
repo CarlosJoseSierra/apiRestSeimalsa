@@ -65,10 +65,10 @@ export const getAllOrdenP = async (req, res) => {
             .input('OP_costoTotal', sql.Decimal(18, 2), vc_OP_costoTotal)
             .input('OP_CLI_id', sql.Decimal, Cliente)
             .input('OP_USU_ing', sql.Decimal, idUser)
-            .query(`INSERT INTO ORDEN_PRODUCCION (OP_codigo, OP_fecha, OP_OT_id, OP_OT_codigo,OP_OT_tipo,
-                OP_costoTotal,OP_CLI_id,OP_estado,OP_USU_ing,OP_fecha_ing) 
-              VALUES (NULL, @OP_fecha, 0, @OP_OT_codigo,0,@OP_costoTotal,@OP_CLI_id,
-              1,@OP_USU_ing,GETDATE());
+            .query(`INSERT INTO ORDEN_PRODUCCION
+             (OP_codigo, OP_fecha, OP_OT_id, OP_OT_codigo,OP_OT_tipo,OP_costoTotal,OP_CLI_id,OP_estado,OP_USU_ing,OP_fecha_ing) 
+              VALUES 
+              (NULL, @OP_fecha, 0, @OP_OT_codigo,0,@OP_costoTotal,@OP_CLI_id,1,@OP_USU_ing,GETDATE());
               DECLARE @NuevoID DECIMAL(18,0) = SCOPE_IDENTITY();
               UPDATE ORDEN_PRODUCCION SET OP_codigo = 'OPR' + CAST(@NuevoID AS VARCHAR(10)) WHERE OP_id = @NuevoID;
               SELECT @NuevoID AS id;`);
@@ -88,10 +88,11 @@ export const getAllOrdenP = async (req, res) => {
             .input('OPD_PROD_nombre', sql.VarChar, m.nombre)
             .input('OPD_CantidadInicio', sql.Decimal(18, 2), m.cantidad)
             .input('OPD_costo', sql.Decimal(18, 2), costo)
-            .query(`INSERT INTO ORDEN_PRODUCCIONDETALLE (OPD_PO_id, OPD_PROD_id, OPD_PROD_codigo,
-                OPD_PROD_nombre,OPD_CantidadInicio,OPD_CantidadProd,OPD_costo,OPD_estado) 
-                VALUES (@OPD_PO_id, @OPD_PROD_id, @OPD_PROD_codigo, @OPD_PROD_nombre,@OPD_CantidadInicio,0,
-                OPD_costo,1);`);
+            .query(`INSERT INTO ORDEN_PRODUCCIONDETALLE 
+            (OPD_PO_id, OPD_PROD_id, OPD_PROD_codigo,OPD_PROD_nombre,OPD_CantidadInicio,OPD_CantidadProd,OPD_costo,OPD_estado) 
+              VALUES
+           (@OPD_PO_id, @OPD_PROD_id, @OPD_PROD_codigo, @OPD_PROD_nombre,@OPD_CantidadInicio,0,
+                @OPD_costo,1);`);
       }
       
     await transaction.commit();
