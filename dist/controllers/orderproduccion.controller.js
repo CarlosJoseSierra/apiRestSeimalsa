@@ -100,37 +100,38 @@ var getOrdenPById = /*#__PURE__*/function () {
 exports.getOrdenPById = getOrdenPById;
 var createOrdenP = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var transaction, vc_OP_costoTotal, detalles, pool, requestCabecera, result, OP_id, _iterator, _step, m, costo;
+    var transaction, _req$body, Fecha, OT, Costo, Cliente, idUser, listAgregados, vc_OP_costoTotal, detalles, pool, requestCabecera, result, OP_id, _iterator, _step, m, costo;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           _context3.prev = 0;
-          if (typeof req.body.Costo === 'string') {
-            vc_OP_costoTotal = parseFloat(req.body.Costo.replace(',', '.'));
+          _req$body = req.body, Fecha = _req$body.Fecha, OT = _req$body.OT, Costo = _req$body.Costo, Cliente = _req$body.Cliente, idUser = _req$body.idUser, listAgregados = _req$body.listAgregados;
+          if (typeof Costo === 'string') {
+            vc_OP_costoTotal = parseFloat(Costo.replace(',', '.'));
           } else {
-            vc_OP_costoTotal = req.body.Costo;
+            vc_OP_costoTotal = Costo;
           }
-          detalles = JSON.parse(OP_detalle);
-          _context3.next = 5;
+          detalles = JSON.parse(listAgregados);
+          _context3.next = 6;
           return (0, _database.getConnection)();
-        case 5:
+        case 6:
           pool = _context3.sent;
           transaction = new _database.sql.Transaction(pool);
-          _context3.next = 9;
+          _context3.next = 10;
           return transaction.begin();
-        case 9:
+        case 10:
           requestCabecera = new _database.sql.Request(transaction);
-          _context3.next = 12;
-          return requestCabecera.input('OP_fecha', _database.sql.DateTime, req.body.Fecha).input('OP_OT_codigo', _database.sql.VarChar, req.body.OT).input('OP_costoTotal', _database.sql.Decimal(18, 2), vc_OP_costoTotal).input('OP_CLI_id', _database.sql.Decimal, req.body.Cliente).input('OP_USU_ing', _database.sql.Decimal, req.body.idUser).query("INSERT INTO ORDEN_PRODUCCION (OP_codigo, OP_fecha, OP_OT_id, OP_OT_codigo,OP_OT_tipo,\n                OP_costoTotal,OP_CLI_id,OP_estado,OP_USU_ing,OP_fecha_ing) \n              VALUES (NULL, @OP_fecha, 0, @OP_OT_codigo,0,@OP_costoTotal,@OP_CLI_id,\n              1,@OP_USU_ing,GETDATE());\n              DECLARE @NuevoID DECIMAL(18,0) = SCOPE_IDENTITY();\n              UPDATE ORDEN_PRODUCCION SET SET OP_codigo = 'OPR' + CAST(@NuevoID AS VARCHAR(10)) WHERE OP_id = @NuevoID;\n              SELECT @NuevoID AS id;");
-        case 12:
+          _context3.next = 13;
+          return requestCabecera.input('OP_fecha', _database.sql.DateTime, Fecha).input('OP_OT_codigo', _database.sql.VarChar, OT).input('OP_costoTotal', _database.sql.Decimal(18, 2), vc_OP_costoTotal).input('OP_CLI_id', _database.sql.Decimal, Cliente).input('OP_USU_ing', _database.sql.Decimal, idUser).query("INSERT INTO ORDEN_PRODUCCION (OP_codigo, OP_fecha, OP_OT_id, OP_OT_codigo,OP_OT_tipo,\n                OP_costoTotal,OP_CLI_id,OP_estado,OP_USU_ing,OP_fecha_ing) \n              VALUES (NULL, @OP_fecha, 0, @OP_OT_codigo,0,@OP_costoTotal,@OP_CLI_id,\n              1,@OP_USU_ing,GETDATE());\n              DECLARE @NuevoID DECIMAL(18,0) = SCOPE_IDENTITY();\n              UPDATE ORDEN_PRODUCCION SET OP_codigo = 'OPR' + CAST(@NuevoID AS VARCHAR(10)) WHERE OP_id = @NuevoID;\n              SELECT @NuevoID AS id;");
+        case 13:
           result = _context3.sent;
           OP_id = result.recordset[0].id;
-          _iterator = _createForOfIteratorHelper(req.body.listAgregados);
-          _context3.prev = 15;
+          _iterator = _createForOfIteratorHelper(detalles);
+          _context3.prev = 16;
           _iterator.s();
-        case 17:
+        case 18:
           if ((_step = _iterator.n()).done) {
-            _context3.next = 25;
+            _context3.next = 26;
             break;
           }
           m = _step.value;
@@ -140,50 +141,50 @@ var createOrdenP = /*#__PURE__*/function () {
           } else {
             costo = m.costoUnitario;
           }
-          _context3.next = 23;
-          return new _database.sql.Request(transaction).input('OPD_PO_id', _database.sql.Decimal(18, 0), OP_id).input('OPD_PROD_id', _database.sql.Decimal(18, 0), m.id).input('OPD_PROD_codigo', _database.sql.VarChar, m.codigo).input('OPD_PROD_nombre', _database.sql.VarChar, m.nombre).input('OPD_CantidadInicio', _database.sql.VarChar, m.cantidad).input('OPD_costo', _database.sql.VarChar, costo).query("INSERT INTO ORDEN_PRODUCCIONDETALLE (OPD_PO_id, OPD_PROD_id, OPD_PROD_codigo,\n                OPD_PROD_nombre,OPD_CantidadInicio,OPD_CantidadProd,OPD_costo,OPD_estado) \n                VALUES (@OPD_PO_id, @OPD_PROD_id, @OPD_PROD_codigo, @OPD_PROD_nombre,@OPD_CantidadInicio,0,\n                OPD_costo,1);");
-        case 23:
-          _context3.next = 17;
+          _context3.next = 24;
+          return new _database.sql.Request(transaction).input('OPD_PO_id', _database.sql.Decimal(18, 0), OP_id).input('OPD_PROD_id', _database.sql.Decimal(18, 0), m.id).input('OPD_PROD_codigo', _database.sql.VarChar, m.codigo).input('OPD_PROD_nombre', _database.sql.VarChar, m.nombre).input('OPD_CantidadInicio', _database.sql.Decimal(18, 2), m.cantidad).input('OPD_costo', _database.sql.Decimal(18, 2), costo).query("INSERT INTO ORDEN_PRODUCCIONDETALLE (OPD_PO_id, OPD_PROD_id, OPD_PROD_codigo,\n                OPD_PROD_nombre,OPD_CantidadInicio,OPD_CantidadProd,OPD_costo,OPD_estado) \n                VALUES (@OPD_PO_id, @OPD_PROD_id, @OPD_PROD_codigo, @OPD_PROD_nombre,@OPD_CantidadInicio,0,\n                OPD_costo,1);");
+        case 24:
+          _context3.next = 18;
           break;
-        case 25:
-          _context3.next = 30;
+        case 26:
+          _context3.next = 31;
           break;
-        case 27:
-          _context3.prev = 27;
-          _context3.t0 = _context3["catch"](15);
+        case 28:
+          _context3.prev = 28;
+          _context3.t0 = _context3["catch"](16);
           _iterator.e(_context3.t0);
-        case 30:
-          _context3.prev = 30;
+        case 31:
+          _context3.prev = 31;
           _iterator.f();
-          return _context3.finish(30);
-        case 33:
-          _context3.next = 35;
+          return _context3.finish(31);
+        case 34:
+          _context3.next = 36;
           return transaction.commit();
-        case 35:
+        case 36:
           res.status(200).json({
             status: "ok",
             msg: "Orden de Produccion creada con éxito",
             token: 0
           });
-          _context3.next = 45;
+          _context3.next = 46;
           break;
-        case 38:
-          _context3.prev = 38;
+        case 39:
+          _context3.prev = 39;
           _context3.t1 = _context3["catch"](0);
           if (!transaction) {
-            _context3.next = 43;
+            _context3.next = 44;
             break;
           }
-          _context3.next = 43;
+          _context3.next = 44;
           return transaction.rollback();
-        case 43:
+        case 44:
           console.error(_context3.t1);
           res.status(500).send("Error al procesar el registro: " + _context3.t1.message);
-        case 45:
+        case 46:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[0, 38], [15, 27, 30, 33]]);
+    }, _callee3, null, [[0, 39], [16, 28, 31, 34]]);
   }));
   return function createOrdenP(_x5, _x6) {
     return _ref3.apply(this, arguments);

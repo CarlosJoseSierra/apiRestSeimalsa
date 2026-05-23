@@ -45,34 +45,35 @@ export const getAllOrdenP = async (req, res) => {
   export const createOrdenP = async (req, res) => {
     let transaction;
     try {   
+      const { Fecha, OT, Costo, Cliente, idUser, listAgregados } = req.body;
     let vc_OP_costoTotal;
-        if (typeof req.body.Costo === 'string') {
-            vc_OP_costoTotal = parseFloat(req.body.Costo.replace(',', '.'));
+        if (typeof Costo === 'string') {
+            vc_OP_costoTotal = parseFloat(Costo.replace(',', '.'));
         } else {
-            vc_OP_costoTotal = req.body.Costo;
+            vc_OP_costoTotal = Costo;
         }
        
-        const detalles = JSON.parse(OP_detalle);
+        const detalles = JSON.parse(listAgregados);
         
         const pool = await getConnection();
         transaction = new sql.Transaction(pool);
         await transaction.begin();
         const requestCabecera = new sql.Request(transaction);
         const result = await requestCabecera
-        .input('OP_fecha', sql.DateTime, req.body.Fecha)
-            .input('OP_OT_codigo', sql.VarChar, req.body.OT)
+        .input('OP_fecha', sql.DateTime, Fecha)
+            .input('OP_OT_codigo', sql.VarChar, OT)
             .input('OP_costoTotal', sql.Decimal(18, 2), vc_OP_costoTotal)
-            .input('OP_CLI_id', sql.Decimal, req.body.Cliente)
-            .input('OP_USU_ing', sql.Decimal, req.body.idUser)
+            .input('OP_CLI_id', sql.Decimal, Cliente)
+            .input('OP_USU_ing', sql.Decimal, idUser)
             .query(`INSERT INTO ORDEN_PRODUCCION (OP_codigo, OP_fecha, OP_OT_id, OP_OT_codigo,OP_OT_tipo,
                 OP_costoTotal,OP_CLI_id,OP_estado,OP_USU_ing,OP_fecha_ing) 
               VALUES (NULL, @OP_fecha, 0, @OP_OT_codigo,0,@OP_costoTotal,@OP_CLI_id,
               1,@OP_USU_ing,GETDATE());
               DECLARE @NuevoID DECIMAL(18,0) = SCOPE_IDENTITY();
-              UPDATE ORDEN_PRODUCCION SET SET OP_codigo = 'OPR' + CAST(@NuevoID AS VARCHAR(10)) WHERE OP_id = @NuevoID;
+              UPDATE ORDEN_PRODUCCION SET OP_codigo = 'OPR' + CAST(@NuevoID AS VARCHAR(10)) WHERE OP_id = @NuevoID;
               SELECT @NuevoID AS id;`);
       const OP_id = result.recordset[0].id;
-      for (const m of req.body.listAgregados) {
+      for (const m of detalles) {
         let costo;
         if (typeof m.costoUnitario === 'string') {
             costo = parseFloat(m.costoUnitario.replace(',', '.'));
@@ -85,8 +86,8 @@ export const getAllOrdenP = async (req, res) => {
             .input('OPD_PROD_id', sql.Decimal(18,0), m.id)
             .input('OPD_PROD_codigo', sql.VarChar, m.codigo)
             .input('OPD_PROD_nombre', sql.VarChar, m.nombre)
-            .input('OPD_CantidadInicio', sql.VarChar, m.cantidad)
-            .input('OPD_costo', sql.VarChar, costo)
+            .input('OPD_CantidadInicio', sql.Decimal(18, 2), m.cantidad)
+            .input('OPD_costo', sql.Decimal(18, 2), costo)
             .query(`INSERT INTO ORDEN_PRODUCCIONDETALLE (OPD_PO_id, OPD_PROD_id, OPD_PROD_codigo,
                 OPD_PROD_nombre,OPD_CantidadInicio,OPD_CantidadProd,OPD_costo,OPD_estado) 
                 VALUES (@OPD_PO_id, @OPD_PROD_id, @OPD_PROD_codigo, @OPD_PROD_nombre,@OPD_CantidadInicio,0,
