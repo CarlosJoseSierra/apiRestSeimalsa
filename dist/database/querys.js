@@ -159,6 +159,7 @@ var querys = {
   //getAllEnsambles:"SELECT PROD_id,PROD_codigo,PROD_nombre,PROD_medida,PROD_costoUnitario,PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,PROD_precioMinimoH,PROD_pvpH,PROD_image,PROD_TotalMP,PROD_TotalMO,PROD_TotalCIF,PROD_TotalFInal,PROD_utilidad,PROD_estado FROM PRODUCTO WHERE PROD_item like 'PRODUCCION' AND PROD_estado = 1",
   getEnsambleById: "SELECT PROD_id,PROD_codigo,PROD_nombre,PROD_medida,PROD_costoUnitario,PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,PROD_precioMinimoH,PROD_pvpH,PROD_image,PROD_TotalMP,PROD_TotalMO,PROD_TotalCIF,PROD_TotalFInal,PROD_utilidad,PROD_estado  FROM PRODUCTO WHERE PROD_id = @id",
   createEnsamble: "INSERT INTO PRODUCTO (PROD_codigo,PROD_nombre,PROD_medida,PROD_costoUnitario,PROD_precioMinimo,PROD_pvp,PROD_item,PROD_costoUnitarioH,PROD_precioMinimoH,PROD_pvpH,PROD_image,PROD_TotalMP,PROD_TotalMO,PROD_TotalCIF,PROD_TotalFInal,PROD_utilidad,PROD_estado) VALUES (@PROD_codigo,@PROD_nombre,@PROD_medida,@PROD_costoUnitario,@PROD_precioMinimo,@PROD_pvp,@PROD_item,@PROD_costoUnitarioH,@PROD_precioMinimoH,@PROD_pvpH,@PROD_image,@PROD_TotalMP,@PROD_TotalMO,@PROD_TotalCIF,@PROD_TotalFInal,@PROD_utilidad,1)",
-  updateEnsamble: "UPDATE PRODUCTO SET CI_descripcion = @CI_descripcion WHERE CI_id = @id"
+  updateEnsamble: "UPDATE PRODUCTO SET CI_descripcion = @CI_descripcion WHERE CI_id = @id",
+  getOrdenPById: "SELECT * FROM ORDEN_PRODUCCION WHERE OP_id = @id"
 };
 exports.querys = querys;
