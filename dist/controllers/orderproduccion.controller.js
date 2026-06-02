@@ -142,7 +142,7 @@ var createOrdenP = /*#__PURE__*/function () {
             costo = m.costoUnitario;
           }
           _context3.next = 24;
-          return new _database.sql.Request(transaction).input('OPD_PO_id', _database.sql.Decimal(18, 0), OP_id).input('OPD_PROD_id', _database.sql.Decimal(18, 0), m.id).input('OPD_PROD_codigo', _database.sql.VarChar, m.codigo).input('OPD_PROD_nombre', _database.sql.VarChar, m.nombre).input('OPD_CantidadInicio', _database.sql.Decimal(18, 2), m.cantidad).input('OPD_costo', _database.sql.Decimal(18, 2), costo).query("INSERT INTO ORDEN_PRODUCCIONDETALLE \n            (OPD_PO_id, OPD_PROD_id, OPD_PROD_codigo,OPD_PROD_nombre,OPD_CantidadInicio,OPD_CantidadProd,OPD_costo,OPD_estado) \n              VALUES\n           (@OPD_PO_id, @OPD_PROD_id, @OPD_PROD_codigo, @OPD_PROD_nombre,@OPD_CantidadInicio,0,\n                @OPD_costo,1);");
+          return new _database.sql.Request(transaction).input('OPD_OP_id', _database.sql.Decimal(18, 0), OP_id).input('OPD_PROD_id', _database.sql.Decimal(18, 0), m.id).input('OPD_PROD_codigo', _database.sql.VarChar, m.codigo).input('OPD_PROD_nombre', _database.sql.VarChar, m.nombre).input('OPD_CantidadInicio', _database.sql.Decimal(18, 2), m.cantidad).input('OPD_costo', _database.sql.Decimal(18, 2), costo).query("INSERT INTO ORDEN_PRODUCCIONDETALLE \n            (OPD_OP_id, OPD_PROD_id, OPD_PROD_codigo,OPD_PROD_nombre,OPD_CantidadInicio,OPD_CantidadProd,OPD_costo,OPD_estado) \n              VALUES\n           (@OPD_OP_id, @OPD_PROD_id, @OPD_PROD_codigo, @OPD_PROD_nombre,@OPD_CantidadInicio,0,\n                @OPD_costo,1);");
         case 24:
           _context3.next = 18;
           break;

@@ -83,16 +83,16 @@ export const getAllOrdenP = async (req, res) => {
         }
         
         await new sql.Request(transaction)
-            .input('OPD_PO_id', sql.Decimal(18,0), OP_id)
+            .input('OPD_OP_id', sql.Decimal(18,0), OP_id)
             .input('OPD_PROD_id', sql.Decimal(18,0), m.id)
             .input('OPD_PROD_codigo', sql.VarChar, m.codigo)
             .input('OPD_PROD_nombre', sql.VarChar, m.nombre)
             .input('OPD_CantidadInicio', sql.Decimal(18, 2), m.cantidad)
             .input('OPD_costo', sql.Decimal(18, 2), costo)
             .query(`INSERT INTO ORDEN_PRODUCCIONDETALLE 
-            (OPD_PO_id, OPD_PROD_id, OPD_PROD_codigo,OPD_PROD_nombre,OPD_CantidadInicio,OPD_CantidadProd,OPD_costo,OPD_estado) 
+            (OPD_OP_id, OPD_PROD_id, OPD_PROD_codigo,OPD_PROD_nombre,OPD_CantidadInicio,OPD_CantidadProd,OPD_costo,OPD_estado) 
               VALUES
-           (@OPD_PO_id, @OPD_PROD_id, @OPD_PROD_codigo, @OPD_PROD_nombre,@OPD_CantidadInicio,0,
+           (@OPD_OP_id, @OPD_PROD_id, @OPD_PROD_codigo, @OPD_PROD_nombre,@OPD_CantidadInicio,0,
                 @OPD_costo,1);`);
       }
       
