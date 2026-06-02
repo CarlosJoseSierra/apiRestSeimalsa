@@ -45,7 +45,7 @@ export const getAllOrdenP = async (req, res) => {
   export const createOrdenP = async (req, res) => {
     let transaction;
     try {   
-      const { Fecha, OT, Costo, Cliente, idUser, listAgregados } = req.body;
+      const { Fecha, FechaFin,OT, Costo, Cliente, idUser, listAgregados } = req.body;
     let vc_OP_costoTotal;
         if (typeof Costo === 'string') {
             vc_OP_costoTotal = parseFloat(Costo.replace(',', '.'));
@@ -61,14 +61,15 @@ export const getAllOrdenP = async (req, res) => {
         const requestCabecera = new sql.Request(transaction);
         const result = await requestCabecera
         .input('OP_fecha', sql.DateTime, Fecha)
+        .input('OP_fechaFin', sql.DateTime, FechaFin)
             .input('OP_OT_codigo', sql.VarChar, OT)
             .input('OP_costoTotal', sql.Decimal(18, 2), vc_OP_costoTotal)
             .input('OP_CLI_id', sql.Decimal, Cliente)
             .input('OP_USU_ing', sql.Decimal, idUser)
             .query(`INSERT INTO ORDEN_PRODUCCION
-             (OP_codigo, OP_fecha, OP_OT_id, OP_OT_codigo,OP_OT_tipo,OP_costoTotal,OP_CLI_id,OP_estado,OP_USU_ing,OP_fecha_ing) 
+             (OP_codigo, OP_fecha,OP_fechaFin, OP_OT_id, OP_OT_codigo,OP_OT_tipo,OP_costoTotal,OP_CLI_id,OP_estado,OP_USU_ing,OP_fecha_ing) 
               VALUES 
-              (NULL, @OP_fecha, 0, @OP_OT_codigo,0,@OP_costoTotal,@OP_CLI_id,1,@OP_USU_ing,GETDATE());
+              (NULL, @OP_fecha,@OP_fechaFin ,0, @OP_OT_codigo,0,@OP_costoTotal,@OP_CLI_id,1,@OP_USU_ing,GETDATE());
               DECLARE @NuevoID DECIMAL(18,0) = SCOPE_IDENTITY();
               UPDATE ORDEN_PRODUCCION SET OP_codigo = 'OPR' + CAST(@NuevoID AS VARCHAR(10)) WHERE OP_id = @NuevoID;
               SELECT @NuevoID AS id;`);

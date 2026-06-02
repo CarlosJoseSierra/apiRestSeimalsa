@@ -100,12 +100,12 @@ var getOrdenPById = /*#__PURE__*/function () {
 exports.getOrdenPById = getOrdenPById;
 var createOrdenP = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var transaction, _req$body, Fecha, OT, Costo, Cliente, idUser, listAgregados, vc_OP_costoTotal, detalles, pool, requestCabecera, result, OP_id, _iterator, _step, m, costo;
+    var transaction, _req$body, Fecha, FechaFin, OT, Costo, Cliente, idUser, listAgregados, vc_OP_costoTotal, detalles, pool, requestCabecera, result, OP_id, _iterator, _step, m, costo;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           _context3.prev = 0;
-          _req$body = req.body, Fecha = _req$body.Fecha, OT = _req$body.OT, Costo = _req$body.Costo, Cliente = _req$body.Cliente, idUser = _req$body.idUser, listAgregados = _req$body.listAgregados;
+          _req$body = req.body, Fecha = _req$body.Fecha, FechaFin = _req$body.FechaFin, OT = _req$body.OT, Costo = _req$body.Costo, Cliente = _req$body.Cliente, idUser = _req$body.idUser, listAgregados = _req$body.listAgregados;
           if (typeof Costo === 'string') {
             vc_OP_costoTotal = parseFloat(Costo.replace(',', '.'));
           } else {
@@ -122,7 +122,7 @@ var createOrdenP = /*#__PURE__*/function () {
         case 10:
           requestCabecera = new _database.sql.Request(transaction);
           _context3.next = 13;
-          return requestCabecera.input('OP_fecha', _database.sql.DateTime, Fecha).input('OP_OT_codigo', _database.sql.VarChar, OT).input('OP_costoTotal', _database.sql.Decimal(18, 2), vc_OP_costoTotal).input('OP_CLI_id', _database.sql.Decimal, Cliente).input('OP_USU_ing', _database.sql.Decimal, idUser).query("INSERT INTO ORDEN_PRODUCCION\n             (OP_codigo, OP_fecha, OP_OT_id, OP_OT_codigo,OP_OT_tipo,OP_costoTotal,OP_CLI_id,OP_estado,OP_USU_ing,OP_fecha_ing) \n              VALUES \n              (NULL, @OP_fecha, 0, @OP_OT_codigo,0,@OP_costoTotal,@OP_CLI_id,1,@OP_USU_ing,GETDATE());\n              DECLARE @NuevoID DECIMAL(18,0) = SCOPE_IDENTITY();\n              UPDATE ORDEN_PRODUCCION SET OP_codigo = 'OPR' + CAST(@NuevoID AS VARCHAR(10)) WHERE OP_id = @NuevoID;\n              SELECT @NuevoID AS id;");
+          return requestCabecera.input('OP_fecha', _database.sql.DateTime, Fecha).input('OP_fechaFin', _database.sql.DateTime, FechaFin).input('OP_OT_codigo', _database.sql.VarChar, OT).input('OP_costoTotal', _database.sql.Decimal(18, 2), vc_OP_costoTotal).input('OP_CLI_id', _database.sql.Decimal, Cliente).input('OP_USU_ing', _database.sql.Decimal, idUser).query("INSERT INTO ORDEN_PRODUCCION\n             (OP_codigo, OP_fecha,OP_fechaFin, OP_OT_id, OP_OT_codigo,OP_OT_tipo,OP_costoTotal,OP_CLI_id,OP_estado,OP_USU_ing,OP_fecha_ing) \n              VALUES \n              (NULL, @OP_fecha,@OP_fechaFin ,0, @OP_OT_codigo,0,@OP_costoTotal,@OP_CLI_id,1,@OP_USU_ing,GETDATE());\n              DECLARE @NuevoID DECIMAL(18,0) = SCOPE_IDENTITY();\n              UPDATE ORDEN_PRODUCCION SET OP_codigo = 'OPR' + CAST(@NuevoID AS VARCHAR(10)) WHERE OP_id = @NuevoID;\n              SELECT @NuevoID AS id;");
         case 13:
           result = _context3.sent;
           OP_id = result.recordset[0].id;
