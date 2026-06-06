@@ -30,6 +30,7 @@ import cifRoutes from "./routes/cif.router.js";
 const cloudinary = require("cloudinary").v2
 //import morgan from "morgan";
 //import config from "./config.js";
+import calificacionRoutes from "./routes/calificacion.routes.js";
 
 const app = express();
 
@@ -67,6 +68,7 @@ app.use("/api", manoobraRoutes);
 app.use("/api", materiaprimaRoutes);
 app.use("/api", productoensambleRoutes);
 app.use("/api", orderproduccionRoutes);
+app.use("/api", calificacionRoutes);
 app.use((req,res,next)=>{
     res.status(404).json({
         message: 'endpoint not found'
