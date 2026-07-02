@@ -311,3 +311,33 @@ export const getAreaByPlaca = async (req, res) => {
       res.status(500);
     }
   }
+
+  export const getReparacionesXtecnico= async(req, res) =>{
+    try {
+      const { idTecnico } = req.params;
+      const pool = await getConnection();
+      const result = await pool.request()
+      .input("idTecnico", sql.Decimal, idTecnico)
+      .execute('sp_Ventas_GetRepairPorTecnico');
+      if (!result.recordset || result.recordset.length === 0) {
+        return res.json([]); 
+      }
+      const jsonResult = result.recordset
+      .map(row => {
+        return Object.values(row)[0]; 
+      })
+      .join('');
+
+      if (!jsonResult) {
+        return res.json([]);
+      }
+      const data = JSON.parse(jsonResult);
+      const finalArray = data.repairs ? data.repairs : data;
+      res.json(finalArray);
+    } catch (error) {
+        res.status(500).send({
+        message: "Error interno del servidor al procesar la solicitud.",
+        error: error.message
+      });
+    }
+  }

@@ -16,10 +16,12 @@ import {
     getEntregadosElRosado,
     getEntregadosArca,
     getDetalleCTById,
+    getReparacionesXtecnico,
 } from "../controllers/areaservicio.controller";
 
 const router = Router();
 
+router.get("/areaservicio/tec/:idTecnico",getReparacionesXtecnico);
 router.get("/areaservicio/:serie/:idCliente1/:idCliente2", getAreaBySerie);
 
 router.get("/areaservicio/x/:placa/:idCliente1/:idCliente2", getAreaByPlaca);

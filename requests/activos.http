@@ -28,14 +28,14 @@ Content-Type: application/json
 http://localhost:3000/api/activos/VLTJ33CA
 
 ### add a product
-POST http://localhost:3000/api/materia/new
+PUT  http://localhost:3000/api/materia/x/15
 Content-Type: application/json
 
 {
-  "Descripcion": "nueva",
-  "Medida": "Litro (l)",
-  "Costo": "2,5",
-  "Categoria": "plastico"
+  "Descripcion": "nueva2",
+  "Medida": "Galón (gl)",
+  "Costo": 3.578,
+  "Categoria": "plastico 2"
 }
 
 ### get product
