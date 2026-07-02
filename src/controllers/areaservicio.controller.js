@@ -95,7 +95,7 @@ export const getAreaByPlaca = async (req, res) => {
       }
   };
 
-  export const createNewAreaServicio = async (req, res) => {
+  /*export const createNewAreaServicio = async (req, res) => {
     const {AS_SS_id, AS_USU_id, AS_fecha,AS_CLI_id,AS_AT_id,AS_OT_id,AS_OT_codigo, AS_TPS_id,
       AS_EC_id,AS_UBIC_id,AS_serie,AS_placa,AS_EQUIP_id,AS_LOGO_id,AS_observacionTecnica,
       AS_USU_ing,AS_Subtotal,AS_impuesto,AS_iva,AS_total,AS_descCliente,AS_descuento,
@@ -179,7 +179,7 @@ export const getAreaByPlaca = async (req, res) => {
     }
   }
 
-
+*/
   export const getAreaServicioMovimiento = async (req, res) => {
     try {
       const pool = await getConnection();

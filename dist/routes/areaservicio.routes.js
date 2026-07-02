@@ -7,9 +7,12 @@ exports["default"] = void 0;
 var _express = require("express");
 var _areaservicio = require("../controllers/areaservicio.controller");
 var router = (0, _express.Router)();
+router.get("/areaservicio/tec/:idTecnico", _areaservicio.getReparacionesXtecnico);
 router.get("/areaservicio/:serie/:idCliente1/:idCliente2", _areaservicio.getAreaBySerie);
 router.get("/areaservicio/x/:placa/:idCliente1/:idCliente2", _areaservicio.getAreaByPlaca);
-router.post("/areaservicio", _areaservicio.createNewAreaServicio);
+
+//router.post("/areaservicio", createNewAreaServicio);
+
 router.get("/areaservicio/x", _areaservicio.getAreaSinTecnico); //Obtengo el listado de cts que no se haya asignado tecnico
 
 router.put("/areaservicio/x/:id", _areaservicio.updateActivoByTecnico); //Actualizo ct pot tecnico
