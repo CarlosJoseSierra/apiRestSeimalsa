@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.querys = void 0;
 var querys = {
-  getAllProducts: "SELECT TOP(500) * FROM PRODUCTO",
+  getAllProducts: "SELECT * FROM PRODUCTO",
   getProductById: "SELECT * FROM PRODUCTO Where PROD_id = @Id",
   addNewProduct: "INSERT INTO PRODUCTO (PROD_codigo, PROD_nombre, PROD_medida) VALUES (@name,@description,@quantity);",
   deleteProduct: "DELETE FROM PRODUCTO WHERE PROD_id= @Id",
@@ -165,6 +165,9 @@ var querys = {
   getOrdenPById: "SELECT * FROM ORDEN_PRODUCCION WHERE OP_id = @id",
   //DIPLOMADO ANGEL PEREZ
   getAllCalificciones: "SELECT * FROM Z_ZCALIFICACION",
-  createCalificacion: "INSERT INTO Z_ZCALIFICACION (CAL_codigo,CAL_numero,CAL_fecha) VALUES (NULL,@CAL_numero,GETDATE());DECLARE @NuevoID DECIMAL(18,0) = SCOPE_IDENTITY();UPDATE Z_ZCALIFICACION SET CAL_codigo = 'PARTICIPANTE' + CAST(@NuevoID AS VARCHAR(10)) WHERE CAL_id = @NuevoID;"
+  createCalificacion: "INSERT INTO Z_ZCALIFICACION (CAL_codigo,CAL_numero,CAL_fecha) VALUES (NULL,@CAL_numero,GETDATE());DECLARE @NuevoID DECIMAL(18,0) = SCOPE_IDENTITY();UPDATE Z_ZCALIFICACION SET CAL_codigo = 'PARTICIPANTE' + CAST(@NuevoID AS VARCHAR(10)) WHERE CAL_id = @NuevoID;",
+  //APP MOVIL
+  getAllES: "SELECT ES_id,ES_descripcion FROM ESTADO_SEIMALSA",
+  getAllEM: "SELECT EM_id,EM_descripcion FROM ESTADO_MOVIMIENTO"
 };
 exports.querys = querys;
