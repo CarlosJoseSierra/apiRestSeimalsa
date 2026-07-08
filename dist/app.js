@@ -31,6 +31,7 @@ var _manoobraRouter = _interopRequireDefault(require("./routes/manoobra.router.j
 var _materiaprimaRoutes = _interopRequireDefault(require("./routes/materiaprima.routes.js"));
 var _productoensambleRouter = _interopRequireDefault(require("./routes/productoensamble.router.js"));
 var _orderproduccionRoutes = _interopRequireDefault(require("./routes/orderproduccion.routes.js"));
+var _tiposervicioRoutes = _interopRequireDefault(require("./routes/tiposervicio.routes.js"));
 var _cifRouter = _interopRequireDefault(require("./routes/cif.router.js"));
 var _calificacionRoutes = _interopRequireDefault(require("./routes/calificacion.routes.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -65,6 +66,7 @@ app.use("/api", _areaservicioRoutes["default"]);
 app.use("/api", _localizacionRoutes["default"]);
 app.use("/api", _personareportaRouter["default"]);
 app.use("/api", _tiposerviciopersRouter["default"]);
+app.use("/api", _tiposervicioRoutes["default"]);
 app.use("/api", _subclienteRouter["default"]);
 app.use("/api", _prefacturaRoutes["default"]);
 app.use("/api", _resumenRoutes["default"]);

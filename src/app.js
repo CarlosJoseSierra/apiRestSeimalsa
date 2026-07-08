@@ -26,6 +26,8 @@ import manoobraRoutes from "./routes/manoobra.router.js";
 import materiaprimaRoutes from "./routes/materiaprima.routes.js";
 import productoensambleRoutes from "./routes/productoensamble.router.js";
 import orderproduccionRoutes from "./routes/orderproduccion.routes.js";
+import tiposervicio from "./routes/tiposervicio.routes.js";
+
 import cifRoutes from "./routes/cif.router.js";
 const cloudinary = require("cloudinary").v2
 //import morgan from "morgan";
@@ -55,6 +57,7 @@ app.use("/api", areaservicioRoutes);
 app.use("/api", localizacionRoutes);
 app.use("/api", personareportaRoutes);
 app.use("/api", tiposervicioPers);
+app.use("/api", tiposervicio);
 app.use("/api", subclienteRoutes);
 app.use("/api", facturaRoutes);
 app.use("/api", resumenRoutes);
