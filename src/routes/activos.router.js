@@ -8,6 +8,8 @@ import {
   updateActivoById,
   getActivoByCodTag,
   getActivosXCliente,
+  getActivoBySerie,
+  getActivoByPlaca,
 } from "../controllers/activos.controller";
 
 const router = Router();
@@ -23,6 +25,10 @@ router.get("/activos/count", getTotalActivos);
 //router.get("/activos/:id", getActivoById);
 
 router.get("/activos1/:EQC_codTag", getActivoByCodTag);
+
+router.get("/activos2/:EQC_serie", getActivoBySerie);
+
+router.get("/activos3/:EQC_placa", getActivoByPlaca);
 
 router.delete("/activos/:id", deleteActivoById);
 

@@ -15,6 +15,8 @@ router.get("/activos/count", _activos.getTotalActivos);
 //router.get("/activos/:id", getActivoById);
 
 router.get("/activos1/:EQC_codTag", _activos.getActivoByCodTag);
+router.get("/activos2/:EQC_serie", _activos.getActivoBySerie);
+router.get("/activos3/:EQC_placa", _activos.getActivoByPlaca);
 router["delete"]("/activos/:id", _activos.deleteActivoById);
 router.put("/activos/:id", _activos.updateActivoById);
 var _default = router;

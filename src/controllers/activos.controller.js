@@ -110,6 +110,36 @@ export const getActivoByCodTag = async (req, res) => {
   }
 };
 
+export const getActivoBySerie = async (req, res) => {
+  try {
+    const pool = await getConnection();
+
+    const result = await pool
+      .request()
+      .input("EQC_serie", req.params.EQC_serie)
+      .query(querys.getActivoBySerie);
+    return res.json(result.recordset[0]);
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};
+
+export const getActivoByPlaca = async (req, res) => {
+  try {
+    const pool = await getConnection();
+
+    const result = await pool
+      .request()
+      .input("EQC_placa", req.params.EQC_placa)
+      .query(querys.getActivoByPlaca);
+    return res.json(result.recordset[0]);
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};
+
 export const deleteActivoById = async (req, res) => {
   try {
     const pool = await getConnection();
