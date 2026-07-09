@@ -33,6 +33,8 @@ var _productoensambleRouter = _interopRequireDefault(require("./routes/productoe
 var _orderproduccionRoutes = _interopRequireDefault(require("./routes/orderproduccion.routes.js"));
 var _tiposervicioRoutes = _interopRequireDefault(require("./routes/tiposervicio.routes.js"));
 var _cifRouter = _interopRequireDefault(require("./routes/cif.router.js"));
+var _estadoseimalsaRoutes = _interopRequireDefault(require("./routes/estadoseimalsa.routes.js"));
+var _estadomovimientoRoutes = _interopRequireDefault(require("./routes/estadomovimiento.routes.js"));
 var _calificacionRoutes = _interopRequireDefault(require("./routes/calificacion.routes.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 //const cors = require("cors");
@@ -81,6 +83,8 @@ app.use("/api", _materiaprimaRoutes["default"]);
 app.use("/api", _productoensambleRouter["default"]);
 app.use("/api", _orderproduccionRoutes["default"]);
 app.use("/api", _calificacionRoutes["default"]);
+app.use("/api", _estadoseimalsaRoutes["default"]);
+app.use("/api", _estadomovimientoRoutes["default"]);
 app.use(function (req, res, next) {
   res.status(404).json({
     message: 'endpoint not found'
