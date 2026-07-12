@@ -95,91 +95,394 @@ export const getAreaByPlaca = async (req, res) => {
       }
   };
 
-  /*export const createNewAreaServicio = async (req, res) => {
-    const {AS_SS_id, AS_USU_id, AS_fecha,AS_CLI_id,AS_AT_id,AS_OT_id,AS_OT_codigo, AS_TPS_id,
-      AS_EC_id,AS_UBIC_id,AS_serie,AS_placa,AS_EQUIP_id,AS_LOGO_id,AS_observacionTecnica,
-      AS_USU_ing,AS_Subtotal,AS_impuesto,AS_iva,AS_total,AS_descCliente,AS_descuento,
-      AS_descuentoR,AS_descuentoS,AS_descuentoP,AS_EstadoFactura,
-      AS_Reporte,AS_SC_id,AS_ES_id,AS_IE_id,AS_SEDE_id,AS_fechaReq,AS_semana,AS_numReq,
-      AS_PR_id,AS_UBIC_id2,AS_TPSP_id,AS_VEND_id,AS_serie2,AS_placa2,AS_EQUIP_id2,
-      AS_LOGO_id2,AS_observacion2,AS_EM_id,AS_CT_idOrigen,AS_serieCompresor} = req.body;
+  export const createNewAreaServicio = async (req, res) => {
     try {
+      const archivos = Array.isArray(req.files)
+        ? req.files
+        : [];
+  
+      const imagenes = [];
+      let firma = '';
+  
+      /*
+        Subir archivos a Cloudinary.
+  
+        La firma se identifica porque el archivo creado por
+        PopupFirmasComponent contiene "Firma" en el nombre.
+      */
+      for (const archivo of archivos) {
+        const resultadoCloudinary =
+          await cloudinary.uploader.upload(archivo.path);
+  
+        if (
+          archivo.originalname
+            .toLowerCase()
+            .includes('firma')
+        ) {
+          firma = resultadoCloudinary.secure_url;
+        } else if (imagenes.length < 5) {
+          imagenes.push(resultadoCloudinary.secure_url);
+        }
+      }
+  
+      while (imagenes.length < 5) {
+        imagenes.push('');
+      }
+  
+      /*
+        Al usar FormData con details[], Multer puede conservar
+        el nombre como "details[]" o convertirlo en "details".
+      */
+      const detallesRecibidos =
+        req.body['details[]'] ??
+        req.body.details ??
+        [];
+  
+      const detallesArray = Array.isArray(detallesRecibidos)
+        ? detallesRecibidos
+        : detallesRecibidos
+          ? [detallesRecibidos]
+          : [];
+  
+          const detalles = detallesArray.map((detalle) => {
+            if (typeof detalle === 'string') {
+              return JSON.parse(detalle);
+            }
+          
+            return detalle;
+          });
+  
+      if (detalles.length === 0) {
+        return res.status(400).json({
+          status: 'error',
+          msg: 'Debe agregar al menos un producto.',
+          token: 0
+        });
+      }
+  
+      let estadoSeimalsa = 4;
+      let estadoMovimiento = 10;
+  
+      const servicio = Number(req.body.Servicio);
+  
+      if (servicio === 2) {
+        estadoSeimalsa = Number(req.body.Estado);
+      }
+  
+      if (servicio === 4) {
+        estadoMovimiento = Number(req.body.Estado);
+      }
+  
       const pool = await getConnection();
-      
-      const codigo = await pool.request().query(querys.getLastIdAreaServivio);
-      let id = codigo.recordset[0].AS_id;
-      let secuencial = '';
-     let _as_es_id = AS_ES_id;
-      if(id>0){
-        secuencial = 'CT'+(id);
-      
+  
+      const result = await pool
+        .request()
+  
+        .input(
+          'AS_SS_id',
+          sql.Decimal(18, 0),
+          Number(req.body.Servicio)
+        )
+        .input(
+          'AS_USU_id',
+          sql.Decimal(18, 0),
+          Number(req.body.USU_id)
+        )
+        .input(
+          'AS_CLI_id',
+          sql.Decimal(18, 0),
+          Number(req.body.Cliente)
+        )
+        .input(
+          'AS_TPS_id',
+          sql.Decimal(18, 0),
+          Number(req.body.TipoServicio)
+        )
+        .input(
+          'AS_UBIC_id',
+          sql.Decimal(18, 0),
+          Number(req.body.Ciudad)
+        )
+        .input(
+          'AS_serie',
+          sql.VarChar(100),
+          req.body.Serie ?? ''
+        )
+        .input(
+          'AS_placa',
+          sql.VarChar(100),
+          req.body.Placa ?? ''
+        )
+        .input(
+          'AS_EQUIP_id',
+          sql.Decimal(18, 0),
+          Number(req.body.Modelo)
+        )
+        .input(
+          'AS_LOGO_id',
+          sql.Decimal(18, 0),
+          Number(req.body.Logo)
+        )
+        .input(
+          'AS_observacionTecnica',
+          sql.VarChar(sql.MAX),
+          req.body.ObservacionTec ?? ''
+        )
+        .input(
+          'AS_Subtotal',
+          sql.Decimal(18, 2),
+          Number(req.body.Subtotal ?? 0)
+        )
+        .input(
+          'AS_impuesto',
+          sql.Decimal(18, 2),
+          15
+        )
+        .input(
+          'AS_iva',
+          sql.Decimal(18, 2),
+          Number(req.body.IVA ?? 0)
+        )
+        .input(
+          'AS_total',
+          sql.Decimal(18, 2),
+          Number(req.body.Total ?? 0)
+        )
+        .input(
+          'AS_SC_id',
+          sql.Decimal(18, 0),
+          Number(req.body.Subcliente ?? 0)
+        )
+        .input(
+          'AS_ES_id',
+          sql.Decimal(18, 0),
+          estadoSeimalsa
+        )
+        .input(
+          'AS_EM_id',
+          sql.Decimal(18, 0),
+          estadoMovimiento
+        )
+        .input(
+          'AS_SEDE_id',
+          sql.Decimal(18, 0),
+          0
+        )
+  
+        .input(
+          'AS_imagen1',
+          sql.VarChar(1000),
+          imagenes[0]
+        )
+        .input(
+          'AS_imagen2',
+          sql.VarChar(1000),
+          imagenes[1]
+        )
+        .input(
+          'AS_imagen3',
+          sql.VarChar(1000),
+          imagenes[2]
+        )
+        .input(
+          'AS_imagen4',
+          sql.VarChar(1000),
+          imagenes[3]
+        )
+        .input(
+          'AS_imagen5',
+          sql.VarChar(1000),
+          imagenes[4]
+        )
+        .input(
+          'AS_imagenfirma',
+          sql.VarChar(1000),
+          firma
+        )
+  
+        .input(
+          'DetallesJSON',
+          sql.NVarChar(sql.MAX),
+          JSON.stringify(detalles)
+        )
+  
+        .execute(
+          'dbo.sp_AreaServicio_InsertarCompleto'
+        );
+  
+      const registro = result.recordset?.[0];
+  
+      return res.status(200).json({
+        status: registro?.status ?? 'ok',
+        msg: registro?.msg ?? 'Registro exitoso',
+        token: 0,
+        data: {
+          AS_id: registro?.AS_id,
+          AS_secuencial: registro?.AS_secuencial,
+          cantidadDetalles:
+            registro?.cantidadDetalles
+        }
+      });
+  
+    } catch (error) {
+      console.error(
+        'Error insertando AREA_SERVICIO:',
+        error
+      );
+  
+      return res.status(500).json({
+        status: 'error',
+        msg:
+          error?.originalError?.info?.message ??
+          error?.message ??
+          'No se pudo registrar la cotización.',
+        token: 0
+      });
+    }
+  };
+
+  /*export const createNewAreaServicio = async (req, res) => {
+    
+    try {
+      let image = '',image1= '',image2= '',image3= '',image4= '',firma=''; 
+      if(req.files.length>0)
+      {
+        if(req.files[0]!=undefined)
+        {
+          if(req.files[0].originalname.includes('Firma')){
+              const img = await cloudinary.uploader.upload(req.files[0].path);
+              firma = img.secure_url;
+          }
+          else{
+            image = req.files[0].filename;
+            const img = await cloudinary.uploader.upload(req.files[0].path);
+            imageruta = img.secure_url;
+          }
+        }
+        if(req.files[1]!=undefined)
+        {
+          if(req.files[1].originalname.includes('Firma')){
+            const img = await cloudinary.uploader.upload(req.files[1].path);
+            firma = img.secure_url;
+          }else{
+            const img = await cloudinary.uploader.upload(req.files[1].path);
+            image1 = img.secure_url;
+          }
+        }
+        if(req.files[2]!=undefined)
+        {
+          if(req.files[2].originalname.includes('Firma')){
+            const img = await cloudinary.uploader.upload(req.files[2].path);
+            firma = img.secure_url;
+          }else{
+            const img = await cloudinary.uploader.upload(req.files[2].path);
+            image2 = img.secure_url;
+          }
+        }
+        if(req.files[3]!=undefined)
+        {
+          if(req.files[3].originalname.includes('Firma')){
+            const img = await cloudinary.uploader.upload(req.files[3].path);
+            firma = img.secure_url;
+          }else{
+            const img = await cloudinary.uploader.upload(req.files[3].path);
+            image3 = img.secure_url;
+          }
+        }
+        if(req.files[4]!=undefined)
+        {
+          if(req.files[4].originalname.includes('Firma')){
+            const img = await cloudinary.uploader.upload(req.files[4].path);
+            firma = img.secure_url;
+          }else{
+            const img = await cloudinary.uploader.upload(req.files[4].path);
+            image4 = img.secure_url;
+          }
+        }
+
+        if(req.files[5]!=undefined)
+        {
+          if(req.files[5].originalname.includes('Firma')){
+            const img = await cloudinary.uploader.upload(req.files[5].path);
+            firma = img.secure_url;
+          }else{
+            const img = await cloudinary.uploader.upload(req.files[5].path);
+            image5 = img.secure_url;
+          }
+        }
+
+        if(req.files[6]!=undefined){
+          if(req.files[6].originalname.includes('Firma')){
+            const img = await cloudinary.uploader.upload(req.files[6].path);
+            firma = img.secure_url;
+          }
+          else{
+            firma = '';
+          }
+        }
+      }
+      for(let i=0;i<req.body.details.length;i++){
+        const json = JSON.parse(req.body.details[i])            
+       }
+      let estadoSeimalsa = 4;
+      let estadoMovimiento = 10;
+      if(req.body.Servicio==2){
+        estadoSeimalsa = req.body.Estado;
+      }
+      if(req.body.Servicio==4){
+        estadoMovimiento = req.body.Estado;
+      }
         const pool = await getConnection();
         const result = await pool
         .request()
-        .input("AS_secuencial", sql.VarChar, secuencial)
-        .input("AS_SS_id", sql.Decimal, AS_SS_id)
-        .input("AS_USU_id", sql.Decimal, AS_USU_id)
-        .input("AS_fecha", sql.DateTime, AS_fecha)
-        .input("AS_CLI_id", sql.Decimal, AS_CLI_id)
-        .input("AS_AT_id", sql.Decimal, AS_AT_id)
-        .input("AS_OT_id", sql.Decimal, AS_OT_id)
-        .input("AS_OT_codigo", sql.VarChar, AS_OT_codigo)
-        .input("AS_TPS_id", sql.Decimal, AS_TPS_id)
-        .input("AS_EC_id", sql.Decimal, AS_EC_id)
-        .input("AS_UBIC_id", sql.Decimal, AS_UBIC_id)
-        .input("AS_serie", sql.VarChar, AS_serie)
-        .input("AS_placa", sql.VarChar, AS_placa)
-        .input("AS_EQUIP_id", sql.Decimal, AS_EQUIP_id)
-        .input("AS_LOGO_id", sql.Decimal, AS_LOGO_id)
-        .input("AS_observacionTecnica", sql.VarChar, AS_observacionTecnica)
-        .input("AS_USU_ing", sql.Decimal, AS_USU_ing)
-        .input("AS_Subtotal", sql.Decimal, AS_Subtotal)
+        .input("AS_SS_id", sql.Decimal, req.body.Servicio)
+        .input("AS_USU_id", sql.Decimal, req.body.USU_id)
+        .input("AS_CLI_id", sql.Decimal, req.body.Cliente)
+        .input("AS_TPS_id", sql.Decimal, req.body.TipoServicio)
+        .input("AS_UBIC_id", sql.Decimal, Ciudad)
+        .input("AS_serie", sql.VarChar, Serie)
+        .input("AS_placa", sql.VarChar, Placa)
+        .input("AS_EQUIP_id", sql.Decimal, Modelo)
+        .input("AS_LOGO_id", sql.Decimal, Logo)
+        .input("AS_observacionTecnica", sql.VarChar, ObservacionTec)
+        .input("AS_Subtotal", sql.Decimal, Subtotal)
         .input("AS_impuesto", sql.Decimal, AS_impuesto)
-        .input("AS_iva", sql.Decimal, AS_iva)
-        .input("AS_total", sql.Decimal, AS_total)
-        .input("AS_descCliente", sql.Decimal, AS_descCliente)
-        .input("AS_descuento", sql.Decimal, AS_descuento)
-        .input("AS_descuentoR", sql.Decimal, AS_descuentoR)
-        .input("AS_descuentoS", sql.Decimal, AS_descuentoS)
-        .input("AS_descuentoP", sql.Decimal, AS_descuentoP)
-        .input("AS_EstadoFactura", sql.Decimal, AS_EstadoFactura)
-        .input("AS_Reporte", sql.VarChar, AS_Reporte)
-        .input("AS_SC_id", sql.Decimal, AS_SC_id)
-        .input("AS_ES_id", sql.Decimal, AS_ES_id)
-        .input("AS_IE_id", sql.Decimal, AS_IE_id)
+        .input("AS_iva", sql.Decimal, IVA)
+        .input("AS_total", sql.Decimal, Total)
+        .input("AS_SC_id", sql.Decimal, Subcliente)
+        .input("AS_ES_id", sql.Decimal, estadoSeimalsa)
         .input("AS_SEDE_id", sql.Decimal, AS_SEDE_id)
-        .input("AS_fechaReq", sql.DateTime, AS_fechaReq)
-        .input("AS_semana", sql.VarChar, AS_semana)
-        .input("AS_numReq", sql.VarChar, AS_numReq)
-        .input("AS_PR_id", sql.Decimal, AS_PR_id)
-        .input("AS_UBIC_id2", sql.Decimal, AS_UBIC_id2)
-        .input("AS_TPSP_id", sql.Decimal, AS_TPSP_id)
-        .input("AS_VEND_id", sql.Decimal, AS_VEND_id)
-        .input("AS_serie2", sql.VarChar, AS_serie2)
-        .input("AS_placa2", sql.VarChar, AS_placa2)
-        .input("AS_EQUIP_id2", sql.Decimal, AS_EQUIP_id2)
-        .input("AS_LOGO_id2", sql.Decimal, AS_LOGO_id2)
-        .input("AS_observacion2", sql.VarChar, AS_observacion2)
-        .input("AS_EM_id", sql.Decimal, AS_EM_id)
-        .input("AS_CT_idOrigen", sql.Decimal, AS_CT_idOrigen)
-        .input("AS_serieCompresor", sql.VarChar, AS_serieCompresor)
-        
+        .input("AS_EM_id", sql.Decimal, estadoMovimiento)
         .query(querys.addNewAreaServicio);
         if(result.rowsAffected==1){
+          let idAS = result.recordset[0].AS_id;
+          if(req.body.details.length>0){
+            for(let i=0;i<req.body.details.length;i++){
+              const json = JSON.parse(req.body.details[i])      
+              const pool3 = await getConnection();
+              const result3 = await pool3
+              .request()
+              .input("AS_DET_AS_id", sql.Decimal,idAS)
+              .input("AS_DET_PROD_id", sql.Decimal, json.productName)
+              .input("AS_DET_PROD_codigo", sql.Varchar, json.codigo)
+              .input("AS_DET_PROD_codigo", sql.Varchar, json.nombre)
+              .input("REQDET_cantidad", sql.Decimal(18,2), json.qty)
+              .input("REQDET_pvp", sql.Decimal(18,2), json.salesPrice)
+              .input("REQDET_total", sql.Decimal(18,2), json.qty * json.salesPrice)
+              .query(querys.addNewAreaServicio);
+            }
+          }
           return res.status(200).json({ status: "ok", msg: "Registro exitoso" ,token:0});
         }else{
           return res.status(400).json({ status: "400", msg: "No se pudo registrar, consulte al administrador" ,token:0});
         }
-      }else{
-        
-      }
     } catch (error) {
       res.status(500);
       res.send(error.message);
     }
-  }
+  }*/
 
-*/
+
   export const getAreaServicioMovimiento = async (req, res) => {
     try {
       const pool = await getConnection();

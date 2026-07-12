@@ -1,4 +1,5 @@
 import { Router } from "express";
+const storage = require('../libs/multer');
 import {
     getAreaBySerie,
     getAreaByPlaca,
@@ -25,7 +26,7 @@ router.get("/areaservicio/tec/:idTecnico",getReparacionesXtecnico);
 router.get("/areaservicio/:serie/:idCliente1/:idCliente2", getAreaBySerie);
 router.get("/areaservicio/x/:placa/:idCliente1/:idCliente2", getAreaByPlaca);
 
-//router.post("/areaservicio", createNewAreaServicio);
+router.post("/areaservicio/new", storage.array('image',7),createNewAreaServicio);
 
 router.get("/areaservicio/x", getAreaSinTecnico); //Obtengo el listado de cts que no se haya asignado tecnico
 
