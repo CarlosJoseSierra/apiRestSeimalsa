@@ -1,5 +1,5 @@
 import { getConnection, querys, sql } from "../database";
-
+const cloudinary = require("../libs/cloudinary");
 
 export const getAreaBySerie = async (req, res) => {
   try {
