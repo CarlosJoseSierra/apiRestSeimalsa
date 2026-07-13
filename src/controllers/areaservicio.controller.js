@@ -96,7 +96,7 @@ export const getAreaByPlaca = async (req, res) => {
   };
 
   export const createNewAreaServicio = async (req, res) => {
-      try {
+      /*try {
         const subcliente = req.body.Subcliente;
 
         if (!isNaN(Number(subcliente))) {}
@@ -118,7 +118,7 @@ export const getAreaByPlaca = async (req, res) => {
     } catch (error) {
       res.status(500);
       //res.send(error.message);
-    }
+    }*/
     try {
       const archivos = Array.isArray(req.files)
         ? req.files
