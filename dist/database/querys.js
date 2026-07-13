@@ -168,6 +168,7 @@ var querys = {
   createCalificacion: "INSERT INTO Z_ZCALIFICACION (CAL_codigo,CAL_numero,CAL_fecha) VALUES (NULL,@CAL_numero,GETDATE());DECLARE @NuevoID DECIMAL(18,0) = SCOPE_IDENTITY();UPDATE Z_ZCALIFICACION SET CAL_codigo = 'PARTICIPANTE' + CAST(@NuevoID AS VARCHAR(10)) WHERE CAL_id = @NuevoID;",
   //APP MOVIL
   getAllES: "SELECT ES_id,ES_descripcion FROM ESTADO_SEIMALSA",
-  getAllEM: "SELECT EM_id,EM_descripcion FROM ESTADO_MOVIMIENTO"
+  getAllEM: "SELECT EM_id,EM_descripcion FROM ESTADO_MOVIMIENTO",
+  createSubcliente: "INSERT INTO SUBCLIENTE (SC_nombre,SC_codUniversal,SC_establecimiento,SC_direccion,SC_telefono,SC_USU_ing,SC_fecha_ing,SC_identificacion,SC_referencia,SC_tipoNegocio) VALUES (@SC_nombre,'',@SC_establecimiento,@SC_direccion@SC_telefono,@SC_USU_ing,GETDATE(),'','','')"
 };
 exports.querys = querys;

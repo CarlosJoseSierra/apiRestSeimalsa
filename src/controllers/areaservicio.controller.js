@@ -96,6 +96,29 @@ export const getAreaByPlaca = async (req, res) => {
   };
 
   export const createNewAreaServicio = async (req, res) => {
+      try {
+        const subcliente = req.body.Subcliente;
+
+        if (!isNaN(Number(subcliente))) {}
+        else{
+          const pool = await getConnection();
+          const result = await pool.request()
+          .input('SC_nombre', sql.VarChar, subcliente)
+          .input('SC_establecimiento', sql.Varchar, req.body.Establecimiento)
+          .input('SC_direccion', sql.VarChar, req.body.Direccion)
+          .input('SC_telefono', sql.VarChar, req.body.Telefono)
+          .input('SC_USU_ing', sql.Decimal, req.body.USU_id)
+          .query(querys.createSubcliente);
+         // if(result.rowsAffected==1){
+           // return res.status(200).json({ status: "ok", msg: "Registro exitoso" ,token:0});
+          //}else{
+            //return res.status(400).json({ status: "400", msg: "No se pudo registrar, consulte al administrador" ,token:0});
+          //}
+        }
+    } catch (error) {
+      res.status(500);
+      //res.send(error.message);
+    }
     try {
       const archivos = Array.isArray(req.files)
         ? req.files
@@ -104,12 +127,6 @@ export const getAreaByPlaca = async (req, res) => {
       const imagenes = [];
       let firma = '';
   
-      /*
-        Subir archivos a Cloudinary.
-  
-        La firma se identifica porque el archivo creado por
-        PopupFirmasComponent contiene "Firma" en el nombre.
-      */
       for (const archivo of archivos) {
         const resultadoCloudinary =
           await cloudinary.uploader.upload(archivo.path);
@@ -129,10 +146,6 @@ export const getAreaByPlaca = async (req, res) => {
         imagenes.push('');
       }
   
-      /*
-        Al usar FormData con details[], Multer puede conservar
-        el nombre como "details[]" o convertirlo en "details".
-      */
       const detallesRecibidos =
         req.body['details[]'] ??
         req.body.details ??
