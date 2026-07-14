@@ -114,7 +114,9 @@ export const getAreaByPlaca = async (req, res) => {
           console.log(result);
           
           if(result.rowsAffected[0]==1){
-            idSub = result.recordset[0].SC_id;
+            if (result.recordset.length > 0) {
+              idSub = result.recordset?.[0]?.SC_id;
+          }
 
           }
         }
