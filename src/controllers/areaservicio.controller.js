@@ -96,33 +96,33 @@ export const getAreaByPlaca = async (req, res) => {
   };
 
   export const createNewAreaServicio = async (req, res) => {
-    const idSub = 0;  
-    try {
-        const subcliente = req.body.Subcliente;
-        if (!isNaN(Number(subcliente))) {
-          idSub = subcliente;
-        }
-        else{
-          const pool = await getConnection();
-          const result = await pool.request()
-          .input('SC_nombre', sql.VarChar, subcliente)
-          .input('SC_establecimiento', sql.VarChar, req.body.Establecimiento)
-          .input('SC_direccion', sql.VarChar, req.body.Direccion)
-          .input('SC_telefono', sql.VarChar, req.body.Telefono)
-          .input('SC_USU_ing', sql.Decimal, req.body.USU_id)
-          .query(querys.createSubcliente);
-          
-          if(result.rowsAffected[0]==1){
-            if (result.recordset.length > 0) {
-              idSub = result.recordset?.[0]?.SC_id;
-          }
-
-          }
-        }
-    } catch (error) {
-      res.status(500);
+    let idSub = 0;  
+    
+    const subcliente = req.body.Subcliente;
+    if (!isNaN(Number(subcliente))) {
+      idSub = subcliente;
     }
+    else{
+      const pool = await getConnection();
+      const result = await pool.request()
+      .input('SC_nombre', sql.VarChar, subcliente)
+      .input('SC_establecimiento', sql.VarChar, req.body.Establecimiento)
+      .input('SC_direccion', sql.VarChar, req.body.Direccion)
+      .input('SC_telefono', sql.VarChar, req.body.Telefono)
+      .input('SC_USU_ing', sql.Decimal, req.body.USU_id)
+      .query(querys.createSubcliente);
+      
+      if(result.rowsAffected[0]==1){
+        if (result.recordset.length > 0) {
+          idSub = result.recordset?.[0]?.SC_id;
+        }
+      }
+    }
+   console.log('1');
+   console.log(idSub);
     try {
+      console.log('2');
+   console.log(idSub);
       const archivos = Array.isArray(req.files)
         ? req.files
         : [];
@@ -175,6 +175,7 @@ export const getAreaByPlaca = async (req, res) => {
           token: 0
         });
       }
+      console.log('3');
       console.log(idSub);
       let estadoSeimalsa = 4;
       let estadoMovimiento = 10;
