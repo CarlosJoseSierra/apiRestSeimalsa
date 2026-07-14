@@ -211,74 +211,69 @@ var createNewAreaServicio = /*#__PURE__*/function () {
           subcliente = req.body.Subcliente;
           console.log(subcliente);
           if (isNaN(Number(subcliente))) {
-            _context6.next = 9;
+            _context6.next = 8;
             break;
           }
-          console.log('1');
           subcliente, _readOnlyError("idSub");
-          _context6.next = 17;
-          break;
-        case 9:
-          console.log('2');
-          _context6.next = 12;
-          return (0, _database.getConnection)();
-        case 12:
-          pool = _context6.sent;
           _context6.next = 15;
-          return pool.request().input('SC_nombre', _database.sql.VarChar, subcliente).input('SC_establecimiento', _database.sql.Varchar, req.body.Establecimiento).input('SC_direccion', _database.sql.VarChar, req.body.Direccion).input('SC_telefono', _database.sql.VarChar, req.body.Telefono).input('SC_USU_ing', _database.sql.Decimal, req.body.USU_id).query(_database.querys.createSubcliente);
-        case 15:
+          break;
+        case 8:
+          _context6.next = 10;
+          return (0, _database.getConnection)();
+        case 10:
+          pool = _context6.sent;
+          _context6.next = 13;
+          return pool.request().input('SC_nombre', _database.sql.VarChar, subcliente).input('SC_establecimiento', _database.sql.VarChar, req.body.Establecimiento).input('SC_direccion', _database.sql.VarChar, req.body.Direccion).input('SC_telefono', _database.sql.VarChar, req.body.Telefono).input('SC_USU_ing', _database.sql.Decimal, req.body.USU_id).query(_database.querys.createSubcliente);
+        case 13:
           result = _context6.sent;
           if (result.rowsAffected == 1) {
             result.recordset[0].SC_id, _readOnlyError("idSub");
           }
-        case 17:
-          console.log(idSub);
-          _context6.next = 24;
+        case 15:
+          _context6.next = 20;
           break;
-        case 20:
-          _context6.prev = 20;
+        case 17:
+          _context6.prev = 17;
           _context6.t0 = _context6["catch"](1);
           res.status(500);
-          console.log(_context6.t0);
-          //res.send(error.message);
-        case 24:
-          _context6.prev = 24;
+        case 20:
+          _context6.prev = 20;
           archivos = Array.isArray(req.files) ? req.files : [];
           imagenes = [];
           firma = '';
           _iterator = _createForOfIteratorHelper(archivos);
-          _context6.prev = 29;
+          _context6.prev = 25;
           _iterator.s();
-        case 31:
+        case 27:
           if ((_step = _iterator.n()).done) {
-            _context6.next = 39;
+            _context6.next = 35;
             break;
           }
           archivo = _step.value;
-          _context6.next = 35;
+          _context6.next = 31;
           return cloudinary.uploader.upload(archivo.path);
-        case 35:
+        case 31:
           resultadoCloudinary = _context6.sent;
           if (archivo.originalname.toLowerCase().includes('firma')) {
             firma = resultadoCloudinary.secure_url;
           } else if (imagenes.length < 5) {
             imagenes.push(resultadoCloudinary.secure_url);
           }
+        case 33:
+          _context6.next = 27;
+          break;
+        case 35:
+          _context6.next = 40;
+          break;
         case 37:
-          _context6.next = 31;
-          break;
-        case 39:
-          _context6.next = 44;
-          break;
-        case 41:
-          _context6.prev = 41;
-          _context6.t1 = _context6["catch"](29);
+          _context6.prev = 37;
+          _context6.t1 = _context6["catch"](25);
           _iterator.e(_context6.t1);
-        case 44:
-          _context6.prev = 44;
+        case 40:
+          _context6.prev = 40;
           _iterator.f();
-          return _context6.finish(44);
-        case 47:
+          return _context6.finish(40);
+        case 43:
           while (imagenes.length < 5) {
             imagenes.push('');
           }
@@ -291,7 +286,7 @@ var createNewAreaServicio = /*#__PURE__*/function () {
             return detalle;
           });
           if (!(detalles.length === 0)) {
-            _context6.next = 53;
+            _context6.next = 49;
             break;
           }
           return _context6.abrupt("return", res.status(400).json({
@@ -299,7 +294,7 @@ var createNewAreaServicio = /*#__PURE__*/function () {
             msg: 'Debe agregar al menos un producto.',
             token: 0
           }));
-        case 53:
+        case 49:
           estadoSeimalsa = 4;
           estadoMovimiento = 10;
           servicio = Number(req.body.Servicio);
@@ -309,13 +304,13 @@ var createNewAreaServicio = /*#__PURE__*/function () {
           if (servicio === 4) {
             estadoMovimiento = Number(req.body.Estado);
           }
-          _context6.next = 60;
+          _context6.next = 56;
           return (0, _database.getConnection)();
-        case 60:
+        case 56:
           _pool = _context6.sent;
-          _context6.next = 63;
+          _context6.next = 59;
           return _pool.request().input('AS_SS_id', _database.sql.Decimal(18, 0), Number(req.body.Servicio)).input('AS_USU_id', _database.sql.Decimal(18, 0), Number(req.body.USU_id)).input('AS_CLI_id', _database.sql.Decimal(18, 0), Number(req.body.Cliente)).input('AS_TPS_id', _database.sql.Decimal(18, 0), Number(req.body.TipoServicio)).input('AS_UBIC_id', _database.sql.Decimal(18, 0), Number(req.body.Ciudad)).input('AS_serie', _database.sql.VarChar(100), (_req$body$Serie = req.body.Serie) !== null && _req$body$Serie !== void 0 ? _req$body$Serie : '').input('AS_placa', _database.sql.VarChar(100), (_req$body$Placa = req.body.Placa) !== null && _req$body$Placa !== void 0 ? _req$body$Placa : '').input('AS_EQUIP_id', _database.sql.Decimal(18, 0), Number(req.body.Modelo)).input('AS_LOGO_id', _database.sql.Decimal(18, 0), Number(req.body.Logo)).input('AS_observacionTecnica', _database.sql.VarChar(_database.sql.MAX), (_req$body$Observacion = req.body.ObservacionTec) !== null && _req$body$Observacion !== void 0 ? _req$body$Observacion : '').input('AS_Subtotal', _database.sql.Decimal(18, 2), Number((_req$body$Subtotal = req.body.Subtotal) !== null && _req$body$Subtotal !== void 0 ? _req$body$Subtotal : 0)).input('AS_impuesto', _database.sql.Decimal(18, 2), 15).input('AS_iva', _database.sql.Decimal(18, 2), Number((_req$body$IVA = req.body.IVA) !== null && _req$body$IVA !== void 0 ? _req$body$IVA : 0)).input('AS_total', _database.sql.Decimal(18, 2), Number((_req$body$Total = req.body.Total) !== null && _req$body$Total !== void 0 ? _req$body$Total : 0)).input('AS_SC_id', _database.sql.Decimal(18, 0), idSub).input('AS_ES_id', _database.sql.Decimal(18, 0), estadoSeimalsa).input('AS_EM_id', _database.sql.Decimal(18, 0), estadoMovimiento).input('AS_SEDE_id', _database.sql.Decimal(18, 0), 0).input('AS_imagen1', _database.sql.VarChar(1000), imagenes[0]).input('AS_imagen2', _database.sql.VarChar(1000), imagenes[1]).input('AS_imagen3', _database.sql.VarChar(1000), imagenes[2]).input('AS_imagen4', _database.sql.VarChar(1000), imagenes[3]).input('AS_imagen5', _database.sql.VarChar(1000), imagenes[4]).input('AS_imagenfirma', _database.sql.VarChar(1000), firma).input('DetallesJSON', _database.sql.NVarChar(_database.sql.MAX), JSON.stringify(detalles)).execute('dbo.sp_AreaServicio_InsertarCompleto');
-        case 63:
+        case 59:
           _result = _context6.sent;
           registro = (_result$recordset = _result.recordset) === null || _result$recordset === void 0 ? void 0 : _result$recordset[0];
           return _context6.abrupt("return", res.status(200).json({
@@ -328,20 +323,20 @@ var createNewAreaServicio = /*#__PURE__*/function () {
               cantidadDetalles: registro === null || registro === void 0 ? void 0 : registro.cantidadDetalles
             }
           }));
-        case 68:
-          _context6.prev = 68;
-          _context6.t2 = _context6["catch"](24);
+        case 64:
+          _context6.prev = 64;
+          _context6.t2 = _context6["catch"](20);
           console.error('Error insertando AREA_SERVICIO:', _context6.t2);
           return _context6.abrupt("return", res.status(500).json({
             status: 'error',
             msg: (_ref8 = (_error$originalError$ = _context6.t2 === null || _context6.t2 === void 0 ? void 0 : (_error$originalError = _context6.t2.originalError) === null || _error$originalError === void 0 ? void 0 : (_error$originalError$2 = _error$originalError.info) === null || _error$originalError$2 === void 0 ? void 0 : _error$originalError$2.message) !== null && _error$originalError$ !== void 0 ? _error$originalError$ : _context6.t2 === null || _context6.t2 === void 0 ? void 0 : _context6.t2.message) !== null && _ref8 !== void 0 ? _ref8 : 'No se pudo registrar la cotización.',
             token: 0
           }));
-        case 72:
+        case 68:
         case "end":
           return _context6.stop();
       }
-    }, _callee6, null, [[1, 20], [24, 68], [29, 41, 44, 47]]);
+    }, _callee6, null, [[1, 17], [20, 64], [25, 37, 40, 43]]);
   }));
   return function createNewAreaServicio(_x11, _x12) {
     return _ref6.apply(this, arguments);

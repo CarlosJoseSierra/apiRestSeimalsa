@@ -101,15 +101,13 @@ export const getAreaByPlaca = async (req, res) => {
         const subcliente = req.body.Subcliente;
         console.log(subcliente);
         if (!isNaN(Number(subcliente))) {
-          console.log('1');
           idSub = subcliente;
         }
         else{
-          console.log('2');
           const pool = await getConnection();
           const result = await pool.request()
           .input('SC_nombre', sql.VarChar, subcliente)
-          .input('SC_establecimiento', sql.Varchar, req.body.Establecimiento)
+          .input('SC_establecimiento', sql.VarChar, req.body.Establecimiento)
           .input('SC_direccion', sql.VarChar, req.body.Direccion)
           .input('SC_telefono', sql.VarChar, req.body.Telefono)
           .input('SC_USU_ing', sql.Decimal, req.body.USU_id)
@@ -119,11 +117,8 @@ export const getAreaByPlaca = async (req, res) => {
 
           }
         }
-        console.log(idSub);
     } catch (error) {
       res.status(500);
-      console.log(error);
-      //res.send(error.message);
     }
     try {
       const archivos = Array.isArray(req.files)

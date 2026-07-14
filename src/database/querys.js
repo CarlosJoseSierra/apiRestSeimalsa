@@ -196,7 +196,7 @@ getDataHIstorialPorSerieInterno: "SELECT * FROM (SELECT HIST_AS_id,HIST_AS_fecha
   //APP MOVIL
   getAllES:"SELECT ES_id,ES_descripcion FROM ESTADO_SEIMALSA",
   getAllEM:"SELECT EM_id,EM_descripcion FROM ESTADO_MOVIMIENTO",
-  createSubcliente:"INSERT INTO SUBCLIENTE (SC_nombre,SC_codUniversal,SC_establecimiento,SC_direccion,SC_telefono,SC_USU_ing,SC_fecha_ing,SC_identificacion,SC_referencia,SC_tipoNegocio) VALUES (@SC_nombre,'',@SC_establecimiento,@SC_direccion@SC_telefono,@SC_USU_ing,GETDATE(),'','',''); SELECT SCOPE_IDENTITY() AS SC_id;",
+  createSubcliente:"INSERT INTO SUBCLIENTE (SC_nombre,SC_codUniversal,SC_establecimiento,SC_direccion,SC_telefono,SC_USU_ing,SC_fecha_ing,SC_identificacion,SC_referencia,SC_tipoNegocio) VALUES (@SC_nombre,'',@SC_establecimiento,@SC_direccion,@SC_telefono,@SC_USU_ing,GETDATE(),'','',''); SELECT SCOPE_IDENTITY() AS SC_id;",
 }
 
 
