@@ -111,9 +111,10 @@ export const getAreaByPlaca = async (req, res) => {
           .input('SC_telefono', sql.VarChar, req.body.Telefono)
           .input('SC_USU_ing', sql.Decimal, req.body.USU_id)
           .query(querys.createSubcliente);
-          console.log(result);
           
           if(result.rowsAffected[0]==1){
+            console.log('entro');
+            console.log(result.recordset?.[0]?.SC_id);
             if (result.recordset.length > 0) {
               idSub = result.recordset?.[0]?.SC_id;
           }
