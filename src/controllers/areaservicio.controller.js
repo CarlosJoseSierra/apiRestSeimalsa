@@ -99,7 +99,6 @@ export const getAreaByPlaca = async (req, res) => {
     const idSub = 0;  
     try {
         const subcliente = req.body.Subcliente;
-        console.log(subcliente);
         if (!isNaN(Number(subcliente))) {
           idSub = subcliente;
         }
@@ -112,9 +111,8 @@ export const getAreaByPlaca = async (req, res) => {
           .input('SC_telefono', sql.VarChar, req.body.Telefono)
           .input('SC_USU_ing', sql.Decimal, req.body.USU_id)
           .query(querys.createSubcliente);
-          console.log(result.rowsAffected[1,1]);
-          console.log(result.rowsAffected[0]);
-          console.log(result.rowsAffected[1]);
+          console.log(result);
+          
           if(result.rowsAffected[0]==1){
             idSub = result.recordset[0].SC_id;
 
