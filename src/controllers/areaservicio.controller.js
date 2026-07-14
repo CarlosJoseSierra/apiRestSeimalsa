@@ -101,9 +101,11 @@ export const getAreaByPlaca = async (req, res) => {
         const subcliente = req.body.Subcliente;
         console.log(subcliente);
         if (!isNaN(Number(subcliente))) {
+          console.log('1');
           idSub = subcliente;
         }
         else{
+          console.log('2');
           const pool = await getConnection();
           const result = await pool.request()
           .input('SC_nombre', sql.VarChar, subcliente)
@@ -120,6 +122,7 @@ export const getAreaByPlaca = async (req, res) => {
         console.log(idSub);
     } catch (error) {
       res.status(500);
+      console.log(error);
       //res.send(error.message);
     }
     try {
