@@ -96,10 +96,13 @@ export const getAreaByPlaca = async (req, res) => {
   };
 
   export const createNewAreaServicio = async (req, res) => {
-      /*try {
+    const idSub = 0;  
+    try {
         const subcliente = req.body.Subcliente;
 
-        if (!isNaN(Number(subcliente))) {}
+        if (!isNaN(Number(subcliente))) {
+          idSub = subcliente;
+        }
         else{
           const pool = await getConnection();
           const result = await pool.request()
@@ -109,16 +112,15 @@ export const getAreaByPlaca = async (req, res) => {
           .input('SC_telefono', sql.VarChar, req.body.Telefono)
           .input('SC_USU_ing', sql.Decimal, req.body.USU_id)
           .query(querys.createSubcliente);
-         // if(result.rowsAffected==1){
-           // return res.status(200).json({ status: "ok", msg: "Registro exitoso" ,token:0});
-          //}else{
-            //return res.status(400).json({ status: "400", msg: "No se pudo registrar, consulte al administrador" ,token:0});
-          //}
+          if(result.rowsAffected==1){
+            idSub = result.recordset[0].SC_id;
+
+          }
         }
     } catch (error) {
       res.status(500);
       //res.send(error.message);
-    }*/
+    }
     try {
       const archivos = Array.isArray(req.files)
         ? req.files
@@ -264,7 +266,7 @@ export const getAreaByPlaca = async (req, res) => {
         .input(
           'AS_SC_id',
           sql.Decimal(18, 0),
-          Number(req.body.Subcliente ?? 0)
+          idSub
         )
         .input(
           'AS_ES_id',
