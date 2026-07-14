@@ -113,8 +113,6 @@ export const getAreaByPlaca = async (req, res) => {
           .query(querys.createSubcliente);
           
           if(result.rowsAffected[0]==1){
-            console.log('entro');
-            console.log(result.recordset?.[0]?.SC_id);
             if (result.recordset.length > 0) {
               idSub = result.recordset?.[0]?.SC_id;
           }
@@ -177,7 +175,7 @@ export const getAreaByPlaca = async (req, res) => {
           token: 0
         });
       }
-  
+      console.log(idSub);
       let estadoSeimalsa = 4;
       let estadoMovimiento = 10;
   
