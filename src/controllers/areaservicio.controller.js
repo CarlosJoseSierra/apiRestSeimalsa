@@ -99,7 +99,7 @@ export const getAreaByPlaca = async (req, res) => {
     const idSub = 0;  
     try {
         const subcliente = req.body.Subcliente;
-
+        console.log(subcliente);
         if (!isNaN(Number(subcliente))) {
           idSub = subcliente;
         }
@@ -117,6 +117,7 @@ export const getAreaByPlaca = async (req, res) => {
 
           }
         }
+        console.log(idSub);
     } catch (error) {
       res.status(500);
       //res.send(error.message);
