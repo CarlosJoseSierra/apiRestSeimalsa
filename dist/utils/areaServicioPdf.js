@@ -113,7 +113,7 @@ function dibujarCampo(doc, etiqueta, valor, x, y, anchoEtiqueta, anchoValor) {
   });
 }
 function dibujarCabecera(doc, cabecera) {
-  var logoPath = _path["default"].join(process.cwd(), 'src', 'assets', 'logo-seimalsa.png');
+  var logoPath = _path["default"].join(process.cwd(), 'src', 'assets', 'logoSeimalsa.png');
   if (_fs["default"].existsSync(logoPath)) {
     doc.image(logoPath, 45, 34, {
       fit: [85, 48],
@@ -391,18 +391,18 @@ function _generarAreaServicioPDF() {
           dibujarDatosCliente(doc, cabecera);
           dibujarDatosServicio(doc, cabecera);
           //  dibujarTablaDetalles(doc, detalles);
-          dibujarTotales(doc, cabecera);
+          //dibujarTotales(doc, cabecera);
           dibujarObservaciones(doc, cabecera);
 
           // Firmas de la primera página o página final del resumen
           necesitaPagina(doc, 145);
           dibujarFirmas(doc, firmaBuffer, cabecera.Tecnico, firmaTecnico);
-          _context3.next = 21;
+          _context3.next = 20;
           return agregarPaginasFotografias(doc, cabecera, firmaBuffer, firmaTecnico);
-        case 21:
+        case 20:
           dibujarPiePagina(doc);
           doc.end();
-        case 23:
+        case 22:
         case "end":
           return _context3.stop();
       }

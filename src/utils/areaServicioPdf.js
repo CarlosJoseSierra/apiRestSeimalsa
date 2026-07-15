@@ -140,7 +140,7 @@ function dibujarCabecera(doc, cabecera) {
     process.cwd(),
     'src',
     'assets',
-    'logo-seimalsa.png'
+    'logoSeimalsa.png'
   );
 
   if (fs.existsSync(logoPath)) {
@@ -828,7 +828,7 @@ export async function generarAreaServicioPDF(
   dibujarDatosCliente(doc, cabecera);
   dibujarDatosServicio(doc, cabecera);
 //  dibujarTablaDetalles(doc, detalles);
-  dibujarTotales(doc, cabecera);
+  //dibujarTotales(doc, cabecera);
   dibujarObservaciones(doc, cabecera);
 
   // Firmas de la primera página o página final del resumen
