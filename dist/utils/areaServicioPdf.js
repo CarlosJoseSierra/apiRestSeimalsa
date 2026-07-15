@@ -294,7 +294,7 @@ function agregarPaginasFotografias(_x2, _x3, _x4, _x5) {
   return _agregarPaginasFotografias.apply(this, arguments);
 }
 function _agregarPaginasFotografias() {
-  _agregarPaginasFotografias = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(doc, cabecera, firmaBuffer, firmaTecnico) {
+  _agregarPaginasFotografias = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(doc, cabecera, firmaBuffer, firmaTecnicoBuffer) {
     var urls, i, imagenBuffer;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
@@ -336,7 +336,7 @@ function _agregarPaginasFotografias() {
           } catch (error) {
             console.error('No se pudo colocar la fotografía:', error.message);
           }
-          dibujarFirmas(doc, firmaBuffer, cabecera.Tecnico, firmaTecnico);
+          dibujarFirmas(doc, firmaBuffer, cabecera.Tecnico, firmaTecnicoBuffer);
         case 13:
           i++;
           _context2.next = 2;
@@ -354,7 +354,7 @@ function generarAreaServicioPDF(_x6, _x7, _x8) {
 }
 function _generarAreaServicioPDF() {
   _generarAreaServicioPDF = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(res, cabecera, detalles) {
-    var doc, nombreArchivo, firmaBuffer, firmaTecnico;
+    var doc, nombreArchivo, firmaClienteBuffer, firmaTecnicoBuffer, espacioFirmas, limitePagina;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
@@ -367,6 +367,7 @@ function _generarAreaServicioPDF() {
               left: 45
             },
             bufferPages: true,
+            autoFirstPage: true,
             info: {
               Title: "Reporte ".concat(texto(cabecera.AS_secuencial)),
               Author: 'SEIMALSA',
@@ -378,31 +379,60 @@ function _generarAreaServicioPDF() {
           res.setHeader('Content-Type', 'application/pdf');
           res.setHeader('Content-Disposition', "inline; filename=\"".concat(nombreArchivo, "\""));
           doc.pipe(res);
+
+          /*
+            Descarga de las firmas
+          */
           _context3.next = 7;
           return descargarImagen(cabecera.AS_imagenfirma);
         case 7:
-          firmaBuffer = _context3.sent;
+          firmaClienteBuffer = _context3.sent;
           _context3.next = 10;
           return descargarImagen(cabecera.USU_firma);
         case 10:
-          firmaTecnico = _context3.sent;
+          firmaTecnicoBuffer = _context3.sent;
+          /*
+            Página principal
+          */
           dibujarCabecera(doc, cabecera);
           dibujarDatosEquipo(doc, cabecera);
           dibujarDatosCliente(doc, cabecera);
           dibujarDatosServicio(doc, cabecera);
-          //  dibujarTablaDetalles(doc, detalles);
-          //dibujarTotales(doc, cabecera);
+          if (Array.isArray(detalles) && detalles.length > 0) {
+            dibujarTablaDetalles(doc, detalles);
+
+            /* dibujarTotales(
+               doc,
+               cabecera
+             );*/
+          }
+
           dibujarObservaciones(doc, cabecera);
 
-          // Firmas de la primera página o página final del resumen
-          necesitaPagina(doc, 145);
-          dibujarFirmas(doc, firmaBuffer, cabecera.Tecnico, firmaTecnico);
-          _context3.next = 20;
-          return agregarPaginasFotografias(doc, cabecera, firmaBuffer, firmaTecnico);
-        case 20:
+          /*
+            Dibujar firmas en el resumen solamente si caben.
+            No crea una página adicional.
+          */
+          espacioFirmas = 130;
+          limitePagina = doc.page.height - doc.page.margins.bottom - 15;
+          if (doc.y + espacioFirmas <= limitePagina) {
+            dibujarFirmas(doc, firmaClienteBuffer, cabecera.Tecnico, firmaTecnicoBuffer);
+          }
+
+          /*
+            Se crea una página solamente por cada imagen
+            válida y descargada.
+          */
+          _context3.next = 22;
+          return agregarPaginasFotografias(doc, cabecera, firmaClienteBuffer, firmaTecnicoBuffer);
+        case 22:
+          /*
+            Siempre debe ir después de crear todas
+            las páginas del documento.
+          */
           dibujarPiePagina(doc);
           doc.end();
-        case 22:
+        case 24:
         case "end":
           return _context3.stop();
       }

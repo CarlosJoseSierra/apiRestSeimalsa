@@ -640,7 +640,8 @@ function dibujarPiePagina(doc) {
 function dibujarFirmas(
   doc,
   firmaClienteBuffer,
-  nombreTecnico
+  nombreTecnico,
+
 ) {
   const y = doc.page.height - 145;
 
@@ -703,7 +704,7 @@ async function agregarPaginasFotografias(
   doc,
   cabecera,
   firmaBuffer,
-  firmaTecnico
+  firmaTecnicoBuffer
 ) {
   const urls = [
     cabecera.AS_imagen1,
@@ -767,88 +768,132 @@ async function agregarPaginasFotografias(
       doc,
       firmaBuffer,
       cabecera.Tecnico,
-      firmaTecnico
+      firmaTecnicoBuffer
     );
   }
 }
 
 export async function generarAreaServicioPDF(
-  res,
-  cabecera,
-  detalles
-) {
-  const doc = new PDFDocument({
-    size: 'A4',
-    margins: {
-      top: 35,
-      right: 45,
-      bottom: 50,
-      left: 45
-    },
-    bufferPages: true,
-    info: {
-      Title:
-        `Reporte ${texto(cabecera.AS_secuencial)}`,
-      Author: 'SEIMALSA',
-      Subject: 'Reporte de reparación y cotización',
-      Creator: 'API SEIMALSA'
-    }
-  });
-
-  const nombreArchivo =
-    `reporte-${texto(
-      cabecera.AS_secuencial,
-      cabecera.AS_id
-    )}.pdf`;
-
-  res.setHeader(
-    'Content-Type',
-    'application/pdf'
-  );
-
-  res.setHeader(
-    'Content-Disposition',
-    `inline; filename="${nombreArchivo}"`
-  );
-
-  doc.pipe(res);
-
-  const firmaBuffer =
-    await descargarImagen(
-      cabecera.AS_imagenfirma
+    res,
+    cabecera,
+    detalles
+  ) {
+    const doc = new PDFDocument({
+      size: 'A4',
+      margins: {
+        top: 35,
+        right: 45,
+        bottom: 50,
+        left: 45
+      },
+      bufferPages: true,
+      autoFirstPage: true,
+      info: {
+        Title:
+          `Reporte ${texto(cabecera.AS_secuencial)}`,
+        Author: 'SEIMALSA',
+        Subject:
+          'Reporte de reparación y cotización',
+        Creator: 'API SEIMALSA'
+      }
+    });
+  
+    const nombreArchivo =
+      `reporte-${texto(
+        cabecera.AS_secuencial,
+        cabecera.AS_id
+      )}.pdf`;
+  
+    res.setHeader(
+      'Content-Type',
+      'application/pdf'
     );
-
-    const firmaTecnico =  
-    await descargarImagen(
+  
+    res.setHeader(
+      'Content-Disposition',
+      `inline; filename="${nombreArchivo}"`
+    );
+  
+    doc.pipe(res);
+  
+    /*
+      Descarga de las firmas
+    */
+    const firmaClienteBuffer =
+      await descargarImagen(
+        cabecera.AS_imagenfirma
+      );
+  
+    const firmaTecnicoBuffer =
+      await descargarImagen(
         cabecera.USU_firma
       );
-    
-  dibujarCabecera(doc, cabecera);
-  dibujarDatosEquipo(doc, cabecera);
-  dibujarDatosCliente(doc, cabecera);
-  dibujarDatosServicio(doc, cabecera);
-//  dibujarTablaDetalles(doc, detalles);
-  //dibujarTotales(doc, cabecera);
-  dibujarObservaciones(doc, cabecera);
-
-  // Firmas de la primera página o página final del resumen
-  necesitaPagina(doc, 145);
-
-  dibujarFirmas(
-    doc,
-    firmaBuffer,
-    cabecera.Tecnico,
-    firmaTecnico
-  );
-
-  await agregarPaginasFotografias(
-    doc,
-    cabecera,
-    firmaBuffer,
-    firmaTecnico
-  );
-
-  dibujarPiePagina(doc);
-
-  doc.end();
-}
+  
+    /*
+      Página principal
+    */
+    dibujarCabecera(doc, cabecera);
+    dibujarDatosEquipo(doc, cabecera);
+    dibujarDatosCliente(doc, cabecera);
+    dibujarDatosServicio(doc, cabecera);
+  
+    if (
+      Array.isArray(detalles) &&
+      detalles.length > 0
+    ) {
+      dibujarTablaDetalles(
+        doc,
+        detalles
+      );
+  
+     /* dibujarTotales(
+        doc,
+        cabecera
+      );*/
+    }
+  
+    dibujarObservaciones(
+      doc,
+      cabecera
+    );
+  
+    /*
+      Dibujar firmas en el resumen solamente si caben.
+      No crea una página adicional.
+    */
+    const espacioFirmas = 130;
+    const limitePagina =
+      doc.page.height -
+      doc.page.margins.bottom -
+      15;
+  
+    if (
+      doc.y + espacioFirmas <= limitePagina
+    ) {
+      dibujarFirmas(
+        doc,
+        firmaClienteBuffer,
+        cabecera.Tecnico,
+        firmaTecnicoBuffer
+      );
+    }
+  
+    /*
+      Se crea una página solamente por cada imagen
+      válida y descargada.
+    */
+    await agregarPaginasFotografias(
+      doc,
+      cabecera,
+      firmaClienteBuffer,
+      firmaTecnicoBuffer
+    );
+  
+    /*
+      Siempre debe ir después de crear todas
+      las páginas del documento.
+    */
+    dibujarPiePagina(doc);
+  
+    doc.end();
+  }
