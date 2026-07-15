@@ -115,8 +115,9 @@ function dibujarCampo(doc, etiqueta, valor, x, y, anchoEtiqueta, anchoValor) {
 function dibujarCabecera(doc, cabecera) {
   var logoPath = _path["default"].join(process.cwd(), 'src', 'assets', 'logoSeimalsa.png');
   if (_fs["default"].existsSync(logoPath)) {
-    doc.image(logoPath, 45, 34, {
-      fit: [85, 48],
+    doc.image(logoPath, 45, 24, {
+      //fit: [85, 48],
+      fit: [85, 78],
       align: 'left'
     });
   }
@@ -124,10 +125,20 @@ function dibujarCabecera(doc, cabecera) {
     width: 405,
     align: 'right'
   });
-  doc.fillColor(COLORES.texto).fontSize(11).text(texto(cabecera.AS_secuencial, "CT-".concat(cabecera.AS_id)), 145, 65, {
-    width: 405,
-    align: 'right'
-  });
+
+  /*doc
+    .fillColor(COLORES.texto)
+    .fontSize(11)
+    .text(
+      texto(cabecera.AS_secuencial, `CT-${cabecera.AS_id}`),
+      145,
+      65,
+      {
+        width: 405,
+        align: 'right'
+      }
+    );*/
+
   doc.moveTo(45, 92).lineTo(550, 92).lineWidth(1).strokeColor(COLORES.primario).stroke();
   doc.y = 108;
 }
@@ -263,31 +274,71 @@ function dibujarPiePagina(doc) {
     });
   }
 }
-function dibujarFirmas(doc, firmaClienteBuffer, nombreTecnico) {
-  var y = doc.page.height - 145;
+function dibujarFirmas(doc, firmaClienteBuffer, nombreTecnico, firmaTecnicoBuffer) {
+  var anchoFirma = 150;
+  var altoFirma = 65;
+  var xCliente = 72;
+  var xTecnico = 372;
+  var yLinea = doc.page.height - 112;
+  var yFirma = yLinea - altoFirma - 5;
+
+  /*
+    Firma del cliente
+  */
   if (firmaClienteBuffer) {
     try {
-      doc.image(firmaClienteBuffer, 70, y - 45, {
-        fit: [150, 70],
+      doc.image(firmaClienteBuffer, xCliente, yFirma, {
+        fit: [anchoFirma, altoFirma],
         align: 'center',
         valign: 'bottom'
       });
     } catch (error) {
-      console.error('No se pudo insertar la firma:', error.message);
+      console.error('No se pudo insertar la firma del cliente:', error.message);
     }
   }
-  doc.moveTo(65, y + 25).lineTo(230, y + 25).lineWidth(0.7).strokeColor(COLORES.texto).stroke();
-  doc.fillColor(COLORES.texto).font('Helvetica-Bold').fontSize(8).text('FIRMA DEL CLIENTE', 65, y + 31, {
+
+  /*
+    Firma del técnico
+  */
+  if (firmaTecnicoBuffer) {
+    try {
+      doc.image(firmaTecnicoBuffer, xTecnico, yFirma, {
+        fit: [anchoFirma, altoFirma],
+        align: 'center',
+        valign: 'bottom'
+      });
+    } catch (error) {
+      console.error('No se pudo insertar la firma del técnico:', error.message);
+    }
+  }
+
+  /*
+    Líneas
+  */
+  doc.moveTo(65, yLinea).lineTo(230, yLinea).lineWidth(0.7).strokeColor(COLORES.texto).stroke();
+  doc.moveTo(365, yLinea).lineTo(530, yLinea).lineWidth(0.7).strokeColor(COLORES.texto).stroke();
+
+  /*
+    Texto de firma del cliente
+  */
+  doc.fillColor(COLORES.texto).font('Helvetica-Bold').fontSize(8).text('FIRMA DEL CLIENTE', 65, yLinea + 7, {
     width: 165,
-    align: 'center'
+    align: 'center',
+    lineBreak: false
   });
-  doc.moveTo(365, y + 25).lineTo(530, y + 25).stroke();
-  doc.font('Helvetica-Bold').text(texto(nombreTecnico, 'TÉCNICO'), 365, y + 31, {
+
+  /*
+    Nombre y texto del técnico
+  */
+  doc.font('Helvetica-Bold').fontSize(8).text(texto(nombreTecnico, 'TÉCNICO'), 365, yLinea + 7, {
     width: 165,
-    align: 'center'
-  }).font('Helvetica').fontSize(7).text('TÉCNICO RESPONSABLE', 365, y + 43, {
+    align: 'center',
+    lineBreak: false
+  });
+  doc.font('Helvetica').fontSize(7).text('TÉCNICO RESPONSABLE', 365, yLinea + 19, {
     width: 165,
-    align: 'center'
+    align: 'center',
+    lineBreak: false
   });
 }
 function agregarPaginasFotografias(_x2, _x3, _x4, _x5) {
@@ -430,9 +481,10 @@ function _generarAreaServicioPDF() {
             Siempre debe ir después de crear todas
             las páginas del documento.
           */
-          dibujarPiePagina(doc);
+          //dibujarPiePagina(doc);
+
           doc.end();
-        case 24:
+        case 23:
         case "end":
           return _context3.stop();
       }

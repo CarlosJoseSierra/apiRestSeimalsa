@@ -949,7 +949,6 @@ export const getAreaByPlaca = async (req, res) => {
         msg: 'No se encontró la reparación solicitada.'
       });
     }
-
     await generarAreaServicioPDF(
       res,
       cabecera,
