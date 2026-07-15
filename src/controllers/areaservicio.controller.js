@@ -568,6 +568,30 @@ export const getAreaByPlaca = async (req, res) => {
           sql.NVarChar(sql.MAX),
           JSON.stringify(detalles)
         )
+
+        .input(
+          'latitud',
+          sql.Decimal(18, 7),
+          Number(req.body.Latitud)
+        )
+
+        .input(
+          'longitud',
+          sql.Decimal(18, 7),
+          Number(req.body.Longitud)
+        )
+
+        .input(
+          'precision',
+          sql.Decimal(18, 2),
+          Number(req.body.PrecisionGPS)
+        )
+
+        .input(
+          'idEquipoCompleto',
+          sql.Decimal(18, 0),
+          Number(req.body.idEquipoCompleto)
+        )
   
         .execute(
           'dbo.sp_AreaServicio_InsertarCompleto'
