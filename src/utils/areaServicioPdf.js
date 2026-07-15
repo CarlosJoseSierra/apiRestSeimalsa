@@ -390,8 +390,7 @@ function dibujarTablaDetalles(doc, detalles) {
     item: 45,
     codigo: 80,
     descripcion: 170,
-    cantidad: 440,
-    total: 495
+    cantidad: 440
   };
 
   function encabezado() {
@@ -415,10 +414,6 @@ function dibujarTablaDetalles(doc, detalles) {
         width: 260
       })
       .text('CANT.', columnas.cantidad, y + 8, {
-        width: 50,
-        align: 'right'
-      })
-      .text('TOTAL', columnas.total, y + 8, {
         width: 50,
         align: 'right'
       });
@@ -498,16 +493,8 @@ function dibujarTablaDetalles(doc, detalles) {
           width: 45,
           align: 'right'
         }
-      )
-      .text(
-        numero(detalle.AS_DET_total),
-        columnas.total,
-        y + 8,
-        {
-          width: 50,
-          align: 'right'
-        }
       );
+     
 
     doc.y = y + altoFila;
   });
@@ -631,7 +618,7 @@ function dibujarPiePagina(doc) {
       .font('Helvetica')
       .fontSize(7)
       .text(
-        'SEIMALSA - Documento generado electrónicamente',
+        'SEIMALSA - GRUPO ALVARADO',
         45,
         doc.page.height - 29,
         {
@@ -715,7 +702,8 @@ function dibujarFirmas(
 async function agregarPaginasFotografias(
   doc,
   cabecera,
-  firmaBuffer
+  firmaBuffer,
+  firmaTecnico
 ) {
   const urls = [
     cabecera.AS_imagen1,
@@ -778,7 +766,8 @@ async function agregarPaginasFotografias(
     dibujarFirmas(
       doc,
       firmaBuffer,
-      cabecera.Tecnico
+      cabecera.Tecnico,
+      firmaTecnico
     );
   }
 }
@@ -829,11 +818,16 @@ export async function generarAreaServicioPDF(
       cabecera.AS_imagenfirma
     );
 
+    const firmaTecnico =  
+    await descargarImagen(
+        cabecera.USU_firma
+      );
+    
   dibujarCabecera(doc, cabecera);
   dibujarDatosEquipo(doc, cabecera);
   dibujarDatosCliente(doc, cabecera);
   dibujarDatosServicio(doc, cabecera);
-  dibujarTablaDetalles(doc, detalles);
+//  dibujarTablaDetalles(doc, detalles);
   dibujarTotales(doc, cabecera);
   dibujarObservaciones(doc, cabecera);
 
@@ -843,13 +837,15 @@ export async function generarAreaServicioPDF(
   dibujarFirmas(
     doc,
     firmaBuffer,
-    cabecera.Tecnico
+    cabecera.Tecnico,
+    firmaTecnico
   );
 
   await agregarPaginasFotografias(
     doc,
     cabecera,
-    firmaBuffer
+    firmaBuffer,
+    firmaTecnico
   );
 
   dibujarPiePagina(doc);

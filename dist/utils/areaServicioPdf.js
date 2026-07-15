@@ -171,8 +171,7 @@ function dibujarTablaDetalles(doc, detalles) {
     item: 45,
     codigo: 80,
     descripcion: 170,
-    cantidad: 440,
-    total: 495
+    cantidad: 440
   };
   function encabezado() {
     var y = doc.y;
@@ -184,9 +183,6 @@ function dibujarTablaDetalles(doc, detalles) {
     }).text('DESCRIPCIÓN', columnas.descripcion, y + 8, {
       width: 260
     }).text('CANT.', columnas.cantidad, y + 8, {
-      width: 50,
-      align: 'right'
-    }).text('TOTAL', columnas.total, y + 8, {
       width: 50,
       align: 'right'
     });
@@ -215,9 +211,6 @@ function dibujarTablaDetalles(doc, detalles) {
       width: 255
     }).text(numero(detalle.AS_DET_cantidad), columnas.cantidad, y + 8, {
       width: 45,
-      align: 'right'
-    }).text(numero(detalle.AS_DET_total), columnas.total, y + 8, {
-      width: 50,
       align: 'right'
     });
     doc.y = y + altoFila;
@@ -262,7 +255,7 @@ function dibujarPiePagina(doc) {
   for (var pagina = paginas.start; pagina < paginas.start + paginas.count; pagina++) {
     doc.switchToPage(pagina);
     doc.moveTo(45, doc.page.height - 38).lineTo(550, doc.page.height - 38).lineWidth(0.5).strokeColor(COLORES.borde).stroke();
-    doc.fillColor(COLORES.textoSuave).font('Helvetica').fontSize(7).text('SEIMALSA - Documento generado electrónicamente', 45, doc.page.height - 29, {
+    doc.fillColor(COLORES.textoSuave).font('Helvetica').fontSize(7).text('SEIMALSA - GRUPO ALVARADO', 45, doc.page.height - 29, {
       width: 360
     }).text("P\xE1gina ".concat(pagina + 1, " de ").concat(paginas.count), 405, doc.page.height - 29, {
       width: 145,
@@ -297,11 +290,11 @@ function dibujarFirmas(doc, firmaClienteBuffer, nombreTecnico) {
     align: 'center'
   });
 }
-function agregarPaginasFotografias(_x2, _x3, _x4) {
+function agregarPaginasFotografias(_x2, _x3, _x4, _x5) {
   return _agregarPaginasFotografias.apply(this, arguments);
 }
 function _agregarPaginasFotografias() {
-  _agregarPaginasFotografias = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(doc, cabecera, firmaBuffer) {
+  _agregarPaginasFotografias = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(doc, cabecera, firmaBuffer, firmaTecnico) {
     var urls, i, imagenBuffer;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
@@ -343,7 +336,7 @@ function _agregarPaginasFotografias() {
           } catch (error) {
             console.error('No se pudo colocar la fotografía:', error.message);
           }
-          dibujarFirmas(doc, firmaBuffer, cabecera.Tecnico);
+          dibujarFirmas(doc, firmaBuffer, cabecera.Tecnico, firmaTecnico);
         case 13:
           i++;
           _context2.next = 2;
@@ -356,12 +349,12 @@ function _agregarPaginasFotografias() {
   }));
   return _agregarPaginasFotografias.apply(this, arguments);
 }
-function generarAreaServicioPDF(_x5, _x6, _x7) {
+function generarAreaServicioPDF(_x6, _x7, _x8) {
   return _generarAreaServicioPDF.apply(this, arguments);
 }
 function _generarAreaServicioPDF() {
   _generarAreaServicioPDF = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(res, cabecera, detalles) {
-    var doc, nombreArchivo, firmaBuffer;
+    var doc, nombreArchivo, firmaBuffer, firmaTecnico;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
@@ -389,23 +382,27 @@ function _generarAreaServicioPDF() {
           return descargarImagen(cabecera.AS_imagenfirma);
         case 7:
           firmaBuffer = _context3.sent;
+          _context3.next = 10;
+          return descargarImagen(cabecera.USU_firma);
+        case 10:
+          firmaTecnico = _context3.sent;
           dibujarCabecera(doc, cabecera);
           dibujarDatosEquipo(doc, cabecera);
           dibujarDatosCliente(doc, cabecera);
           dibujarDatosServicio(doc, cabecera);
-          dibujarTablaDetalles(doc, detalles);
+          //  dibujarTablaDetalles(doc, detalles);
           dibujarTotales(doc, cabecera);
           dibujarObservaciones(doc, cabecera);
 
           // Firmas de la primera página o página final del resumen
           necesitaPagina(doc, 145);
-          dibujarFirmas(doc, firmaBuffer, cabecera.Tecnico);
-          _context3.next = 19;
-          return agregarPaginasFotografias(doc, cabecera, firmaBuffer);
-        case 19:
+          dibujarFirmas(doc, firmaBuffer, cabecera.Tecnico, firmaTecnico);
+          _context3.next = 21;
+          return agregarPaginasFotografias(doc, cabecera, firmaBuffer, firmaTecnico);
+        case 21:
           dibujarPiePagina(doc);
           doc.end();
-        case 21:
+        case 23:
         case "end":
           return _context3.stop();
       }
