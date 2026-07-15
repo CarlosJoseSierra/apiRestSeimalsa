@@ -18,6 +18,8 @@ import {
     getEntregadosArca,
     getDetalleCTById,
     getReparacionesXtecnico,
+    updateAreaServicio,
+    obtenerPDFReparacion,
 } from "../controllers/areaservicio.controller";
 
 const router = Router();
@@ -47,5 +49,6 @@ router.get("/areaservicio/U", getEntregadosUnilever);
 router.get("/areaservicio/R", getEntregadosElRosado);
 router.get("/areaservicio/A", getEntregadosArca);
 router.get("/areaservicio/DET/:id", getDetalleCTById);
-
+router.put("/areaservicio/:id", storage.array('image',7), updateAreaServicio);
+router.get('/areaservicio/:id/pdf',obtenerPDFReparacion);
 export default router;

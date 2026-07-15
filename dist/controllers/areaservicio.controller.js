@@ -4,8 +4,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateActivoByTecnico = exports.getReporteGeneral = exports.getReparacionesXtecnico = exports.getEntregadosUnilever = exports.getEntregadosTesalia = exports.getEntregadosPronaca = exports.getEntregadosHeineken = exports.getEntregadosElRosado = exports.getEntregadosArca = exports.getDetalleCTById = exports.getAreaSinTecnico = exports.getAreaServicioMovimiento = exports.getAreaServicioMantenimiento = exports.getAreaByTecnico = exports.getAreaBySerie = exports.getAreaByPlaca = exports.createNewAreaServicio = void 0;
+exports.updateAreaServicio = exports.updateActivoByTecnico = exports.obtenerPDFReparacion = exports.getReporteGeneral = exports.getReparacionesXtecnico = exports.getEntregadosUnilever = exports.getEntregadosTesalia = exports.getEntregadosPronaca = exports.getEntregadosHeineken = exports.getEntregadosElRosado = exports.getEntregadosArca = exports.getDetalleCTById = exports.getAreaSinTecnico = exports.getAreaServicioMovimiento = exports.getAreaServicioMantenimiento = exports.getAreaByTecnico = exports.getAreaBySerie = exports.getAreaByPlaca = exports.createNewAreaServicio = void 0;
 var _database = require("../database");
+var _areaServicioPdf = require("../utils/areaServicioPdf.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -199,7 +200,7 @@ var getAreaByTecnico = /*#__PURE__*/function () {
   };
 }();
 exports.getAreaByTecnico = getAreaByTecnico;
-var createNewAreaServicio = /*#__PURE__*/function () {
+var updateAreaServicio = /*#__PURE__*/function () {
   var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(req, res) {
     var idSub, subcliente, pool, result, _result$recordset, _result$recordset$, _ref7, _req$body$details, _req$body$Serie, _req$body$Placa, _req$body$Observacion, _req$body$Subtotal, _req$body$IVA, _req$body$Total, _result$recordset2, _registro$status, _registro$msg, archivos, imagenes, firma, _iterator, _step, archivo, resultadoCloudinary, detallesRecibidos, detallesArray, detalles, estadoSeimalsa, estadoMovimiento, servicio, _pool, _result, registro, _ref8, _error$originalError$, _error$originalError, _error$originalError$2;
     return _regeneratorRuntime().wrap(function _callee6$(_context6) {
@@ -229,47 +230,43 @@ var createNewAreaServicio = /*#__PURE__*/function () {
             }
           }
         case 13:
-          console.log('1');
-          console.log(idSub);
-          _context6.prev = 15;
-          console.log('2');
-          console.log(idSub);
+          _context6.prev = 13;
           archivos = Array.isArray(req.files) ? req.files : [];
           imagenes = [];
           firma = '';
           _iterator = _createForOfIteratorHelper(archivos);
-          _context6.prev = 22;
+          _context6.prev = 18;
           _iterator.s();
-        case 24:
+        case 20:
           if ((_step = _iterator.n()).done) {
-            _context6.next = 32;
+            _context6.next = 28;
             break;
           }
           archivo = _step.value;
-          _context6.next = 28;
+          _context6.next = 24;
           return cloudinary.uploader.upload(archivo.path);
-        case 28:
+        case 24:
           resultadoCloudinary = _context6.sent;
           if (archivo.originalname.toLowerCase().includes('firma')) {
             firma = resultadoCloudinary.secure_url;
           } else if (imagenes.length < 5) {
             imagenes.push(resultadoCloudinary.secure_url);
           }
+        case 26:
+          _context6.next = 20;
+          break;
+        case 28:
+          _context6.next = 33;
+          break;
         case 30:
-          _context6.next = 24;
-          break;
-        case 32:
-          _context6.next = 37;
-          break;
-        case 34:
-          _context6.prev = 34;
-          _context6.t0 = _context6["catch"](22);
+          _context6.prev = 30;
+          _context6.t0 = _context6["catch"](18);
           _iterator.e(_context6.t0);
-        case 37:
-          _context6.prev = 37;
+        case 33:
+          _context6.prev = 33;
           _iterator.f();
-          return _context6.finish(37);
-        case 40:
+          return _context6.finish(33);
+        case 36:
           while (imagenes.length < 5) {
             imagenes.push('');
           }
@@ -282,7 +279,7 @@ var createNewAreaServicio = /*#__PURE__*/function () {
             return detalle;
           });
           if (!(detalles.length === 0)) {
-            _context6.next = 46;
+            _context6.next = 42;
             break;
           }
           return _context6.abrupt("return", res.status(400).json({
@@ -290,9 +287,7 @@ var createNewAreaServicio = /*#__PURE__*/function () {
             msg: 'Debe agregar al menos un producto.',
             token: 0
           }));
-        case 46:
-          console.log('3');
-          console.log(idSub);
+        case 42:
           estadoSeimalsa = 4;
           estadoMovimiento = 10;
           servicio = Number(req.body.Servicio);
@@ -302,13 +297,13 @@ var createNewAreaServicio = /*#__PURE__*/function () {
           if (servicio === 4) {
             estadoMovimiento = Number(req.body.Estado);
           }
-          _context6.next = 55;
+          _context6.next = 49;
           return (0, _database.getConnection)();
-        case 55:
+        case 49:
           _pool = _context6.sent;
-          _context6.next = 58;
+          _context6.next = 52;
           return _pool.request().input('AS_SS_id', _database.sql.Decimal(18, 0), Number(req.body.Servicio)).input('AS_USU_id', _database.sql.Decimal(18, 0), Number(req.body.USU_id)).input('AS_CLI_id', _database.sql.Decimal(18, 0), Number(req.body.Cliente)).input('AS_TPS_id', _database.sql.Decimal(18, 0), Number(req.body.TipoServicio)).input('AS_UBIC_id', _database.sql.Decimal(18, 0), Number(req.body.Ciudad)).input('AS_serie', _database.sql.VarChar(100), (_req$body$Serie = req.body.Serie) !== null && _req$body$Serie !== void 0 ? _req$body$Serie : '').input('AS_placa', _database.sql.VarChar(100), (_req$body$Placa = req.body.Placa) !== null && _req$body$Placa !== void 0 ? _req$body$Placa : '').input('AS_EQUIP_id', _database.sql.Decimal(18, 0), Number(req.body.Modelo)).input('AS_LOGO_id', _database.sql.Decimal(18, 0), Number(req.body.Logo)).input('AS_observacionTecnica', _database.sql.VarChar(_database.sql.MAX), (_req$body$Observacion = req.body.ObservacionTec) !== null && _req$body$Observacion !== void 0 ? _req$body$Observacion : '').input('AS_Subtotal', _database.sql.Decimal(18, 2), Number((_req$body$Subtotal = req.body.Subtotal) !== null && _req$body$Subtotal !== void 0 ? _req$body$Subtotal : 0)).input('AS_impuesto', _database.sql.Decimal(18, 2), 15).input('AS_iva', _database.sql.Decimal(18, 2), Number((_req$body$IVA = req.body.IVA) !== null && _req$body$IVA !== void 0 ? _req$body$IVA : 0)).input('AS_total', _database.sql.Decimal(18, 2), Number((_req$body$Total = req.body.Total) !== null && _req$body$Total !== void 0 ? _req$body$Total : 0)).input('AS_SC_id', _database.sql.Decimal(18, 0), idSub).input('AS_ES_id', _database.sql.Decimal(18, 0), estadoSeimalsa).input('AS_EM_id', _database.sql.Decimal(18, 0), estadoMovimiento).input('AS_SEDE_id', _database.sql.Decimal(18, 0), 0).input('AS_imagen1', _database.sql.VarChar(1000), imagenes[0]).input('AS_imagen2', _database.sql.VarChar(1000), imagenes[1]).input('AS_imagen3', _database.sql.VarChar(1000), imagenes[2]).input('AS_imagen4', _database.sql.VarChar(1000), imagenes[3]).input('AS_imagen5', _database.sql.VarChar(1000), imagenes[4]).input('AS_imagenfirma', _database.sql.VarChar(1000), firma).input('DetallesJSON', _database.sql.NVarChar(_database.sql.MAX), JSON.stringify(detalles)).execute('dbo.sp_AreaServicio_InsertarCompleto');
-        case 58:
+        case 52:
           _result = _context6.sent;
           registro = (_result$recordset2 = _result.recordset) === null || _result$recordset2 === void 0 ? void 0 : _result$recordset2[0];
           return _context6.abrupt("return", res.status(200).json({
@@ -321,23 +316,159 @@ var createNewAreaServicio = /*#__PURE__*/function () {
               cantidadDetalles: registro === null || registro === void 0 ? void 0 : registro.cantidadDetalles
             }
           }));
-        case 63:
-          _context6.prev = 63;
-          _context6.t1 = _context6["catch"](15);
+        case 57:
+          _context6.prev = 57;
+          _context6.t1 = _context6["catch"](13);
           console.error('Error insertando AREA_SERVICIO:', _context6.t1);
           return _context6.abrupt("return", res.status(500).json({
             status: 'error',
             msg: (_ref8 = (_error$originalError$ = _context6.t1 === null || _context6.t1 === void 0 ? void 0 : (_error$originalError = _context6.t1.originalError) === null || _error$originalError === void 0 ? void 0 : (_error$originalError$2 = _error$originalError.info) === null || _error$originalError$2 === void 0 ? void 0 : _error$originalError$2.message) !== null && _error$originalError$ !== void 0 ? _error$originalError$ : _context6.t1 === null || _context6.t1 === void 0 ? void 0 : _context6.t1.message) !== null && _ref8 !== void 0 ? _ref8 : 'No se pudo registrar la cotización.',
             token: 0
           }));
-        case 67:
+        case 61:
         case "end":
           return _context6.stop();
       }
-    }, _callee6, null, [[15, 63], [22, 34, 37, 40]]);
+    }, _callee6, null, [[13, 57], [18, 30, 33, 36]]);
   }));
-  return function createNewAreaServicio(_x11, _x12) {
+  return function updateAreaServicio(_x11, _x12) {
     return _ref6.apply(this, arguments);
+  };
+}();
+exports.updateAreaServicio = updateAreaServicio;
+var createNewAreaServicio = /*#__PURE__*/function () {
+  var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(req, res) {
+    var idSub, subcliente, pool, result, _result$recordset3, _result$recordset3$, _ref10, _req$body$details2, _req$body$Serie2, _req$body$Placa2, _req$body$Observacion2, _req$body$Subtotal2, _req$body$IVA2, _req$body$Total2, _result2$recordset, _registro$status2, _registro$msg2, archivos, imagenes, firma, _iterator2, _step2, archivo, resultadoCloudinary, detallesRecibidos, detallesArray, detalles, estadoSeimalsa, estadoMovimiento, servicio, _pool2, _result2, registro, _ref11, _error$originalError$3, _error$originalError2, _error$originalError3;
+    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+      while (1) switch (_context7.prev = _context7.next) {
+        case 0:
+          idSub = 0;
+          subcliente = req.body.Subcliente;
+          if (isNaN(Number(subcliente))) {
+            _context7.next = 6;
+            break;
+          }
+          idSub = subcliente;
+          _context7.next = 13;
+          break;
+        case 6:
+          _context7.next = 8;
+          return (0, _database.getConnection)();
+        case 8:
+          pool = _context7.sent;
+          _context7.next = 11;
+          return pool.request().input('SC_nombre', _database.sql.VarChar, subcliente).input('SC_establecimiento', _database.sql.VarChar, req.body.Establecimiento).input('SC_direccion', _database.sql.VarChar, req.body.Direccion).input('SC_telefono', _database.sql.VarChar, req.body.Telefono).input('SC_USU_ing', _database.sql.Decimal, req.body.USU_id).query(_database.querys.createSubcliente);
+        case 11:
+          result = _context7.sent;
+          if (result.rowsAffected[0] == 1) {
+            if (result.recordset.length > 0) {
+              idSub = (_result$recordset3 = result.recordset) === null || _result$recordset3 === void 0 ? void 0 : (_result$recordset3$ = _result$recordset3[0]) === null || _result$recordset3$ === void 0 ? void 0 : _result$recordset3$.SC_id;
+            }
+          }
+        case 13:
+          _context7.prev = 13;
+          archivos = Array.isArray(req.files) ? req.files : [];
+          imagenes = [];
+          firma = '';
+          _iterator2 = _createForOfIteratorHelper(archivos);
+          _context7.prev = 18;
+          _iterator2.s();
+        case 20:
+          if ((_step2 = _iterator2.n()).done) {
+            _context7.next = 28;
+            break;
+          }
+          archivo = _step2.value;
+          _context7.next = 24;
+          return cloudinary.uploader.upload(archivo.path);
+        case 24:
+          resultadoCloudinary = _context7.sent;
+          if (archivo.originalname.toLowerCase().includes('firma')) {
+            firma = resultadoCloudinary.secure_url;
+          } else if (imagenes.length < 5) {
+            imagenes.push(resultadoCloudinary.secure_url);
+          }
+        case 26:
+          _context7.next = 20;
+          break;
+        case 28:
+          _context7.next = 33;
+          break;
+        case 30:
+          _context7.prev = 30;
+          _context7.t0 = _context7["catch"](18);
+          _iterator2.e(_context7.t0);
+        case 33:
+          _context7.prev = 33;
+          _iterator2.f();
+          return _context7.finish(33);
+        case 36:
+          while (imagenes.length < 5) {
+            imagenes.push('');
+          }
+          detallesRecibidos = (_ref10 = (_req$body$details2 = req.body['details[]']) !== null && _req$body$details2 !== void 0 ? _req$body$details2 : req.body.details) !== null && _ref10 !== void 0 ? _ref10 : [];
+          detallesArray = Array.isArray(detallesRecibidos) ? detallesRecibidos : detallesRecibidos ? [detallesRecibidos] : [];
+          detalles = detallesArray.map(function (detalle) {
+            if (typeof detalle === 'string') {
+              return JSON.parse(detalle);
+            }
+            return detalle;
+          });
+          if (!(detalles.length === 0)) {
+            _context7.next = 42;
+            break;
+          }
+          return _context7.abrupt("return", res.status(400).json({
+            status: 'error',
+            msg: 'Debe agregar al menos un producto.',
+            token: 0
+          }));
+        case 42:
+          estadoSeimalsa = 4;
+          estadoMovimiento = 10;
+          servicio = Number(req.body.Servicio);
+          if (servicio === 2) {
+            estadoSeimalsa = Number(req.body.Estado);
+          }
+          if (servicio === 4) {
+            estadoMovimiento = Number(req.body.Estado);
+          }
+          _context7.next = 49;
+          return (0, _database.getConnection)();
+        case 49:
+          _pool2 = _context7.sent;
+          _context7.next = 52;
+          return _pool2.request().input('AS_SS_id', _database.sql.Decimal(18, 0), Number(req.body.Servicio)).input('AS_USU_id', _database.sql.Decimal(18, 0), Number(req.body.USU_id)).input('AS_CLI_id', _database.sql.Decimal(18, 0), Number(req.body.Cliente)).input('AS_TPS_id', _database.sql.Decimal(18, 0), Number(req.body.TipoServicio)).input('AS_UBIC_id', _database.sql.Decimal(18, 0), Number(req.body.Ciudad)).input('AS_serie', _database.sql.VarChar(100), (_req$body$Serie2 = req.body.Serie) !== null && _req$body$Serie2 !== void 0 ? _req$body$Serie2 : '').input('AS_placa', _database.sql.VarChar(100), (_req$body$Placa2 = req.body.Placa) !== null && _req$body$Placa2 !== void 0 ? _req$body$Placa2 : '').input('AS_EQUIP_id', _database.sql.Decimal(18, 0), Number(req.body.Modelo)).input('AS_LOGO_id', _database.sql.Decimal(18, 0), Number(req.body.Logo)).input('AS_observacionTecnica', _database.sql.VarChar(_database.sql.MAX), (_req$body$Observacion2 = req.body.ObservacionTec) !== null && _req$body$Observacion2 !== void 0 ? _req$body$Observacion2 : '').input('AS_Subtotal', _database.sql.Decimal(18, 2), Number((_req$body$Subtotal2 = req.body.Subtotal) !== null && _req$body$Subtotal2 !== void 0 ? _req$body$Subtotal2 : 0)).input('AS_impuesto', _database.sql.Decimal(18, 2), 15).input('AS_iva', _database.sql.Decimal(18, 2), Number((_req$body$IVA2 = req.body.IVA) !== null && _req$body$IVA2 !== void 0 ? _req$body$IVA2 : 0)).input('AS_total', _database.sql.Decimal(18, 2), Number((_req$body$Total2 = req.body.Total) !== null && _req$body$Total2 !== void 0 ? _req$body$Total2 : 0)).input('AS_SC_id', _database.sql.Decimal(18, 0), idSub).input('AS_ES_id', _database.sql.Decimal(18, 0), estadoSeimalsa).input('AS_EM_id', _database.sql.Decimal(18, 0), estadoMovimiento).input('AS_SEDE_id', _database.sql.Decimal(18, 0), 0).input('AS_imagen1', _database.sql.VarChar(1000), imagenes[0]).input('AS_imagen2', _database.sql.VarChar(1000), imagenes[1]).input('AS_imagen3', _database.sql.VarChar(1000), imagenes[2]).input('AS_imagen4', _database.sql.VarChar(1000), imagenes[3]).input('AS_imagen5', _database.sql.VarChar(1000), imagenes[4]).input('AS_imagenfirma', _database.sql.VarChar(1000), firma).input('DetallesJSON', _database.sql.NVarChar(_database.sql.MAX), JSON.stringify(detalles)).execute('dbo.sp_AreaServicio_InsertarCompleto');
+        case 52:
+          _result2 = _context7.sent;
+          registro = (_result2$recordset = _result2.recordset) === null || _result2$recordset === void 0 ? void 0 : _result2$recordset[0];
+          return _context7.abrupt("return", res.status(200).json({
+            status: (_registro$status2 = registro === null || registro === void 0 ? void 0 : registro.status) !== null && _registro$status2 !== void 0 ? _registro$status2 : 'ok',
+            msg: (_registro$msg2 = registro === null || registro === void 0 ? void 0 : registro.msg) !== null && _registro$msg2 !== void 0 ? _registro$msg2 : 'Registro exitoso',
+            token: 0,
+            data: {
+              AS_id: registro === null || registro === void 0 ? void 0 : registro.AS_id,
+              AS_secuencial: registro === null || registro === void 0 ? void 0 : registro.AS_secuencial,
+              cantidadDetalles: registro === null || registro === void 0 ? void 0 : registro.cantidadDetalles
+            }
+          }));
+        case 57:
+          _context7.prev = 57;
+          _context7.t1 = _context7["catch"](13);
+          console.error('Error insertando AREA_SERVICIO:', _context7.t1);
+          return _context7.abrupt("return", res.status(500).json({
+            status: 'error',
+            msg: (_ref11 = (_error$originalError$3 = _context7.t1 === null || _context7.t1 === void 0 ? void 0 : (_error$originalError2 = _context7.t1.originalError) === null || _error$originalError2 === void 0 ? void 0 : (_error$originalError3 = _error$originalError2.info) === null || _error$originalError3 === void 0 ? void 0 : _error$originalError3.message) !== null && _error$originalError$3 !== void 0 ? _error$originalError$3 : _context7.t1 === null || _context7.t1 === void 0 ? void 0 : _context7.t1.message) !== null && _ref11 !== void 0 ? _ref11 : 'No se pudo registrar la cotización.',
+            token: 0
+          }));
+        case 61:
+        case "end":
+          return _context7.stop();
+      }
+    }, _callee7, null, [[13, 57], [18, 30, 33, 36]]);
+  }));
+  return function createNewAreaServicio(_x13, _x14) {
+    return _ref9.apply(this, arguments);
   };
 }();
 
@@ -481,39 +612,7 @@ var createNewAreaServicio = /*#__PURE__*/function () {
 }*/
 exports.createNewAreaServicio = createNewAreaServicio;
 var getAreaServicioMovimiento = /*#__PURE__*/function () {
-  var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(req, res) {
-    var pool, result;
-    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-      while (1) switch (_context7.prev = _context7.next) {
-        case 0:
-          _context7.prev = 0;
-          _context7.next = 3;
-          return (0, _database.getConnection)();
-        case 3:
-          pool = _context7.sent;
-          _context7.next = 6;
-          return pool.request().query(_database.querys.getAreaByMovimiento);
-        case 6:
-          result = _context7.sent;
-          return _context7.abrupt("return", res.json(result.recordset[0]));
-        case 10:
-          _context7.prev = 10;
-          _context7.t0 = _context7["catch"](0);
-          res.status(500);
-          res.send(_context7.t0.message);
-        case 14:
-        case "end":
-          return _context7.stop();
-      }
-    }, _callee7, null, [[0, 10]]);
-  }));
-  return function getAreaServicioMovimiento(_x13, _x14) {
-    return _ref9.apply(this, arguments);
-  };
-}();
-exports.getAreaServicioMovimiento = getAreaServicioMovimiento;
-var getAreaServicioMantenimiento = /*#__PURE__*/function () {
-  var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(req, res) {
+  var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(req, res) {
     var pool, result;
     return _regeneratorRuntime().wrap(function _callee8$(_context8) {
       while (1) switch (_context8.prev = _context8.next) {
@@ -524,7 +623,7 @@ var getAreaServicioMantenimiento = /*#__PURE__*/function () {
         case 3:
           pool = _context8.sent;
           _context8.next = 6;
-          return pool.request().query(_database.querys.getAreaByMantenimiento);
+          return pool.request().query(_database.querys.getAreaByMovimiento);
         case 6:
           result = _context8.sent;
           return _context8.abrupt("return", res.json(result.recordset[0]));
@@ -539,13 +638,13 @@ var getAreaServicioMantenimiento = /*#__PURE__*/function () {
       }
     }, _callee8, null, [[0, 10]]);
   }));
-  return function getAreaServicioMantenimiento(_x15, _x16) {
-    return _ref10.apply(this, arguments);
+  return function getAreaServicioMovimiento(_x15, _x16) {
+    return _ref12.apply(this, arguments);
   };
 }();
-exports.getAreaServicioMantenimiento = getAreaServicioMantenimiento;
-var getReporteGeneral = /*#__PURE__*/function () {
-  var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(req, res) {
+exports.getAreaServicioMovimiento = getAreaServicioMovimiento;
+var getAreaServicioMantenimiento = /*#__PURE__*/function () {
+  var _ref13 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(req, res) {
     var pool, result;
     return _regeneratorRuntime().wrap(function _callee9$(_context9) {
       while (1) switch (_context9.prev = _context9.next) {
@@ -556,27 +655,28 @@ var getReporteGeneral = /*#__PURE__*/function () {
         case 3:
           pool = _context9.sent;
           _context9.next = 6;
-          return pool.request().query(_database.querys.getReporteGeneralSabana);
+          return pool.request().query(_database.querys.getAreaByMantenimiento);
         case 6:
           result = _context9.sent;
-          return _context9.abrupt("return", res.json(result.recordset));
+          return _context9.abrupt("return", res.json(result.recordset[0]));
         case 10:
           _context9.prev = 10;
           _context9.t0 = _context9["catch"](0);
           res.status(500);
-        case 13:
+          res.send(_context9.t0.message);
+        case 14:
         case "end":
           return _context9.stop();
       }
     }, _callee9, null, [[0, 10]]);
   }));
-  return function getReporteGeneral(_x17, _x18) {
-    return _ref11.apply(this, arguments);
+  return function getAreaServicioMantenimiento(_x17, _x18) {
+    return _ref13.apply(this, arguments);
   };
 }();
-exports.getReporteGeneral = getReporteGeneral;
-var getEntregadosHeineken = /*#__PURE__*/function () {
-  var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(req, res) {
+exports.getAreaServicioMantenimiento = getAreaServicioMantenimiento;
+var getReporteGeneral = /*#__PURE__*/function () {
+  var _ref14 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(req, res) {
     var pool, result;
     return _regeneratorRuntime().wrap(function _callee10$(_context10) {
       while (1) switch (_context10.prev = _context10.next) {
@@ -587,7 +687,7 @@ var getEntregadosHeineken = /*#__PURE__*/function () {
         case 3:
           pool = _context10.sent;
           _context10.next = 6;
-          return pool.request().query(_database.querys.getEntregaGeneralHeineken);
+          return pool.request().query(_database.querys.getReporteGeneralSabana);
         case 6:
           result = _context10.sent;
           return _context10.abrupt("return", res.json(result.recordset));
@@ -601,13 +701,13 @@ var getEntregadosHeineken = /*#__PURE__*/function () {
       }
     }, _callee10, null, [[0, 10]]);
   }));
-  return function getEntregadosHeineken(_x19, _x20) {
-    return _ref12.apply(this, arguments);
+  return function getReporteGeneral(_x19, _x20) {
+    return _ref14.apply(this, arguments);
   };
 }();
-exports.getEntregadosHeineken = getEntregadosHeineken;
-var getEntregadosPronaca = /*#__PURE__*/function () {
-  var _ref13 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(req, res) {
+exports.getReporteGeneral = getReporteGeneral;
+var getEntregadosHeineken = /*#__PURE__*/function () {
+  var _ref15 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(req, res) {
     var pool, result;
     return _regeneratorRuntime().wrap(function _callee11$(_context11) {
       while (1) switch (_context11.prev = _context11.next) {
@@ -618,7 +718,7 @@ var getEntregadosPronaca = /*#__PURE__*/function () {
         case 3:
           pool = _context11.sent;
           _context11.next = 6;
-          return pool.request().query(_database.querys.getEntregaGeneralPronaca);
+          return pool.request().query(_database.querys.getEntregaGeneralHeineken);
         case 6:
           result = _context11.sent;
           return _context11.abrupt("return", res.json(result.recordset));
@@ -632,13 +732,13 @@ var getEntregadosPronaca = /*#__PURE__*/function () {
       }
     }, _callee11, null, [[0, 10]]);
   }));
-  return function getEntregadosPronaca(_x21, _x22) {
-    return _ref13.apply(this, arguments);
+  return function getEntregadosHeineken(_x21, _x22) {
+    return _ref15.apply(this, arguments);
   };
 }();
-exports.getEntregadosPronaca = getEntregadosPronaca;
-var getEntregadosTesalia = /*#__PURE__*/function () {
-  var _ref14 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(req, res) {
+exports.getEntregadosHeineken = getEntregadosHeineken;
+var getEntregadosPronaca = /*#__PURE__*/function () {
+  var _ref16 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(req, res) {
     var pool, result;
     return _regeneratorRuntime().wrap(function _callee12$(_context12) {
       while (1) switch (_context12.prev = _context12.next) {
@@ -649,7 +749,7 @@ var getEntregadosTesalia = /*#__PURE__*/function () {
         case 3:
           pool = _context12.sent;
           _context12.next = 6;
-          return pool.request().query(_database.querys.getEntregaGeneralTesalia);
+          return pool.request().query(_database.querys.getEntregaGeneralPronaca);
         case 6:
           result = _context12.sent;
           return _context12.abrupt("return", res.json(result.recordset));
@@ -663,13 +763,13 @@ var getEntregadosTesalia = /*#__PURE__*/function () {
       }
     }, _callee12, null, [[0, 10]]);
   }));
-  return function getEntregadosTesalia(_x23, _x24) {
-    return _ref14.apply(this, arguments);
+  return function getEntregadosPronaca(_x23, _x24) {
+    return _ref16.apply(this, arguments);
   };
 }();
-exports.getEntregadosTesalia = getEntregadosTesalia;
-var getEntregadosUnilever = /*#__PURE__*/function () {
-  var _ref15 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13(req, res) {
+exports.getEntregadosPronaca = getEntregadosPronaca;
+var getEntregadosTesalia = /*#__PURE__*/function () {
+  var _ref17 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13(req, res) {
     var pool, result;
     return _regeneratorRuntime().wrap(function _callee13$(_context13) {
       while (1) switch (_context13.prev = _context13.next) {
@@ -680,7 +780,7 @@ var getEntregadosUnilever = /*#__PURE__*/function () {
         case 3:
           pool = _context13.sent;
           _context13.next = 6;
-          return pool.request().query(_database.querys.getEntregaGeneralUnilever);
+          return pool.request().query(_database.querys.getEntregaGeneralTesalia);
         case 6:
           result = _context13.sent;
           return _context13.abrupt("return", res.json(result.recordset));
@@ -694,13 +794,13 @@ var getEntregadosUnilever = /*#__PURE__*/function () {
       }
     }, _callee13, null, [[0, 10]]);
   }));
-  return function getEntregadosUnilever(_x25, _x26) {
-    return _ref15.apply(this, arguments);
+  return function getEntregadosTesalia(_x25, _x26) {
+    return _ref17.apply(this, arguments);
   };
 }();
-exports.getEntregadosUnilever = getEntregadosUnilever;
-var getEntregadosElRosado = /*#__PURE__*/function () {
-  var _ref16 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14(req, res) {
+exports.getEntregadosTesalia = getEntregadosTesalia;
+var getEntregadosUnilever = /*#__PURE__*/function () {
+  var _ref18 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14(req, res) {
     var pool, result;
     return _regeneratorRuntime().wrap(function _callee14$(_context14) {
       while (1) switch (_context14.prev = _context14.next) {
@@ -711,7 +811,7 @@ var getEntregadosElRosado = /*#__PURE__*/function () {
         case 3:
           pool = _context14.sent;
           _context14.next = 6;
-          return pool.request().query(_database.querys.getEntregaGeneralElRosado);
+          return pool.request().query(_database.querys.getEntregaGeneralUnilever);
         case 6:
           result = _context14.sent;
           return _context14.abrupt("return", res.json(result.recordset));
@@ -725,13 +825,13 @@ var getEntregadosElRosado = /*#__PURE__*/function () {
       }
     }, _callee14, null, [[0, 10]]);
   }));
-  return function getEntregadosElRosado(_x27, _x28) {
-    return _ref16.apply(this, arguments);
+  return function getEntregadosUnilever(_x27, _x28) {
+    return _ref18.apply(this, arguments);
   };
 }();
-exports.getEntregadosElRosado = getEntregadosElRosado;
-var getEntregadosArca = /*#__PURE__*/function () {
-  var _ref17 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(req, res) {
+exports.getEntregadosUnilever = getEntregadosUnilever;
+var getEntregadosElRosado = /*#__PURE__*/function () {
+  var _ref19 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15(req, res) {
     var pool, result;
     return _regeneratorRuntime().wrap(function _callee15$(_context15) {
       while (1) switch (_context15.prev = _context15.next) {
@@ -742,7 +842,7 @@ var getEntregadosArca = /*#__PURE__*/function () {
         case 3:
           pool = _context15.sent;
           _context15.next = 6;
-          return pool.request().query(_database.querys.getEntregaGeneralArca);
+          return pool.request().query(_database.querys.getEntregaGeneralElRosado);
         case 6:
           result = _context15.sent;
           return _context15.abrupt("return", res.json(result.recordset));
@@ -756,13 +856,13 @@ var getEntregadosArca = /*#__PURE__*/function () {
       }
     }, _callee15, null, [[0, 10]]);
   }));
-  return function getEntregadosArca(_x29, _x30) {
-    return _ref17.apply(this, arguments);
+  return function getEntregadosElRosado(_x29, _x30) {
+    return _ref19.apply(this, arguments);
   };
 }();
-exports.getEntregadosArca = getEntregadosArca;
-var getDetalleCTById = /*#__PURE__*/function () {
-  var _ref18 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee16(req, res) {
+exports.getEntregadosElRosado = getEntregadosElRosado;
+var getEntregadosArca = /*#__PURE__*/function () {
+  var _ref20 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee16(req, res) {
     var pool, result;
     return _regeneratorRuntime().wrap(function _callee16$(_context16) {
       while (1) switch (_context16.prev = _context16.next) {
@@ -773,7 +873,7 @@ var getDetalleCTById = /*#__PURE__*/function () {
         case 3:
           pool = _context16.sent;
           _context16.next = 6;
-          return pool.request().input("id", req.params.id).query(_database.querys.getDetalleCTById);
+          return pool.request().query(_database.querys.getEntregaGeneralArca);
         case 6:
           result = _context16.sent;
           return _context16.abrupt("return", res.json(result.recordset));
@@ -787,62 +887,164 @@ var getDetalleCTById = /*#__PURE__*/function () {
       }
     }, _callee16, null, [[0, 10]]);
   }));
-  return function getDetalleCTById(_x31, _x32) {
-    return _ref18.apply(this, arguments);
+  return function getEntregadosArca(_x31, _x32) {
+    return _ref20.apply(this, arguments);
   };
 }();
-exports.getDetalleCTById = getDetalleCTById;
-var getReparacionesXtecnico = /*#__PURE__*/function () {
-  var _ref19 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee17(req, res) {
-    var idTecnico, pool, result, jsonResult, data, finalArray;
+exports.getEntregadosArca = getEntregadosArca;
+var getDetalleCTById = /*#__PURE__*/function () {
+  var _ref21 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee17(req, res) {
+    var pool, result;
     return _regeneratorRuntime().wrap(function _callee17$(_context17) {
       while (1) switch (_context17.prev = _context17.next) {
         case 0:
           _context17.prev = 0;
+          _context17.next = 3;
+          return (0, _database.getConnection)();
+        case 3:
+          pool = _context17.sent;
+          _context17.next = 6;
+          return pool.request().input("id", req.params.id).query(_database.querys.getDetalleCTById);
+        case 6:
+          result = _context17.sent;
+          return _context17.abrupt("return", res.json(result.recordset));
+        case 10:
+          _context17.prev = 10;
+          _context17.t0 = _context17["catch"](0);
+          res.status(500);
+        case 13:
+        case "end":
+          return _context17.stop();
+      }
+    }, _callee17, null, [[0, 10]]);
+  }));
+  return function getDetalleCTById(_x33, _x34) {
+    return _ref21.apply(this, arguments);
+  };
+}();
+exports.getDetalleCTById = getDetalleCTById;
+var getReparacionesXtecnico = /*#__PURE__*/function () {
+  var _ref22 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee18(req, res) {
+    var idTecnico, pool, result, jsonResult, data, finalArray;
+    return _regeneratorRuntime().wrap(function _callee18$(_context18) {
+      while (1) switch (_context18.prev = _context18.next) {
+        case 0:
+          _context18.prev = 0;
           idTecnico = req.params.idTecnico;
-          _context17.next = 4;
+          _context18.next = 4;
           return (0, _database.getConnection)();
         case 4:
-          pool = _context17.sent;
-          _context17.next = 7;
+          pool = _context18.sent;
+          _context18.next = 7;
           return pool.request().input("idTecnico", _database.sql.Decimal, idTecnico).execute('sp_Ventas_GetRepairPorTecnico');
         case 7:
-          result = _context17.sent;
+          result = _context18.sent;
           if (!(!result.recordset || result.recordset.length === 0)) {
-            _context17.next = 10;
+            _context18.next = 10;
             break;
           }
-          return _context17.abrupt("return", res.json([]));
+          return _context18.abrupt("return", res.json([]));
         case 10:
           jsonResult = result.recordset.map(function (row) {
             return Object.values(row)[0];
           }).join('');
           if (jsonResult) {
-            _context17.next = 13;
+            _context18.next = 13;
             break;
           }
-          return _context17.abrupt("return", res.json([]));
+          return _context18.abrupt("return", res.json([]));
         case 13:
           data = JSON.parse(jsonResult);
           finalArray = data.repairs ? data.repairs : data;
           res.json(finalArray);
-          _context17.next = 21;
+          _context18.next = 21;
           break;
         case 18:
-          _context17.prev = 18;
-          _context17.t0 = _context17["catch"](0);
+          _context18.prev = 18;
+          _context18.t0 = _context18["catch"](0);
           res.status(500).send({
             message: "Error interno del servidor al procesar la solicitud.",
-            error: _context17.t0.message
+            error: _context18.t0.message
           });
         case 21:
         case "end":
-          return _context17.stop();
+          return _context18.stop();
       }
-    }, _callee17, null, [[0, 18]]);
+    }, _callee18, null, [[0, 18]]);
   }));
-  return function getReparacionesXtecnico(_x33, _x34) {
-    return _ref19.apply(this, arguments);
+  return function getReparacionesXtecnico(_x35, _x36) {
+    return _ref22.apply(this, arguments);
   };
 }();
 exports.getReparacionesXtecnico = getReparacionesXtecnico;
+var obtenerPDFReparacion = /*#__PURE__*/function () {
+  var _ref23 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee19(req, res) {
+    var _result$recordsets, _result$recordsets$, _result$recordsets2, id, pool, result, cabecera, detalles, _error$originalError4, _error$originalError5;
+    return _regeneratorRuntime().wrap(function _callee19$(_context19) {
+      while (1) switch (_context19.prev = _context19.next) {
+        case 0:
+          _context19.prev = 0;
+          id = Number(req.params.id);
+          if (!(!Number.isFinite(id) || id <= 0)) {
+            _context19.next = 4;
+            break;
+          }
+          return _context19.abrupt("return", res.status(400).json({
+            status: 'error',
+            msg: 'El ID de AREA_SERVICIO no es válido.'
+          }));
+        case 4:
+          _context19.next = 6;
+          return (0, _database.getConnection)();
+        case 6:
+          pool = _context19.sent;
+          _context19.next = 9;
+          return pool.request().input('AS_id', _database.sql.Decimal(18, 0), id).execute('dbo.sp_AreaServicio_ObtenerReportePDF');
+        case 9:
+          result = _context19.sent;
+          cabecera = (_result$recordsets = result.recordsets) === null || _result$recordsets === void 0 ? void 0 : (_result$recordsets$ = _result$recordsets[0]) === null || _result$recordsets$ === void 0 ? void 0 : _result$recordsets$[0];
+          detalles = ((_result$recordsets2 = result.recordsets) === null || _result$recordsets2 === void 0 ? void 0 : _result$recordsets2[1]) || [];
+          if (cabecera) {
+            _context19.next = 14;
+            break;
+          }
+          return _context19.abrupt("return", res.status(404).json({
+            status: 'error',
+            msg: 'No se encontró la reparación solicitada.'
+          }));
+        case 14:
+          _context19.next = 16;
+          return (0, _areaServicioPdf.generarAreaServicioPDF)(res, cabecera, detalles);
+        case 16:
+          _context19.next = 24;
+          break;
+        case 18:
+          _context19.prev = 18;
+          _context19.t0 = _context19["catch"](0);
+          console.error('Error generando el PDF:', _context19.t0);
+
+          /*
+            No se puede enviar JSON si el PDF ya comenzó
+            a escribirse en la respuesta.
+          */
+          if (res.headersSent) {
+            _context19.next = 23;
+            break;
+          }
+          return _context19.abrupt("return", res.status(500).json({
+            status: 'error',
+            msg: (_context19.t0 === null || _context19.t0 === void 0 ? void 0 : (_error$originalError4 = _context19.t0.originalError) === null || _error$originalError4 === void 0 ? void 0 : (_error$originalError5 = _error$originalError4.info) === null || _error$originalError5 === void 0 ? void 0 : _error$originalError5.message) || (_context19.t0 === null || _context19.t0 === void 0 ? void 0 : _context19.t0.message) || 'No se pudo generar el PDF.'
+          }));
+        case 23:
+          res.end();
+        case 24:
+        case "end":
+          return _context19.stop();
+      }
+    }, _callee19, null, [[0, 18]]);
+  }));
+  return function obtenerPDFReparacion(_x37, _x38) {
+    return _ref23.apply(this, arguments);
+  };
+}();
+exports.obtenerPDFReparacion = obtenerPDFReparacion;
