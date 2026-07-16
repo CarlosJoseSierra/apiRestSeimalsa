@@ -4,7 +4,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateAreaServicio = exports.updateActivoByTecnico = exports.obtenerPDFReparacion = exports.getReporteGeneral = exports.getReparacionesXtecnico = exports.getEntregadosUnilever = exports.getEntregadosTesalia = exports.getEntregadosPronaca = exports.getEntregadosHeineken = exports.getEntregadosElRosado = exports.getEntregadosArca = exports.getDetalleCTById = exports.getAreaSinTecnico = exports.getAreaServicioMovimiento = exports.getAreaServicioMantenimiento = exports.getAreaByTecnico = exports.getAreaBySerie = exports.getAreaByPlaca = exports.createNewAreaServicio = void 0;
+exports.updateAreaServicio = exports.updateActivoByTecnico = exports.obtenerPDFReparacion = exports.obtenerMapaEquipos = exports.getReporteGeneral = exports.getReparacionesXtecnico = exports.getEntregadosUnilever = exports.getEntregadosTesalia = exports.getEntregadosPronaca = exports.getEntregadosHeineken = exports.getEntregadosElRosado = exports.getEntregadosArca = exports.getDetalleCTById = exports.getAreaSinTecnico = exports.getAreaServicioMovimiento = exports.getAreaServicioMantenimiento = exports.getAreaByTecnico = exports.getAreaBySerie = exports.getAreaByPlaca = exports.createNewAreaServicio = void 0;
 var _database = require("../database");
 var _areaServicioPdf = require("../utils/areaServicioPdf.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -455,10 +455,10 @@ var createNewAreaServicio = /*#__PURE__*/function () {
         case 57:
           _context7.prev = 57;
           _context7.t1 = _context7["catch"](13);
-          console.error('Error insertando AREA_SERVICIO:', _context7.t1);
+          console.error('Error insertando FIRMA:', _context7.t1);
           return _context7.abrupt("return", res.status(500).json({
             status: 'error',
-            msg: (_ref11 = (_error$originalError$3 = _context7.t1 === null || _context7.t1 === void 0 ? void 0 : (_error$originalError2 = _context7.t1.originalError) === null || _error$originalError2 === void 0 ? void 0 : (_error$originalError3 = _error$originalError2.info) === null || _error$originalError3 === void 0 ? void 0 : _error$originalError3.message) !== null && _error$originalError$3 !== void 0 ? _error$originalError$3 : _context7.t1 === null || _context7.t1 === void 0 ? void 0 : _context7.t1.message) !== null && _ref11 !== void 0 ? _ref11 : 'No se pudo registrar la cotización.',
+            msg: (_ref11 = (_error$originalError$3 = _context7.t1 === null || _context7.t1 === void 0 ? void 0 : (_error$originalError2 = _context7.t1.originalError) === null || _error$originalError2 === void 0 ? void 0 : (_error$originalError3 = _error$originalError2.info) === null || _error$originalError3 === void 0 ? void 0 : _error$originalError3.message) !== null && _error$originalError$3 !== void 0 ? _error$originalError$3 : _context7.t1 === null || _context7.t1 === void 0 ? void 0 : _context7.t1.message) !== null && _ref11 !== void 0 ? _ref11 : 'No se pudo registrar la firma.',
             token: 0
           }));
         case 61:
@@ -1048,3 +1048,48 @@ var obtenerPDFReparacion = /*#__PURE__*/function () {
   };
 }();
 exports.obtenerPDFReparacion = obtenerPDFReparacion;
+var obtenerMapaEquipos = /*#__PURE__*/function () {
+  var _ref24 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee20(req, res) {
+    var clienteId, pool, result, _error$originalError6, _error$originalError7;
+    return _regeneratorRuntime().wrap(function _callee20$(_context20) {
+      while (1) switch (_context20.prev = _context20.next) {
+        case 0:
+          _context20.prev = 0;
+          clienteId = req.query.clienteId ? Number(req.query.clienteId) : null;
+          _context20.next = 4;
+          return (0, _database.getConnection)();
+        case 4:
+          pool = _context20.sent;
+          _context20.next = 7;
+          return pool.request()
+          /*.input(
+            'AS_CLI_id',
+            sql.Decimal(18, 0),
+            clienteId
+          )*/.execute('dbo.sp_AreaServicio_ObtenerMapaEquipos');
+        case 7:
+          result = _context20.sent;
+          return _context20.abrupt("return", res.status(200).json({
+            status: 'ok',
+            msg: result.recordset.length,
+            token: result.recordset
+          }));
+        case 11:
+          _context20.prev = 11;
+          _context20.t0 = _context20["catch"](0);
+          console.error('Error consultando mapa:', _context20.t0);
+          return _context20.abrupt("return", res.status(500).json({
+            status: 'error',
+            msg: (_context20.t0 === null || _context20.t0 === void 0 ? void 0 : (_error$originalError6 = _context20.t0.originalError) === null || _error$originalError6 === void 0 ? void 0 : (_error$originalError7 = _error$originalError6.info) === null || _error$originalError7 === void 0 ? void 0 : _error$originalError7.message) || (_context20.t0 === null || _context20.t0 === void 0 ? void 0 : _context20.t0.message) || 'No se pudieron obtener las ubicaciones.'
+          }));
+        case 15:
+        case "end":
+          return _context20.stop();
+      }
+    }, _callee20, null, [[0, 11]]);
+  }));
+  return function obtenerMapaEquipos(_x39, _x40) {
+    return _ref24.apply(this, arguments);
+  };
+}();
+exports.obtenerMapaEquipos = obtenerMapaEquipos;

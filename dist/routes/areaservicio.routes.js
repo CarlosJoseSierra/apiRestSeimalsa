@@ -32,5 +32,6 @@ router.get("/areaservicio/A", _areaservicio.getEntregadosArca);
 router.get("/areaservicio/DET/:id", _areaservicio.getDetalleCTById);
 router.put("/areaservicio/:id", storage.array('image', 7), _areaservicio.updateAreaServicio);
 router.get('/areaservicio/:id/pdf', _areaservicio.obtenerPDFReparacion);
+router.get('/areaservicio/mapa/equipos', _areaservicio.obtenerMapaEquipos);
 var _default = router;
 exports["default"] = _default;

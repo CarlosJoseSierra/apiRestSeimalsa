@@ -76,6 +76,63 @@ export const getByUserPass = async (req, res) => {
     }
 };
 
+export const createFirmaUser = async (req, res) => {
+  try{
+  const archivos = Array.isArray(req.files)
+    ? req.files
+    : [];
+
+    for (const archivo of archivos) {
+      const resultadoCloudinary =
+        await cloudinary.uploader.upload(archivo.path);
+
+        if (
+          archivo.originalname
+            .toLowerCase()
+            .includes('firma')
+        ) {
+          firma = resultadoCloudinary.secure_url;
+        } else if (imagenes.length < 5) {
+          imagenes.push(resultadoCloudinary.secure_url);
+        }
+      }
+
+      const pool = await getConnection();
+
+      const result = await pool
+        .request()
+        .input(
+          'USU_firma',
+          sql.VarChar(1000),
+          imagenes[0]
+        )
+        .execute(
+          'dbo.sp_Usuario_InsertarFirma'
+        );
+        const registro = result.recordset?.[0];
+  
+      return res.status(200).json({
+        status: registro?.status ?? 'ok',
+        msg: registro?.msg ?? 'Registro exitoso',
+        token: 0
+      });
+    } catch (error) {
+      console.error(
+        'Error insertando AREA_SERVICIO:',
+        error
+      );
+  
+      return res.status(500).json({
+        status: 'error',
+        msg:
+          error?.originalError?.info?.message ??
+          error?.message ??
+          'No se pudo registrar la cotización.',
+        token: 0
+      });
+    }
+}
+
 export const getUsuarioById = async (req, res) => {
     try {
         const pool = await getConnection();

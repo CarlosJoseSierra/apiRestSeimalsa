@@ -613,7 +613,7 @@ export const getAreaByPlaca = async (req, res) => {
   
     } catch (error) {
       console.error(
-        'Error insertando AREA_SERVICIO:',
+        'Error insertando FIRMA:',
         error
       );
   
@@ -622,7 +622,7 @@ export const getAreaByPlaca = async (req, res) => {
         msg:
           error?.originalError?.info?.message ??
           error?.message ??
-          'No se pudo registrar la cotización.',
+          'No se pudo registrar la firma.',
         token: 0
       });
     }
@@ -1000,5 +1000,49 @@ export const getAreaByPlaca = async (req, res) => {
     }
 
     res.end();
+  }
+};
+
+export const obtenerMapaEquipos =
+  async (req, res) => {
+
+  try {
+    const clienteId =
+      req.query.clienteId
+        ? Number(req.query.clienteId)
+        : null;
+
+    const pool = await getConnection();
+
+    const result = await pool
+      .request()
+      /*.input(
+        'AS_CLI_id',
+        sql.Decimal(18, 0),
+        clienteId
+      )*/
+      .execute(
+        'dbo.sp_AreaServicio_ObtenerMapaEquipos'
+      );
+
+    return res.status(200).json({
+      status: 'ok',
+      msg: result.recordset.length,
+      token: result.recordset
+    });
+
+  } catch (error) {
+    console.error(
+      'Error consultando mapa:',
+      error
+    );
+
+    return res.status(500).json({
+      status: 'error',
+      msg:
+        error?.originalError?.info?.message ||
+        error?.message ||
+        'No se pudieron obtener las ubicaciones.'
+    });
   }
 };
