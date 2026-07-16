@@ -100,6 +100,7 @@ export const getAreaByPlaca = async (req, res) => {
     let idSub = 0;  
     
     const subcliente = req.body.Subcliente;
+    const areaServicioId = Number(req.params.id);
     if (!isNaN(Number(subcliente))) {
       idSub = subcliente;
     }
@@ -190,7 +191,11 @@ export const getAreaByPlaca = async (req, res) => {
   
       const result = await pool
         .request()
-  
+        .input(
+          'AS_id',
+          sql.Decimal(18, 0),
+          areaServicioId
+        )
         .input(
           'AS_SS_id',
           sql.Decimal(18, 0),
@@ -316,7 +321,7 @@ export const getAreaByPlaca = async (req, res) => {
         )
   
         .execute(
-          'dbo.sp_AreaServicio_InsertarCompleto'
+          'dbo.sp_AreaServicio_ActualizarCompleto'
         );
   
       const registro = result.recordset?.[0];
@@ -627,148 +632,6 @@ export const getAreaByPlaca = async (req, res) => {
       });
     }
   };
-
-  /*export const createNewAreaServicio = async (req, res) => {
-    
-    try {
-      let image = '',image1= '',image2= '',image3= '',image4= '',firma=''; 
-      if(req.files.length>0)
-      {
-        if(req.files[0]!=undefined)
-        {
-          if(req.files[0].originalname.includes('Firma')){
-              const img = await cloudinary.uploader.upload(req.files[0].path);
-              firma = img.secure_url;
-          }
-          else{
-            image = req.files[0].filename;
-            const img = await cloudinary.uploader.upload(req.files[0].path);
-            imageruta = img.secure_url;
-          }
-        }
-        if(req.files[1]!=undefined)
-        {
-          if(req.files[1].originalname.includes('Firma')){
-            const img = await cloudinary.uploader.upload(req.files[1].path);
-            firma = img.secure_url;
-          }else{
-            const img = await cloudinary.uploader.upload(req.files[1].path);
-            image1 = img.secure_url;
-          }
-        }
-        if(req.files[2]!=undefined)
-        {
-          if(req.files[2].originalname.includes('Firma')){
-            const img = await cloudinary.uploader.upload(req.files[2].path);
-            firma = img.secure_url;
-          }else{
-            const img = await cloudinary.uploader.upload(req.files[2].path);
-            image2 = img.secure_url;
-          }
-        }
-        if(req.files[3]!=undefined)
-        {
-          if(req.files[3].originalname.includes('Firma')){
-            const img = await cloudinary.uploader.upload(req.files[3].path);
-            firma = img.secure_url;
-          }else{
-            const img = await cloudinary.uploader.upload(req.files[3].path);
-            image3 = img.secure_url;
-          }
-        }
-        if(req.files[4]!=undefined)
-        {
-          if(req.files[4].originalname.includes('Firma')){
-            const img = await cloudinary.uploader.upload(req.files[4].path);
-            firma = img.secure_url;
-          }else{
-            const img = await cloudinary.uploader.upload(req.files[4].path);
-            image4 = img.secure_url;
-          }
-        }
-
-        if(req.files[5]!=undefined)
-        {
-          if(req.files[5].originalname.includes('Firma')){
-            const img = await cloudinary.uploader.upload(req.files[5].path);
-            firma = img.secure_url;
-          }else{
-            const img = await cloudinary.uploader.upload(req.files[5].path);
-            image5 = img.secure_url;
-          }
-        }
-
-        if(req.files[6]!=undefined){
-          if(req.files[6].originalname.includes('Firma')){
-            const img = await cloudinary.uploader.upload(req.files[6].path);
-            firma = img.secure_url;
-          }
-          else{
-            firma = '';
-          }
-        }
-      }
-      for(let i=0;i<req.body.details.length;i++){
-        const json = JSON.parse(req.body.details[i])            
-       }
-      let estadoSeimalsa = 4;
-      let estadoMovimiento = 10;
-      if(req.body.Servicio==2){
-        estadoSeimalsa = req.body.Estado;
-      }
-      if(req.body.Servicio==4){
-        estadoMovimiento = req.body.Estado;
-      }
-        const pool = await getConnection();
-        const result = await pool
-        .request()
-        .input("AS_SS_id", sql.Decimal, req.body.Servicio)
-        .input("AS_USU_id", sql.Decimal, req.body.USU_id)
-        .input("AS_CLI_id", sql.Decimal, req.body.Cliente)
-        .input("AS_TPS_id", sql.Decimal, req.body.TipoServicio)
-        .input("AS_UBIC_id", sql.Decimal, Ciudad)
-        .input("AS_serie", sql.VarChar, Serie)
-        .input("AS_placa", sql.VarChar, Placa)
-        .input("AS_EQUIP_id", sql.Decimal, Modelo)
-        .input("AS_LOGO_id", sql.Decimal, Logo)
-        .input("AS_observacionTecnica", sql.VarChar, ObservacionTec)
-        .input("AS_Subtotal", sql.Decimal, Subtotal)
-        .input("AS_impuesto", sql.Decimal, AS_impuesto)
-        .input("AS_iva", sql.Decimal, IVA)
-        .input("AS_total", sql.Decimal, Total)
-        .input("AS_SC_id", sql.Decimal, Subcliente)
-        .input("AS_ES_id", sql.Decimal, estadoSeimalsa)
-        .input("AS_SEDE_id", sql.Decimal, AS_SEDE_id)
-        .input("AS_EM_id", sql.Decimal, estadoMovimiento)
-        .query(querys.addNewAreaServicio);
-        if(result.rowsAffected==1){
-          let idAS = result.recordset[0].AS_id;
-          if(req.body.details.length>0){
-            for(let i=0;i<req.body.details.length;i++){
-              const json = JSON.parse(req.body.details[i])      
-              const pool3 = await getConnection();
-              const result3 = await pool3
-              .request()
-              .input("AS_DET_AS_id", sql.Decimal,idAS)
-              .input("AS_DET_PROD_id", sql.Decimal, json.productName)
-              .input("AS_DET_PROD_codigo", sql.Varchar, json.codigo)
-              .input("AS_DET_PROD_codigo", sql.Varchar, json.nombre)
-              .input("REQDET_cantidad", sql.Decimal(18,2), json.qty)
-              .input("REQDET_pvp", sql.Decimal(18,2), json.salesPrice)
-              .input("REQDET_total", sql.Decimal(18,2), json.qty * json.salesPrice)
-              .query(querys.addNewAreaServicio);
-            }
-          }
-          return res.status(200).json({ status: "ok", msg: "Registro exitoso" ,token:0});
-        }else{
-          return res.status(400).json({ status: "400", msg: "No se pudo registrar, consulte al administrador" ,token:0});
-        }
-    } catch (error) {
-      res.status(500);
-      res.send(error.message);
-    }
-  }*/
-
 
   export const getAreaServicioMovimiento = async (req, res) => {
     try {

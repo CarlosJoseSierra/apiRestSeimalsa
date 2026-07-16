@@ -4,7 +4,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getUsuarios = exports.getUsuarioById = exports.getUsuarioByCargo = exports.getUser = exports.getByUserPass = void 0;
+exports.getUsuarios = exports.getUsuarioById = exports.getUsuarioByCargo = exports.getUser = exports.getByUserPass = exports.createFirmaUser = void 0;
 var _connection = require("../database/connection");
 var _mssql = _interopRequireDefault(require("mssql"));
 var _querys = require("../database/querys");
@@ -172,98 +172,62 @@ var getByUserPass = /*#__PURE__*/function () {
     return _ref3.apply(this, arguments);
   };
 }();
-
-/*export const createFirmaUser = async (req, res) => {
-  try{
-  const archivos = Array.isArray(req.files)
-    ? req.files
-    : [];
-
-    for (const archivo of archivos) {
-      const resultadoCloudinary =
-        await cloudinary.uploader.upload(archivo.path);
-
-        if (
-          archivo.originalname
-            .toLowerCase()
-            .includes('firma')
-        ) {
-          firma = resultadoCloudinary.secure_url;
-        } else if (imagenes.length < 5) {
-          imagenes.push(resultadoCloudinary.secure_url);
-        }
-      }
-
-      const pool = await getConnection();
-
-      const result = await pool
-        .request()
-        .input(
-          'USU_firma',
-          sql.VarChar(1000),
-          imagenes[0]
-        )
-        .execute(
-          'dbo.sp_Usuario_InsertarFirma'
-        );
-        const registro = result.recordset?.[0];
-  
-      return res.status(200).json({
-        status: registro?.status ?? 'ok',
-        msg: registro?.msg ?? 'Registro exitoso',
-        token: 0
-      });
-    } catch (error) {
-      console.error(
-        'Error insertando AREA_SERVICIO:',
-        error
-      );
-  
-      return res.status(500).json({
-        status: 'error',
-        msg:
-          error?.originalError?.info?.message ??
-          error?.message ??
-          'No se pudo registrar la cotización.',
-        token: 0
-      });
-    }
-};*/
 exports.getByUserPass = getByUserPass;
-var getUsuarioById = /*#__PURE__*/function () {
+var createFirmaUser = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
-    var pool, result;
+    var _result$recordset, _registro$status, _registro$msg, firma, imagen, resultadoCloudinary, pool, result, registro, _ref5, _error$originalError$, _error$originalError, _error$originalError$2;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
           _context4.prev = 0;
-          _context4.next = 3;
-          return (0, _connection.getConnection)();
-        case 3:
-          pool = _context4.sent;
+          firma = '';
+          imagen = req.file;
+          if (!(imagen.length > 0)) {
+            _context4.next = 8;
+            break;
+          }
           _context4.next = 6;
-          return pool.request().input("id", req.params.id).query(_querys.querys.getUsuarioById);
+          return cloudinary.uploader.upload(imagen.path);
         case 6:
-          result = _context4.sent;
-          return _context4.abrupt("return", res.json(result.recordset[0]));
+          resultadoCloudinary = _context4.sent;
+          firma = resultadoCloudinary.secure_url;
+        case 8:
+          _context4.next = 10;
+          return (0, _connection.getConnection)();
         case 10:
-          _context4.prev = 10;
+          pool = _context4.sent;
+          _context4.next = 13;
+          return pool.request().input("USU_id", req.params.id).input('USU_firma', _mssql["default"].VarChar(1000), imagenes[0]).execute('dbo.sp_AreaServicio_InsertarFirmaUsuario');
+        case 13:
+          result = _context4.sent;
+          registro = (_result$recordset = result.recordset) === null || _result$recordset === void 0 ? void 0 : _result$recordset[0];
+          return _context4.abrupt("return", res.status(200).json({
+            status: (_registro$status = registro === null || registro === void 0 ? void 0 : registro.status) !== null && _registro$status !== void 0 ? _registro$status : 'ok',
+            msg: (_registro$msg = registro === null || registro === void 0 ? void 0 : registro.msg) !== null && _registro$msg !== void 0 ? _registro$msg : 'Registro exitoso',
+            token: 0
+          }));
+        case 18:
+          _context4.prev = 18;
           _context4.t0 = _context4["catch"](0);
-          res.status(500);
-          res.send(_context4.t0.message);
-        case 14:
+          console.error('Error insertando la firma:', _context4.t0);
+          return _context4.abrupt("return", res.status(500).json({
+            status: 'error',
+            msg: (_ref5 = (_error$originalError$ = _context4.t0 === null || _context4.t0 === void 0 ? void 0 : (_error$originalError = _context4.t0.originalError) === null || _error$originalError === void 0 ? void 0 : (_error$originalError$2 = _error$originalError.info) === null || _error$originalError$2 === void 0 ? void 0 : _error$originalError$2.message) !== null && _error$originalError$ !== void 0 ? _error$originalError$ : _context4.t0 === null || _context4.t0 === void 0 ? void 0 : _context4.t0.message) !== null && _ref5 !== void 0 ? _ref5 : 'No se pudo registrar la firma.',
+            token: 0
+          }));
+        case 22:
         case "end":
           return _context4.stop();
       }
-    }, _callee4, null, [[0, 10]]);
+    }, _callee4, null, [[0, 18]]);
   }));
-  return function getUsuarioById(_x7, _x8) {
+  return function createFirmaUser(_x7, _x8) {
     return _ref4.apply(this, arguments);
   };
 }();
-exports.getUsuarioById = getUsuarioById;
-var getUsuarioByCargo = /*#__PURE__*/function () {
-  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(req, res) {
+exports.createFirmaUser = createFirmaUser;
+var getUsuarioById = /*#__PURE__*/function () {
+  var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(req, res) {
     var pool, result;
     return _regeneratorRuntime().wrap(function _callee5$(_context5) {
       while (1) switch (_context5.prev = _context5.next) {
@@ -274,12 +238,10 @@ var getUsuarioByCargo = /*#__PURE__*/function () {
         case 3:
           pool = _context5.sent;
           _context5.next = 6;
-          return pool.request().query(_querys.querys.getAllUsuariosByCargo);
+          return pool.request().input("id", req.params.id).query(_querys.querys.getUsuarioById);
         case 6:
           result = _context5.sent;
-          res.json(result.recordset);
-          _context5.next = 14;
-          break;
+          return _context5.abrupt("return", res.json(result.recordset[0]));
         case 10:
           _context5.prev = 10;
           _context5.t0 = _context5["catch"](0);
@@ -291,8 +253,42 @@ var getUsuarioByCargo = /*#__PURE__*/function () {
       }
     }, _callee5, null, [[0, 10]]);
   }));
-  return function getUsuarioByCargo(_x9, _x10) {
-    return _ref5.apply(this, arguments);
+  return function getUsuarioById(_x9, _x10) {
+    return _ref6.apply(this, arguments);
+  };
+}();
+exports.getUsuarioById = getUsuarioById;
+var getUsuarioByCargo = /*#__PURE__*/function () {
+  var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(req, res) {
+    var pool, result;
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+      while (1) switch (_context6.prev = _context6.next) {
+        case 0:
+          _context6.prev = 0;
+          _context6.next = 3;
+          return (0, _connection.getConnection)();
+        case 3:
+          pool = _context6.sent;
+          _context6.next = 6;
+          return pool.request().query(_querys.querys.getAllUsuariosByCargo);
+        case 6:
+          result = _context6.sent;
+          res.json(result.recordset);
+          _context6.next = 14;
+          break;
+        case 10:
+          _context6.prev = 10;
+          _context6.t0 = _context6["catch"](0);
+          res.status(500);
+          res.send(_context6.t0.message);
+        case 14:
+        case "end":
+          return _context6.stop();
+      }
+    }, _callee6, null, [[0, 10]]);
+  }));
+  return function getUsuarioByCargo(_x11, _x12) {
+    return _ref7.apply(this, arguments);
   };
 }();
 exports.getUsuarioByCargo = getUsuarioByCargo;

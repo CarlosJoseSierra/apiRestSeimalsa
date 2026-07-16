@@ -76,38 +76,28 @@ export const getByUserPass = async (req, res) => {
     }
 };
 
-/*export const createFirmaUser = async (req, res) => {
+export const createFirmaUser = async (req, res) => {
   try{
-  const archivos = Array.isArray(req.files)
-    ? req.files
-    : [];
+    let firma=''; 
+    const imagen = req.file;
 
-    for (const archivo of archivos) {
-      const resultadoCloudinary =
-        await cloudinary.uploader.upload(archivo.path);
+    if(imagen.length>0){
+      const resultadoCloudinary = await cloudinary.uploader.upload(imagen.path);
+      firma = resultadoCloudinary.secure_url;
+    }
+  
+    const pool = await getConnection();
 
-        if (
-          archivo.originalname
-            .toLowerCase()
-            .includes('firma')
-        ) {
-          firma = resultadoCloudinary.secure_url;
-        } else if (imagenes.length < 5) {
-          imagenes.push(resultadoCloudinary.secure_url);
-        }
-      }
-
-      const pool = await getConnection();
-
-      const result = await pool
+    const result = await pool
         .request()
+        .input("USU_id", req.params.id)
         .input(
           'USU_firma',
           sql.VarChar(1000),
           imagenes[0]
         )
         .execute(
-          'dbo.sp_Usuario_InsertarFirma'
+          'dbo.sp_AreaServicio_InsertarFirmaUsuario'
         );
         const registro = result.recordset?.[0];
   
@@ -118,7 +108,7 @@ export const getByUserPass = async (req, res) => {
       });
     } catch (error) {
       console.error(
-        'Error insertando AREA_SERVICIO:',
+        'Error insertando la firma:',
         error
       );
   
@@ -127,11 +117,11 @@ export const getByUserPass = async (req, res) => {
         msg:
           error?.originalError?.info?.message ??
           error?.message ??
-          'No se pudo registrar la cotización.',
+          'No se pudo registrar la firma.',
         token: 0
       });
     }
-};*/
+};
 
 export const getUsuarioById = async (req, res) => {
     try {

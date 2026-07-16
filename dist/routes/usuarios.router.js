@@ -14,6 +14,7 @@ router.get("/usuarios", _usuarios.getUsuarios);
 router.post("/usuarios/login", _usuarios.getByUserPass);
 //router.post("/usuarios/login", getUser);
 router.get("/usuarios/tec", _usuarios.getUsuarioByCargo);
-//router.post("/usuarios/new", storage.array('image',1),createFirmaUser);
+router.post("/usuarios/new", storage.single('image'), _usuarios.createFirmaUser);
+//router.get('/usuarios/get/:id',getFirma);
 var _default = router;
 exports["default"] = _default;

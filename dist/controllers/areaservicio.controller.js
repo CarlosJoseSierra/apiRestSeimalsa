@@ -202,71 +202,72 @@ var getAreaByTecnico = /*#__PURE__*/function () {
 exports.getAreaByTecnico = getAreaByTecnico;
 var updateAreaServicio = /*#__PURE__*/function () {
   var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(req, res) {
-    var idSub, subcliente, pool, result, _result$recordset, _result$recordset$, _ref7, _req$body$details, _req$body$Serie, _req$body$Placa, _req$body$Observacion, _req$body$Subtotal, _req$body$IVA, _req$body$Total, _result$recordset2, _registro$status, _registro$msg, archivos, imagenes, firma, _iterator, _step, archivo, resultadoCloudinary, detallesRecibidos, detallesArray, detalles, estadoSeimalsa, estadoMovimiento, servicio, _pool, _result, registro, _ref8, _error$originalError$, _error$originalError, _error$originalError$2;
+    var idSub, subcliente, areaServicioId, pool, result, _result$recordset, _result$recordset$, _ref7, _req$body$details, _req$body$Serie, _req$body$Placa, _req$body$Observacion, _req$body$Subtotal, _req$body$IVA, _req$body$Total, _result$recordset2, _registro$status, _registro$msg, archivos, imagenes, firma, _iterator, _step, archivo, resultadoCloudinary, detallesRecibidos, detallesArray, detalles, estadoSeimalsa, estadoMovimiento, servicio, _pool, _result, registro, _ref8, _error$originalError$, _error$originalError, _error$originalError$2;
     return _regeneratorRuntime().wrap(function _callee6$(_context6) {
       while (1) switch (_context6.prev = _context6.next) {
         case 0:
           idSub = 0;
           subcliente = req.body.Subcliente;
+          areaServicioId = Number(req.params.id);
           if (isNaN(Number(subcliente))) {
-            _context6.next = 6;
+            _context6.next = 7;
             break;
           }
           idSub = subcliente;
-          _context6.next = 13;
+          _context6.next = 14;
           break;
-        case 6:
-          _context6.next = 8;
+        case 7:
+          _context6.next = 9;
           return (0, _database.getConnection)();
-        case 8:
+        case 9:
           pool = _context6.sent;
-          _context6.next = 11;
+          _context6.next = 12;
           return pool.request().input('SC_nombre', _database.sql.VarChar, subcliente).input('SC_establecimiento', _database.sql.VarChar, req.body.Establecimiento).input('SC_direccion', _database.sql.VarChar, req.body.Direccion).input('SC_telefono', _database.sql.VarChar, req.body.Telefono).input('SC_USU_ing', _database.sql.Decimal, req.body.USU_id).query(_database.querys.createSubcliente);
-        case 11:
+        case 12:
           result = _context6.sent;
           if (result.rowsAffected[0] == 1) {
             if (result.recordset.length > 0) {
               idSub = (_result$recordset = result.recordset) === null || _result$recordset === void 0 ? void 0 : (_result$recordset$ = _result$recordset[0]) === null || _result$recordset$ === void 0 ? void 0 : _result$recordset$.SC_id;
             }
           }
-        case 13:
-          _context6.prev = 13;
+        case 14:
+          _context6.prev = 14;
           archivos = Array.isArray(req.files) ? req.files : [];
           imagenes = [];
           firma = '';
           _iterator = _createForOfIteratorHelper(archivos);
-          _context6.prev = 18;
+          _context6.prev = 19;
           _iterator.s();
-        case 20:
+        case 21:
           if ((_step = _iterator.n()).done) {
-            _context6.next = 28;
+            _context6.next = 29;
             break;
           }
           archivo = _step.value;
-          _context6.next = 24;
+          _context6.next = 25;
           return cloudinary.uploader.upload(archivo.path);
-        case 24:
+        case 25:
           resultadoCloudinary = _context6.sent;
           if (archivo.originalname.toLowerCase().includes('firma')) {
             firma = resultadoCloudinary.secure_url;
           } else if (imagenes.length < 5) {
             imagenes.push(resultadoCloudinary.secure_url);
           }
-        case 26:
-          _context6.next = 20;
+        case 27:
+          _context6.next = 21;
           break;
-        case 28:
-          _context6.next = 33;
+        case 29:
+          _context6.next = 34;
           break;
-        case 30:
-          _context6.prev = 30;
-          _context6.t0 = _context6["catch"](18);
+        case 31:
+          _context6.prev = 31;
+          _context6.t0 = _context6["catch"](19);
           _iterator.e(_context6.t0);
-        case 33:
-          _context6.prev = 33;
+        case 34:
+          _context6.prev = 34;
           _iterator.f();
-          return _context6.finish(33);
-        case 36:
+          return _context6.finish(34);
+        case 37:
           while (imagenes.length < 5) {
             imagenes.push('');
           }
@@ -279,7 +280,7 @@ var updateAreaServicio = /*#__PURE__*/function () {
             return detalle;
           });
           if (!(detalles.length === 0)) {
-            _context6.next = 42;
+            _context6.next = 43;
             break;
           }
           return _context6.abrupt("return", res.status(400).json({
@@ -287,7 +288,7 @@ var updateAreaServicio = /*#__PURE__*/function () {
             msg: 'Debe agregar al menos un producto.',
             token: 0
           }));
-        case 42:
+        case 43:
           estadoSeimalsa = 4;
           estadoMovimiento = 10;
           servicio = Number(req.body.Servicio);
@@ -297,13 +298,13 @@ var updateAreaServicio = /*#__PURE__*/function () {
           if (servicio === 4) {
             estadoMovimiento = Number(req.body.Estado);
           }
-          _context6.next = 49;
+          _context6.next = 50;
           return (0, _database.getConnection)();
-        case 49:
+        case 50:
           _pool = _context6.sent;
-          _context6.next = 52;
-          return _pool.request().input('AS_SS_id', _database.sql.Decimal(18, 0), Number(req.body.Servicio)).input('AS_USU_id', _database.sql.Decimal(18, 0), Number(req.body.USU_id)).input('AS_CLI_id', _database.sql.Decimal(18, 0), Number(req.body.Cliente)).input('AS_TPS_id', _database.sql.Decimal(18, 0), Number(req.body.TipoServicio)).input('AS_UBIC_id', _database.sql.Decimal(18, 0), Number(req.body.Ciudad)).input('AS_serie', _database.sql.VarChar(100), (_req$body$Serie = req.body.Serie) !== null && _req$body$Serie !== void 0 ? _req$body$Serie : '').input('AS_placa', _database.sql.VarChar(100), (_req$body$Placa = req.body.Placa) !== null && _req$body$Placa !== void 0 ? _req$body$Placa : '').input('AS_EQUIP_id', _database.sql.Decimal(18, 0), Number(req.body.Modelo)).input('AS_LOGO_id', _database.sql.Decimal(18, 0), Number(req.body.Logo)).input('AS_observacionTecnica', _database.sql.VarChar(_database.sql.MAX), (_req$body$Observacion = req.body.ObservacionTec) !== null && _req$body$Observacion !== void 0 ? _req$body$Observacion : '').input('AS_Subtotal', _database.sql.Decimal(18, 2), Number((_req$body$Subtotal = req.body.Subtotal) !== null && _req$body$Subtotal !== void 0 ? _req$body$Subtotal : 0)).input('AS_impuesto', _database.sql.Decimal(18, 2), 15).input('AS_iva', _database.sql.Decimal(18, 2), Number((_req$body$IVA = req.body.IVA) !== null && _req$body$IVA !== void 0 ? _req$body$IVA : 0)).input('AS_total', _database.sql.Decimal(18, 2), Number((_req$body$Total = req.body.Total) !== null && _req$body$Total !== void 0 ? _req$body$Total : 0)).input('AS_SC_id', _database.sql.Decimal(18, 0), idSub).input('AS_ES_id', _database.sql.Decimal(18, 0), estadoSeimalsa).input('AS_EM_id', _database.sql.Decimal(18, 0), estadoMovimiento).input('AS_SEDE_id', _database.sql.Decimal(18, 0), 0).input('AS_imagen1', _database.sql.VarChar(1000), imagenes[0]).input('AS_imagen2', _database.sql.VarChar(1000), imagenes[1]).input('AS_imagen3', _database.sql.VarChar(1000), imagenes[2]).input('AS_imagen4', _database.sql.VarChar(1000), imagenes[3]).input('AS_imagen5', _database.sql.VarChar(1000), imagenes[4]).input('AS_imagenfirma', _database.sql.VarChar(1000), firma).input('DetallesJSON', _database.sql.NVarChar(_database.sql.MAX), JSON.stringify(detalles)).execute('dbo.sp_AreaServicio_InsertarCompleto');
-        case 52:
+          _context6.next = 53;
+          return _pool.request().input('AS_id', _database.sql.Decimal(18, 0), areaServicioId).input('AS_SS_id', _database.sql.Decimal(18, 0), Number(req.body.Servicio)).input('AS_USU_id', _database.sql.Decimal(18, 0), Number(req.body.USU_id)).input('AS_CLI_id', _database.sql.Decimal(18, 0), Number(req.body.Cliente)).input('AS_TPS_id', _database.sql.Decimal(18, 0), Number(req.body.TipoServicio)).input('AS_UBIC_id', _database.sql.Decimal(18, 0), Number(req.body.Ciudad)).input('AS_serie', _database.sql.VarChar(100), (_req$body$Serie = req.body.Serie) !== null && _req$body$Serie !== void 0 ? _req$body$Serie : '').input('AS_placa', _database.sql.VarChar(100), (_req$body$Placa = req.body.Placa) !== null && _req$body$Placa !== void 0 ? _req$body$Placa : '').input('AS_EQUIP_id', _database.sql.Decimal(18, 0), Number(req.body.Modelo)).input('AS_LOGO_id', _database.sql.Decimal(18, 0), Number(req.body.Logo)).input('AS_observacionTecnica', _database.sql.VarChar(_database.sql.MAX), (_req$body$Observacion = req.body.ObservacionTec) !== null && _req$body$Observacion !== void 0 ? _req$body$Observacion : '').input('AS_Subtotal', _database.sql.Decimal(18, 2), Number((_req$body$Subtotal = req.body.Subtotal) !== null && _req$body$Subtotal !== void 0 ? _req$body$Subtotal : 0)).input('AS_impuesto', _database.sql.Decimal(18, 2), 15).input('AS_iva', _database.sql.Decimal(18, 2), Number((_req$body$IVA = req.body.IVA) !== null && _req$body$IVA !== void 0 ? _req$body$IVA : 0)).input('AS_total', _database.sql.Decimal(18, 2), Number((_req$body$Total = req.body.Total) !== null && _req$body$Total !== void 0 ? _req$body$Total : 0)).input('AS_SC_id', _database.sql.Decimal(18, 0), idSub).input('AS_ES_id', _database.sql.Decimal(18, 0), estadoSeimalsa).input('AS_EM_id', _database.sql.Decimal(18, 0), estadoMovimiento).input('AS_SEDE_id', _database.sql.Decimal(18, 0), 0).input('AS_imagen1', _database.sql.VarChar(1000), imagenes[0]).input('AS_imagen2', _database.sql.VarChar(1000), imagenes[1]).input('AS_imagen3', _database.sql.VarChar(1000), imagenes[2]).input('AS_imagen4', _database.sql.VarChar(1000), imagenes[3]).input('AS_imagen5', _database.sql.VarChar(1000), imagenes[4]).input('AS_imagenfirma', _database.sql.VarChar(1000), firma).input('DetallesJSON', _database.sql.NVarChar(_database.sql.MAX), JSON.stringify(detalles)).execute('dbo.sp_AreaServicio_ActualizarCompleto');
+        case 53:
           _result = _context6.sent;
           registro = (_result$recordset2 = _result.recordset) === null || _result$recordset2 === void 0 ? void 0 : _result$recordset2[0];
           return _context6.abrupt("return", res.status(200).json({
@@ -316,20 +317,20 @@ var updateAreaServicio = /*#__PURE__*/function () {
               cantidadDetalles: registro === null || registro === void 0 ? void 0 : registro.cantidadDetalles
             }
           }));
-        case 57:
-          _context6.prev = 57;
-          _context6.t1 = _context6["catch"](13);
+        case 58:
+          _context6.prev = 58;
+          _context6.t1 = _context6["catch"](14);
           console.error('Error insertando AREA_SERVICIO:', _context6.t1);
           return _context6.abrupt("return", res.status(500).json({
             status: 'error',
             msg: (_ref8 = (_error$originalError$ = _context6.t1 === null || _context6.t1 === void 0 ? void 0 : (_error$originalError = _context6.t1.originalError) === null || _error$originalError === void 0 ? void 0 : (_error$originalError$2 = _error$originalError.info) === null || _error$originalError$2 === void 0 ? void 0 : _error$originalError$2.message) !== null && _error$originalError$ !== void 0 ? _error$originalError$ : _context6.t1 === null || _context6.t1 === void 0 ? void 0 : _context6.t1.message) !== null && _ref8 !== void 0 ? _ref8 : 'No se pudo registrar la cotización.',
             token: 0
           }));
-        case 61:
+        case 62:
         case "end":
           return _context6.stop();
       }
-    }, _callee6, null, [[13, 57], [18, 30, 33, 36]]);
+    }, _callee6, null, [[14, 58], [19, 31, 34, 37]]);
   }));
   return function updateAreaServicio(_x11, _x12) {
     return _ref6.apply(this, arguments);
@@ -471,145 +472,6 @@ var createNewAreaServicio = /*#__PURE__*/function () {
     return _ref9.apply(this, arguments);
   };
 }();
-
-/*export const createNewAreaServicio = async (req, res) => {
-  
-  try {
-    let image = '',image1= '',image2= '',image3= '',image4= '',firma=''; 
-    if(req.files.length>0)
-    {
-      if(req.files[0]!=undefined)
-      {
-        if(req.files[0].originalname.includes('Firma')){
-            const img = await cloudinary.uploader.upload(req.files[0].path);
-            firma = img.secure_url;
-        }
-        else{
-          image = req.files[0].filename;
-          const img = await cloudinary.uploader.upload(req.files[0].path);
-          imageruta = img.secure_url;
-        }
-      }
-      if(req.files[1]!=undefined)
-      {
-        if(req.files[1].originalname.includes('Firma')){
-          const img = await cloudinary.uploader.upload(req.files[1].path);
-          firma = img.secure_url;
-        }else{
-          const img = await cloudinary.uploader.upload(req.files[1].path);
-          image1 = img.secure_url;
-        }
-      }
-      if(req.files[2]!=undefined)
-      {
-        if(req.files[2].originalname.includes('Firma')){
-          const img = await cloudinary.uploader.upload(req.files[2].path);
-          firma = img.secure_url;
-        }else{
-          const img = await cloudinary.uploader.upload(req.files[2].path);
-          image2 = img.secure_url;
-        }
-      }
-      if(req.files[3]!=undefined)
-      {
-        if(req.files[3].originalname.includes('Firma')){
-          const img = await cloudinary.uploader.upload(req.files[3].path);
-          firma = img.secure_url;
-        }else{
-          const img = await cloudinary.uploader.upload(req.files[3].path);
-          image3 = img.secure_url;
-        }
-      }
-      if(req.files[4]!=undefined)
-      {
-        if(req.files[4].originalname.includes('Firma')){
-          const img = await cloudinary.uploader.upload(req.files[4].path);
-          firma = img.secure_url;
-        }else{
-          const img = await cloudinary.uploader.upload(req.files[4].path);
-          image4 = img.secure_url;
-        }
-      }
-        if(req.files[5]!=undefined)
-      {
-        if(req.files[5].originalname.includes('Firma')){
-          const img = await cloudinary.uploader.upload(req.files[5].path);
-          firma = img.secure_url;
-        }else{
-          const img = await cloudinary.uploader.upload(req.files[5].path);
-          image5 = img.secure_url;
-        }
-      }
-        if(req.files[6]!=undefined){
-        if(req.files[6].originalname.includes('Firma')){
-          const img = await cloudinary.uploader.upload(req.files[6].path);
-          firma = img.secure_url;
-        }
-        else{
-          firma = '';
-        }
-      }
-    }
-    for(let i=0;i<req.body.details.length;i++){
-      const json = JSON.parse(req.body.details[i])            
-     }
-    let estadoSeimalsa = 4;
-    let estadoMovimiento = 10;
-    if(req.body.Servicio==2){
-      estadoSeimalsa = req.body.Estado;
-    }
-    if(req.body.Servicio==4){
-      estadoMovimiento = req.body.Estado;
-    }
-      const pool = await getConnection();
-      const result = await pool
-      .request()
-      .input("AS_SS_id", sql.Decimal, req.body.Servicio)
-      .input("AS_USU_id", sql.Decimal, req.body.USU_id)
-      .input("AS_CLI_id", sql.Decimal, req.body.Cliente)
-      .input("AS_TPS_id", sql.Decimal, req.body.TipoServicio)
-      .input("AS_UBIC_id", sql.Decimal, Ciudad)
-      .input("AS_serie", sql.VarChar, Serie)
-      .input("AS_placa", sql.VarChar, Placa)
-      .input("AS_EQUIP_id", sql.Decimal, Modelo)
-      .input("AS_LOGO_id", sql.Decimal, Logo)
-      .input("AS_observacionTecnica", sql.VarChar, ObservacionTec)
-      .input("AS_Subtotal", sql.Decimal, Subtotal)
-      .input("AS_impuesto", sql.Decimal, AS_impuesto)
-      .input("AS_iva", sql.Decimal, IVA)
-      .input("AS_total", sql.Decimal, Total)
-      .input("AS_SC_id", sql.Decimal, Subcliente)
-      .input("AS_ES_id", sql.Decimal, estadoSeimalsa)
-      .input("AS_SEDE_id", sql.Decimal, AS_SEDE_id)
-      .input("AS_EM_id", sql.Decimal, estadoMovimiento)
-      .query(querys.addNewAreaServicio);
-      if(result.rowsAffected==1){
-        let idAS = result.recordset[0].AS_id;
-        if(req.body.details.length>0){
-          for(let i=0;i<req.body.details.length;i++){
-            const json = JSON.parse(req.body.details[i])      
-            const pool3 = await getConnection();
-            const result3 = await pool3
-            .request()
-            .input("AS_DET_AS_id", sql.Decimal,idAS)
-            .input("AS_DET_PROD_id", sql.Decimal, json.productName)
-            .input("AS_DET_PROD_codigo", sql.Varchar, json.codigo)
-            .input("AS_DET_PROD_codigo", sql.Varchar, json.nombre)
-            .input("REQDET_cantidad", sql.Decimal(18,2), json.qty)
-            .input("REQDET_pvp", sql.Decimal(18,2), json.salesPrice)
-            .input("REQDET_total", sql.Decimal(18,2), json.qty * json.salesPrice)
-            .query(querys.addNewAreaServicio);
-          }
-        }
-        return res.status(200).json({ status: "ok", msg: "Registro exitoso" ,token:0});
-      }else{
-        return res.status(400).json({ status: "400", msg: "No se pudo registrar, consulte al administrador" ,token:0});
-      }
-  } catch (error) {
-    res.status(500);
-    res.send(error.message);
-  }
-}*/
 exports.createNewAreaServicio = createNewAreaServicio;
 var getAreaServicioMovimiento = /*#__PURE__*/function () {
   var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(req, res) {
