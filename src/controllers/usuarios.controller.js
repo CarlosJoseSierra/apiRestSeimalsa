@@ -1,6 +1,7 @@
 import { getConnection } from "../database/connection";
 import sql from "mssql"; // <--- ESTA ES LA LÍNEA CLAVE
 import { querys } from "../database/querys";
+const cloudinary = require("../libs/cloudinary");
 
 const jwt = require('jsonwebtoken');
 

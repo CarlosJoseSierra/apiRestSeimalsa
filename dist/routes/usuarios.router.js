@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _express = require("express");
 var _usuarios = require("../controllers/usuarios.controller");
+var storage = require('../libs/multer');
 var router = (0, _express.Router)();
 router.get("/usuarios", _usuarios.getUsuarios);
 
