@@ -131,7 +131,7 @@ export const createFirmaUser = async (req, res) => {
         token: 0
       });
     }
-}
+};
 
 export const getUsuarioById = async (req, res) => {
     try {
