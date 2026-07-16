@@ -3,7 +3,7 @@ import {
   getUsuarios,
   getUsuarioByCargo,
   getByUserPass,
-  createFirmaUser,
+  //createFirmaUser,
 } from "../controllers/usuarios.controller";
 
 const router = Router();

@@ -76,7 +76,7 @@ export const getByUserPass = async (req, res) => {
     }
 };
 
-export const createFirmaUser = async (req, res) => {
+/*export const createFirmaUser = async (req, res) => {
   try{
   const archivos = Array.isArray(req.files)
     ? req.files
@@ -131,7 +131,7 @@ export const createFirmaUser = async (req, res) => {
         token: 0
       });
     }
-};
+};*/
 
 export const getUsuarioById = async (req, res) => {
     try {
