@@ -15,6 +15,6 @@ router.get("/usuarios", getUsuarios);
 router.post("/usuarios/login", getByUserPass);
 //router.post("/usuarios/login", getUser);
 router.get("/usuarios/tec", getUsuarioByCargo);
-router.post("/usuarios/new", storage.array('image',1),createFirmaUser);
+//router.post("/usuarios/new", storage.array('image',1),createFirmaUser);
 
 export default router;
