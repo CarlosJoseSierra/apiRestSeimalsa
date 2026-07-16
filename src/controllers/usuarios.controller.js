@@ -149,3 +149,17 @@ export const getUsuarioById = async (req, res) => {
       res.send(error.message);
     }
   };
+
+export const getFirma = async (req, resp) => {
+  try{
+    const pool = await getConnection();
+      const result = await pool.request()
+      .input("id", req.params.id)
+      .query(querys.getFirmaTecnico);
+      res.json(result.recordset);
+  }
+  catch(error){
+    res.status(500);
+    res.send(error.message);
+  }
+};

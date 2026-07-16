@@ -4,7 +4,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getUsuarios = exports.getUsuarioById = exports.getUsuarioByCargo = exports.getUser = exports.getByUserPass = exports.createFirmaUser = void 0;
+exports.getUsuarios = exports.getUsuarioById = exports.getUsuarioByCargo = exports.getUser = exports.getFirma = exports.getByUserPass = exports.createFirmaUser = void 0;
 var _connection = require("../database/connection");
 var _mssql = _interopRequireDefault(require("mssql"));
 var _querys = require("../database/querys");
@@ -293,3 +293,37 @@ var getUsuarioByCargo = /*#__PURE__*/function () {
   };
 }();
 exports.getUsuarioByCargo = getUsuarioByCargo;
+var getFirma = /*#__PURE__*/function () {
+  var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(req, resp) {
+    var pool, result;
+    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+      while (1) switch (_context7.prev = _context7.next) {
+        case 0:
+          _context7.prev = 0;
+          _context7.next = 3;
+          return (0, _connection.getConnection)();
+        case 3:
+          pool = _context7.sent;
+          _context7.next = 6;
+          return pool.request().input("id", req.params.id).query(_querys.querys.getFirmaTecnico);
+        case 6:
+          result = _context7.sent;
+          res.json(result.recordset);
+          _context7.next = 14;
+          break;
+        case 10:
+          _context7.prev = 10;
+          _context7.t0 = _context7["catch"](0);
+          res.status(500);
+          res.send(_context7.t0.message);
+        case 14:
+        case "end":
+          return _context7.stop();
+      }
+    }, _callee7, null, [[0, 10]]);
+  }));
+  return function getFirma(_x13, _x14) {
+    return _ref8.apply(this, arguments);
+  };
+}();
+exports.getFirma = getFirma;
