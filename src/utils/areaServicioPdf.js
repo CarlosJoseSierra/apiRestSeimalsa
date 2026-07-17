@@ -222,7 +222,7 @@ function dibujarDatosEquipo(doc, cabecera) {
   dibujarCampo(
     doc,
     'MARCA:',
-    cabecera.EQUIP_marca,
+    cabecera.EQUIP_marca.toUpperCase(),
     58,
     y + 38,
     55,
@@ -232,7 +232,7 @@ function dibujarDatosEquipo(doc, cabecera) {
   dibujarCampo(
     doc,
     'MODELO:',
-    cabecera.EQUIP_modelo,
+    cabecera.EQUIP_modelo.toUpperCase(),
     310,
     y + 38,
     50,
@@ -254,7 +254,7 @@ function dibujarDatosEquipo(doc, cabecera) {
   dibujarCampo(
     doc,
     'LOGO',
-    cabecera.LOGO_nombre,
+    cabecera.LOGO_nombre.toUpperCase(),
     310,
     y + 60,
     50,
@@ -278,7 +278,7 @@ function dibujarDatosCliente(doc, cabecera) {
   dibujarCampo(
     doc,
     'CLIENTE:',
-    cabecera.CLI_nombre,
+    cabecera.CLI_nombre.toUpperCase(),
     58,
     y + 13,
     75,
@@ -288,7 +288,7 @@ function dibujarDatosCliente(doc, cabecera) {
   dibujarCampo(
     doc,
     'SUBCLIENTE:',
-    cabecera.SC_nombre,
+    cabecera.SC_nombre.toUpperCase(),
     58,
     y + 35,
     75,
@@ -308,7 +308,7 @@ function dibujarDatosCliente(doc, cabecera) {
   dibujarCampo(
     doc,
     'PROVINCIA:',
-    cabecera.UBIC_provincia,
+    cabecera.UBIC_provincia.toUpperCase(),
     58,
     y + 57,
     75,
@@ -318,7 +318,7 @@ function dibujarDatosCliente(doc, cabecera) {
   dibujarCampo(
     doc,
     'CIUDAD:',
-    cabecera.UBIC_ciudad,
+    cabecera.UBIC_ciudad.toUpperCase(),
     310,
     y + 57,
     55,
@@ -328,7 +328,7 @@ function dibujarDatosCliente(doc, cabecera) {
   dibujarCampo(
     doc,
     'ESTABLEC.:',
-    cabecera.SC_establecimiento,
+    cabecera.SC_establecimiento.toUpperCase(),
     58,
     y + 79,
     75,
@@ -348,7 +348,7 @@ function dibujarDatosCliente(doc, cabecera) {
   dibujarCampo(
     doc,
     'TÉCNICO:',
-    cabecera.Tecnico,
+    cabecera.Tecnico.toUpperCase(),
     310,
     y + 101,
     55,
@@ -360,7 +360,7 @@ function dibujarDatosCliente(doc, cabecera) {
   dibujarCampo(
     doc,
     'DIRECCIÓN:',
-    cabecera.SC_direccion,
+    cabecera.SC_direccion.toUpperCase(),
     45,
     doc.y,
     75,
@@ -384,7 +384,7 @@ function dibujarDatosServicio(doc, cabecera) {
   dibujarCampo(
     doc,
     'SERVICIO:',
-    cabecera.Servicio,
+    cabecera.Servicio.toUpperCase(),
     58,
     y + 13,
     70,
@@ -394,7 +394,7 @@ function dibujarDatosServicio(doc, cabecera) {
   dibujarCampo(
     doc,
     'TIPO:',
-    cabecera.TipoServicio,
+    cabecera.TipoServicio.toUpperCase(),
     310,
     y + 13,
     45,
@@ -581,7 +581,7 @@ function dibujarObservaciones(doc, cabecera) {
   dibujarTituloSeccion(doc, 'OBSERVACIONES');
 
   const observacion = texto(
-    cabecera.AS_observacionTecnica,
+    cabecera.AS_observacionTecnica.toUpperCase(),
     'Sin observaciones técnicas.'
   );
 

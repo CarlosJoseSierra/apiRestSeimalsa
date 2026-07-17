@@ -148,34 +148,34 @@ function dibujarDatosEquipo(doc, cabecera) {
   doc.roundedRect(45, y, 505, 76, 6).lineWidth(0.8).strokeColor(COLORES.borde).stroke();
   dibujarCampo(doc, 'SERIE:', cabecera.AS_serie, 58, y + 13, 55, 140);
   dibujarCampo(doc, 'PLACA:', cabecera.AS_placa, 310, y + 13, 50, 165);
-  dibujarCampo(doc, 'MARCA:', cabecera.EQUIP_marca, 58, y + 38, 55, 140);
-  dibujarCampo(doc, 'MODELO:', cabecera.EQUIP_modelo, 310, y + 38, 50, 165);
+  dibujarCampo(doc, 'MARCA:', cabecera.EQUIP_marca.toUpperCase(), 58, y + 38, 55, 140);
+  dibujarCampo(doc, 'MODELO:', cabecera.EQUIP_modelo.toUpperCase(), 310, y + 38, 50, 165);
   dibujarCampo(doc, 'FECHA:', fechaEcuador(cabecera.AS_fechaReq || cabecera.AS_fecha), 58, y + 60, 55, 390);
-  dibujarCampo(doc, 'LOGO', cabecera.LOGO_nombre, 310, y + 60, 50, 165);
+  dibujarCampo(doc, 'LOGO', cabecera.LOGO_nombre.toUpperCase(), 310, y + 60, 50, 165);
   doc.y = y + 90;
 }
 function dibujarDatosCliente(doc, cabecera) {
   dibujarTituloSeccion(doc, 'DATOS DEL CLIENTE');
   var y = doc.y;
   doc.roundedRect(45, y, 505, 122, 6).lineWidth(0.8).strokeColor(COLORES.borde).stroke();
-  dibujarCampo(doc, 'CLIENTE:', cabecera.CLI_nombre, 58, y + 13, 75, 390);
-  dibujarCampo(doc, 'SUBCLIENTE:', cabecera.SC_nombre, 58, y + 35, 75, 390);
+  dibujarCampo(doc, 'CLIENTE:', cabecera.CLI_nombre.toUpperCase(), 58, y + 13, 75, 390);
+  dibujarCampo(doc, 'SUBCLIENTE:', cabecera.SC_nombre.toUpperCase(), 58, y + 35, 75, 390);
   dibujarCampo(doc, 'COD. SUBCLIENTE:', cabecera.SC_codUniversal, 310, y + 35, 75, 390);
-  dibujarCampo(doc, 'PROVINCIA:', cabecera.UBIC_provincia, 58, y + 57, 75, 140);
-  dibujarCampo(doc, 'CIUDAD:', cabecera.UBIC_ciudad, 310, y + 57, 55, 160);
-  dibujarCampo(doc, 'ESTABLEC.:', cabecera.SC_establecimiento, 58, y + 79, 75, 390);
+  dibujarCampo(doc, 'PROVINCIA:', cabecera.UBIC_provincia.toUpperCase(), 58, y + 57, 75, 140);
+  dibujarCampo(doc, 'CIUDAD:', cabecera.UBIC_ciudad.toUpperCase(), 310, y + 57, 55, 160);
+  dibujarCampo(doc, 'ESTABLEC.:', cabecera.SC_establecimiento.toUpperCase(), 58, y + 79, 75, 390);
   dibujarCampo(doc, 'TELÉFONO:', cabecera.SC_telefono, 58, y + 101, 75, 145);
-  dibujarCampo(doc, 'TÉCNICO:', cabecera.Tecnico, 310, y + 101, 55, 160);
+  dibujarCampo(doc, 'TÉCNICO:', cabecera.Tecnico.toUpperCase(), 310, y + 101, 55, 160);
   doc.y = y + 136;
-  dibujarCampo(doc, 'DIRECCIÓN:', cabecera.SC_direccion, 45, doc.y, 75, 430);
+  dibujarCampo(doc, 'DIRECCIÓN:', cabecera.SC_direccion.toUpperCase(), 45, doc.y, 75, 430);
   doc.moveDown(1.6);
 }
 function dibujarDatosServicio(doc, cabecera) {
   dibujarTituloSeccion(doc, 'INFORMACIÓN DEL SERVICIO');
   var y = doc.y;
   doc.roundedRect(45, y, 505, 48, 6).lineWidth(0.8).strokeColor(COLORES.borde).stroke();
-  dibujarCampo(doc, 'SERVICIO:', cabecera.Servicio, 58, y + 13, 70, 145);
-  dibujarCampo(doc, 'TIPO:', cabecera.TipoServicio, 310, y + 13, 45, 170);
+  dibujarCampo(doc, 'SERVICIO:', cabecera.Servicio.toUpperCase(), 58, y + 13, 70, 145);
+  dibujarCampo(doc, 'TIPO:', cabecera.TipoServicio.toUpperCase(), 310, y + 13, 45, 170);
   doc.y = y + 62;
 }
 function dibujarTablaDetalles(doc, detalles) {
@@ -248,7 +248,7 @@ function dibujarTotales(doc, cabecera) {
 }
 function dibujarObservaciones(doc, cabecera) {
   dibujarTituloSeccion(doc, 'OBSERVACIONES');
-  var observacion = texto(cabecera.AS_observacionTecnica, 'Sin observaciones técnicas.');
+  var observacion = texto(cabecera.AS_observacionTecnica.toUpperCase(), 'Sin observaciones técnicas.');
   var alto = Math.max(75, doc.heightOfString(observacion, {
     width: 475,
     fontSize: 9
