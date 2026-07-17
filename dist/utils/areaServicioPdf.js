@@ -151,6 +151,7 @@ function dibujarDatosEquipo(doc, cabecera) {
   dibujarCampo(doc, 'MARCA:', cabecera.EQUIP_marca, 58, y + 38, 55, 140);
   dibujarCampo(doc, 'MODELO:', cabecera.EQUIP_modelo, 310, y + 38, 50, 165);
   dibujarCampo(doc, 'FECHA:', fechaEcuador(cabecera.AS_fechaReq || cabecera.AS_fecha), 58, y + 60, 55, 390);
+  dibujarCampo(doc, 'LOGO', cabecera.LOGO_nombre, 310, y + 60, 50, 165);
   doc.y = y + 90;
 }
 function dibujarDatosCliente(doc, cabecera) {
@@ -159,6 +160,7 @@ function dibujarDatosCliente(doc, cabecera) {
   doc.roundedRect(45, y, 505, 122, 6).lineWidth(0.8).strokeColor(COLORES.borde).stroke();
   dibujarCampo(doc, 'CLIENTE:', cabecera.CLI_nombre, 58, y + 13, 75, 390);
   dibujarCampo(doc, 'SUBCLIENTE:', cabecera.SC_nombre, 58, y + 35, 75, 390);
+  dibujarCampo(doc, 'COD. SUBCLIENTE:', cabecera.SC_codUniversal, 310, y + 35, 75, 390);
   dibujarCampo(doc, 'PROVINCIA:', cabecera.UBIC_provincia, 58, y + 57, 75, 140);
   dibujarCampo(doc, 'CIUDAD:', cabecera.UBIC_ciudad, 310, y + 57, 55, 160);
   dibujarCampo(doc, 'ESTABLEC.:', cabecera.SC_establecimiento, 58, y + 79, 75, 390);

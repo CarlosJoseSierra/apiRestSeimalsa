@@ -251,6 +251,16 @@ function dibujarDatosEquipo(doc, cabecera) {
     390
   );
 
+  dibujarCampo(
+    doc,
+    'LOGO',
+    cabecera.LOGO_nombre,
+    310,
+    y + 60,
+    50,
+    165
+    );
+
   doc.y = y + 90;
 }
 
@@ -280,6 +290,16 @@ function dibujarDatosCliente(doc, cabecera) {
     'SUBCLIENTE:',
     cabecera.SC_nombre,
     58,
+    y + 35,
+    75,
+    390
+  );
+
+  dibujarCampo(
+    doc,
+    'COD. SUBCLIENTE:',
+    cabecera.SC_codUniversal,
+    310,
     y + 35,
     75,
     390
