@@ -932,3 +932,80 @@ export const obtenerMapaEquipos =
     });
   }
 };
+
+export const obtenerDashboardTecnico =
+  async (req, res) => {
+
+  try {
+    const usuarioId =
+      Number(req.params.usuarioId);
+
+    if (
+      !Number.isFinite(usuarioId) ||
+      usuarioId <= 0
+    ) {
+      return res.status(400).json({
+        status: 'error',
+        msg: 'El usuario no es válido.'
+      });
+    }
+
+    const pool = await getConnection();
+
+    const result = await pool
+      .request()
+      .input(
+        'USU_id',
+        sql.Decimal(18, 0),
+        usuarioId
+      )
+      .execute(
+        'dbo.sp_DashboardTecnico'
+      );
+
+    return res.status(200).json({
+      status: 'ok',
+
+      data: {
+        resumen:
+          result.recordsets?.[0]?.[0] || {},
+
+        actividadSemanal:
+          result.recordsets?.[1] || [],
+
+        actividadMensual:
+          result.recordsets?.[2] || [],
+
+        clientes:
+          result.recordsets?.[3] || [],
+
+        ciudades:
+          result.recordsets?.[4] || [],
+
+        repuestos:
+          result.recordsets?.[5] || [],
+
+        ultimasReparaciones:
+          result.recordsets?.[6] || [],
+
+        tecnico:
+          result.recordsets?.[7]?.[0] || {}
+      }
+    });
+
+  } catch (error) {
+    console.error(
+      'Error consultando dashboard:',
+      error
+    );
+
+    return res.status(500).json({
+      status: 'error',
+
+      msg:
+        error?.originalError?.info?.message ||
+        error?.message ||
+        'No se pudo obtener el dashboard.'
+    });
+  }
+};

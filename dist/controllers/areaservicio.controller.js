@@ -4,7 +4,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateAreaServicio = exports.updateActivoByTecnico = exports.obtenerPDFReparacion = exports.obtenerMapaEquipos = exports.getReporteGeneral = exports.getReparacionesXtecnico = exports.getEntregadosUnilever = exports.getEntregadosTesalia = exports.getEntregadosPronaca = exports.getEntregadosHeineken = exports.getEntregadosElRosado = exports.getEntregadosArca = exports.getDetalleCTById = exports.getAreaSinTecnico = exports.getAreaServicioMovimiento = exports.getAreaServicioMantenimiento = exports.getAreaByTecnico = exports.getAreaBySerie = exports.getAreaByPlaca = exports.createNewAreaServicio = void 0;
+exports.updateAreaServicio = exports.updateActivoByTecnico = exports.obtenerPDFReparacion = exports.obtenerMapaEquipos = exports.obtenerDashboardTecnico = exports.getReporteGeneral = exports.getReparacionesXtecnico = exports.getEntregadosUnilever = exports.getEntregadosTesalia = exports.getEntregadosPronaca = exports.getEntregadosHeineken = exports.getEntregadosElRosado = exports.getEntregadosArca = exports.getDetalleCTById = exports.getAreaSinTecnico = exports.getAreaServicioMovimiento = exports.getAreaServicioMantenimiento = exports.getAreaByTecnico = exports.getAreaBySerie = exports.getAreaByPlaca = exports.createNewAreaServicio = void 0;
 var _database = require("../database");
 var _areaServicioPdf = require("../utils/areaServicioPdf.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -959,3 +959,60 @@ var obtenerMapaEquipos = /*#__PURE__*/function () {
   };
 }();
 exports.obtenerMapaEquipos = obtenerMapaEquipos;
+var obtenerDashboardTecnico = /*#__PURE__*/function () {
+  var _ref25 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee21(req, res) {
+    var _result$recordsets3, _result$recordsets3$, _result$recordsets4, _result$recordsets5, _result$recordsets6, _result$recordsets7, _result$recordsets8, _result$recordsets9, _result$recordsets10, _result$recordsets10$, usuarioId, pool, result, _error$originalError8, _error$originalError9;
+    return _regeneratorRuntime().wrap(function _callee21$(_context21) {
+      while (1) switch (_context21.prev = _context21.next) {
+        case 0:
+          _context21.prev = 0;
+          usuarioId = Number(req.params.usuarioId);
+          if (!(!Number.isFinite(usuarioId) || usuarioId <= 0)) {
+            _context21.next = 4;
+            break;
+          }
+          return _context21.abrupt("return", res.status(400).json({
+            status: 'error',
+            msg: 'El usuario no es válido.'
+          }));
+        case 4:
+          _context21.next = 6;
+          return (0, _database.getConnection)();
+        case 6:
+          pool = _context21.sent;
+          _context21.next = 9;
+          return pool.request().input('USU_id', _database.sql.Decimal(18, 0), usuarioId).execute('dbo.sp_DashboardTecnico');
+        case 9:
+          result = _context21.sent;
+          return _context21.abrupt("return", res.status(200).json({
+            status: 'ok',
+            data: {
+              resumen: ((_result$recordsets3 = result.recordsets) === null || _result$recordsets3 === void 0 ? void 0 : (_result$recordsets3$ = _result$recordsets3[0]) === null || _result$recordsets3$ === void 0 ? void 0 : _result$recordsets3$[0]) || {},
+              actividadSemanal: ((_result$recordsets4 = result.recordsets) === null || _result$recordsets4 === void 0 ? void 0 : _result$recordsets4[1]) || [],
+              actividadMensual: ((_result$recordsets5 = result.recordsets) === null || _result$recordsets5 === void 0 ? void 0 : _result$recordsets5[2]) || [],
+              clientes: ((_result$recordsets6 = result.recordsets) === null || _result$recordsets6 === void 0 ? void 0 : _result$recordsets6[3]) || [],
+              ciudades: ((_result$recordsets7 = result.recordsets) === null || _result$recordsets7 === void 0 ? void 0 : _result$recordsets7[4]) || [],
+              repuestos: ((_result$recordsets8 = result.recordsets) === null || _result$recordsets8 === void 0 ? void 0 : _result$recordsets8[5]) || [],
+              ultimasReparaciones: ((_result$recordsets9 = result.recordsets) === null || _result$recordsets9 === void 0 ? void 0 : _result$recordsets9[6]) || [],
+              tecnico: ((_result$recordsets10 = result.recordsets) === null || _result$recordsets10 === void 0 ? void 0 : (_result$recordsets10$ = _result$recordsets10[7]) === null || _result$recordsets10$ === void 0 ? void 0 : _result$recordsets10$[0]) || {}
+            }
+          }));
+        case 13:
+          _context21.prev = 13;
+          _context21.t0 = _context21["catch"](0);
+          console.error('Error consultando dashboard:', _context21.t0);
+          return _context21.abrupt("return", res.status(500).json({
+            status: 'error',
+            msg: (_context21.t0 === null || _context21.t0 === void 0 ? void 0 : (_error$originalError8 = _context21.t0.originalError) === null || _error$originalError8 === void 0 ? void 0 : (_error$originalError9 = _error$originalError8.info) === null || _error$originalError9 === void 0 ? void 0 : _error$originalError9.message) || (_context21.t0 === null || _context21.t0 === void 0 ? void 0 : _context21.t0.message) || 'No se pudo obtener el dashboard.'
+          }));
+        case 17:
+        case "end":
+          return _context21.stop();
+      }
+    }, _callee21, null, [[0, 13]]);
+  }));
+  return function obtenerDashboardTecnico(_x41, _x42) {
+    return _ref25.apply(this, arguments);
+  };
+}();
+exports.obtenerDashboardTecnico = obtenerDashboardTecnico;
