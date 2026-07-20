@@ -91,12 +91,8 @@ export const createFirmaUser = async (req, res) => {
 
     const result = await pool
         .request()
-        .input("USU_id", req.params.id)
-        .input(
-          'USU_firma',
-          sql.VarChar(1000),
-          firma
-        )
+        .input("USU_id",sql.Decimal(18, 0), req.params.id)
+        .input('USU_firma',sql.VarChar(1000),firma)
         .execute(
           'dbo.sp_AreaServicio_InsertarFirmaUsuario'
         );

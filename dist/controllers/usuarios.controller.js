@@ -198,7 +198,7 @@ var createFirmaUser = /*#__PURE__*/function () {
         case 10:
           pool = _context4.sent;
           _context4.next = 13;
-          return pool.request().input("USU_id", req.params.id).input('USU_firma', _mssql["default"].VarChar(1000), firma).execute('dbo.sp_AreaServicio_InsertarFirmaUsuario');
+          return pool.request().input("USU_id", _mssql["default"].Decimal(18, 0), req.params.id).input('USU_firma', _mssql["default"].VarChar(1000), firma).execute('dbo.sp_AreaServicio_InsertarFirmaUsuario');
         case 13:
           result = _context4.sent;
           registro = (_result$recordset = result.recordset) === null || _result$recordset === void 0 ? void 0 : _result$recordset[0];
