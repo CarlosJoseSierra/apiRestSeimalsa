@@ -198,7 +198,7 @@ var createFirmaUser = /*#__PURE__*/function () {
         case 10:
           pool = _context4.sent;
           _context4.next = 13;
-          return pool.request().input("USU_id", req.params.id).input('USU_firma', _mssql["default"].VarChar(1000), imagenes[0]).execute('dbo.sp_AreaServicio_InsertarFirmaUsuario');
+          return pool.request().input("USU_id", req.params.id).input('USU_firma', _mssql["default"].VarChar(1000), firma).execute('dbo.sp_AreaServicio_InsertarFirmaUsuario');
         case 13:
           result = _context4.sent;
           registro = (_result$recordset = result.recordset) === null || _result$recordset === void 0 ? void 0 : _result$recordset[0];
@@ -294,7 +294,7 @@ var getUsuarioByCargo = /*#__PURE__*/function () {
 }();
 exports.getUsuarioByCargo = getUsuarioByCargo;
 var getFirma = /*#__PURE__*/function () {
-  var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(req, resp) {
+  var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(req, res) {
     var pool, result;
     return _regeneratorRuntime().wrap(function _callee7$(_context7) {
       while (1) switch (_context7.prev = _context7.next) {

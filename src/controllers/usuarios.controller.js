@@ -86,7 +86,7 @@ export const createFirmaUser = async (req, res) => {
       const resultadoCloudinary = await cloudinary.uploader.upload(imagen.path);
       firma = resultadoCloudinary.secure_url;
     }
-  
+    
     const pool = await getConnection();
 
     const result = await pool
@@ -95,7 +95,7 @@ export const createFirmaUser = async (req, res) => {
         .input(
           'USU_firma',
           sql.VarChar(1000),
-          imagenes[0]
+          firma
         )
         .execute(
           'dbo.sp_AreaServicio_InsertarFirmaUsuario'
@@ -150,7 +150,7 @@ export const getUsuarioById = async (req, res) => {
     }
   };
 
-export const getFirma = async (req, resp) => {
+export const getFirma = async (req, res) => {
   try{
     const pool = await getConnection();
       const result = await pool.request()
