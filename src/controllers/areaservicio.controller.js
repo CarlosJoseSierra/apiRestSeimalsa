@@ -130,7 +130,7 @@ export const getAreaByPlaca = async (req, res) => {
   
       for (const archivo of archivos) {
         const resultadoCloudinary =
-          await cloudinary.uploader.upload(archivo.path);
+          await cloudinary.uploader.upload(archivo.path,{folder: 'seimalsa'});
   
         if (
           archivo.originalname
@@ -411,7 +411,7 @@ export const getAreaByPlaca = async (req, res) => {
   
       for (const archivo of archivos) {
         const resultadoCloudinary =
-          await cloudinary.uploader.upload(archivo.path);
+          await cloudinary.uploader.upload(archivo.path,{folder: 'seimalsa'});
   
         if (
           archivo.originalname

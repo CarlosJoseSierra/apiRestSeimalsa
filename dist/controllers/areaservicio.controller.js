@@ -245,7 +245,9 @@ var updateAreaServicio = /*#__PURE__*/function () {
           }
           archivo = _step.value;
           _context6.next = 25;
-          return cloudinary.uploader.upload(archivo.path);
+          return cloudinary.uploader.upload(archivo.path, {
+            folder: 'seimalsa'
+          });
         case 25:
           resultadoCloudinary = _context6.sent;
           if (archivo.originalname.toLowerCase().includes('firma')) {
@@ -381,7 +383,9 @@ var createNewAreaServicio = /*#__PURE__*/function () {
           }
           archivo = _step2.value;
           _context7.next = 24;
-          return cloudinary.uploader.upload(archivo.path);
+          return cloudinary.uploader.upload(archivo.path, {
+            folder: 'seimalsa'
+          });
         case 24:
           resultadoCloudinary = _context7.sent;
           if (archivo.originalname.toLowerCase().includes('firma')) {

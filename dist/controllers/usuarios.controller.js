@@ -183,12 +183,14 @@ var createFirmaUser = /*#__PURE__*/function () {
           _context4.prev = 0;
           firma = '';
           imagen = req.file;
-          if (!(imagen.length > 0)) {
+          if (!imagen) {
             _context4.next = 8;
             break;
           }
           _context4.next = 6;
-          return cloudinary.uploader.upload(imagen.path);
+          return cloudinary.uploader.upload(imagen.path, {
+            folder: 'seimalsa'
+          });
         case 6:
           resultadoCloudinary = _context4.sent;
           firma = resultadoCloudinary.secure_url;

@@ -82,8 +82,8 @@ export const createFirmaUser = async (req, res) => {
     let firma=''; 
     const imagen = req.file;
 
-    if(imagen.length>0){
-      const resultadoCloudinary = await cloudinary.uploader.upload(imagen.path);
+    if(imagen){
+      const resultadoCloudinary = await cloudinary.uploader.upload(imagen.path,{folder: 'seimalsa'});
       firma = resultadoCloudinary.secure_url;
     }
     
