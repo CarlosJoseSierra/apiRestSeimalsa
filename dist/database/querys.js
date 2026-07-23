@@ -171,6 +171,6 @@ var querys = {
   getAllEM: "SELECT EM_id,EM_descripcion FROM ESTADO_MOVIMIENTO",
   createSubcliente: "INSERT INTO SUBCLIENTE (SC_nombre,SC_codUniversal,SC_establecimiento,SC_direccion,SC_telefono,SC_USU_ing,SC_fecha_ing,SC_identificacion,SC_referencia,SC_tipoNegocio) VALUES (@SC_nombre,@SC_codUniversal,@SC_establecimiento,@SC_direccion,@SC_telefono,@SC_USU_ing,GETDATE(),'','',''); SELECT SCOPE_IDENTITY() AS SC_id;",
   getFirmaTecnico: "SELECT USU_firma FROM USUARIOS WHERE USU_id = @id",
-  updateSubcliente: "UPDATE SUBCLIENTE SET SC_codUniversal = @SC_codUniversal WHERE SC_id = @id"
+  updateSubcliente: "UPDATE SUBCLIENTE SET SC_codUniversal = @SC_codUniversal WHERE SC_id = @SC_id"
 };
 exports.querys = querys;
