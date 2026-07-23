@@ -100,23 +100,8 @@ export const getAreaByPlaca = async (req, res) => {
     let idSub = 0;  
     const subcliente = req.body.Subcliente;
     const areaServicioId = Number(req.params.id);
-    console.log(req.body.CodigoS);
     if (!isNaN(Number(subcliente))) {
       idSub = subcliente;
-      //actualizar subcliente el codigo
-      const pool = await getConnection();
-      const result = await pool.request()
-      .input('SC_id', sql.Decimal, idSub)
-      .input('SC_codUniversal', sql.VarChar, req.body.CodigoS)
-      .query(querys.updateSubcliente);
-      console.log(idSub);
-      console.log(result.rowsAffected);
-      if(result.rowsAffected==1){
-        // if (result.recordset.length > 0) {
-          //idSub = result.recordset?.[0]?.SC_id;
-        //}
-      }
-
     }
     else{
       const pool = await getConnection();
@@ -399,6 +384,16 @@ export const getAreaByPlaca = async (req, res) => {
     const subcliente = req.body.Subcliente;
     if (!isNaN(Number(subcliente))) {
       idSub = subcliente;
+      const pool = await getConnection();
+      const result = await pool.request()
+      .input('SC_id', sql.Decimal, idSub)
+      .input('SC_codUniversal', sql.VarChar, req.body.CodigoS)
+      .query(querys.updateSubcliente);
+      if(result.rowsAffected==1){
+        // if (result.recordset.length > 0) {
+          //idSub = result.recordset?.[0]?.SC_id;
+        //}
+      }
     }
     else{
       const pool = await getConnection();
