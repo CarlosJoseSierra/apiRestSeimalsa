@@ -380,6 +380,7 @@ export const getAreaByPlaca = async (req, res) => {
 
   export const createNewAreaServicio = async (req, res) => {
     let idSub = 0;  
+    let idEquipo = 0;
     
     const subcliente = req.body.Subcliente;
     if (!isNaN(Number(subcliente))) {
@@ -630,6 +631,11 @@ export const getAreaByPlaca = async (req, res) => {
           'idEquipoCompleto',
           sql.Decimal(18, 0),
           Number(req.body.idEquipoCompleto)
+        )
+        .input(
+          'codTag',
+          sql.Varchar(50),
+          req.body.QR 
         )
   
         .execute(
