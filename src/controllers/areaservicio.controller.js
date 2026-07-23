@@ -98,16 +98,29 @@ export const getAreaByPlaca = async (req, res) => {
 
   export const updateAreaServicio = async (req, res) => {
     let idSub = 0;  
-    
     const subcliente = req.body.Subcliente;
     const areaServicioId = Number(req.params.id);
     if (!isNaN(Number(subcliente))) {
       idSub = subcliente;
+      //actualizar subcliente el codigo
+      const pool = await getConnection();
+      const result = await pool.request()
+      .input('SC_id', sql.Decimal, idSub)
+      .input('SC_codUniversal', sql.VarChar, req.body.CodigoS)
+      .query(querys.updateSubcliente);
+      
+      if(result.rowsAffected==1){
+        // if (result.recordset.length > 0) {
+          //idSub = result.recordset?.[0]?.SC_id;
+        //}
+      }
+
     }
     else{
       const pool = await getConnection();
       const result = await pool.request()
       .input('SC_nombre', sql.VarChar, subcliente)
+      .input('SC_codUniversal', sql.VarChar, req.body.CodigoS)
       .input('SC_establecimiento', sql.VarChar, req.body.Establecimiento)
       .input('SC_direccion', sql.VarChar, req.body.Direccion)
       .input('SC_telefono', sql.VarChar, req.body.Telefono)
