@@ -100,6 +100,7 @@ export const getAreaByPlaca = async (req, res) => {
     let idSub = 0;  
     const subcliente = req.body.Subcliente;
     const areaServicioId = Number(req.params.id);
+    console.log(req.body.CodigoS);
     if (!isNaN(Number(subcliente))) {
       idSub = subcliente;
       //actualizar subcliente el codigo
@@ -108,7 +109,8 @@ export const getAreaByPlaca = async (req, res) => {
       .input('SC_id', sql.Decimal, idSub)
       .input('SC_codUniversal', sql.VarChar, req.body.CodigoS)
       .query(querys.updateSubcliente);
-      
+      console.log(idSub);
+      console.log(result.rowsAffected);
       if(result.rowsAffected==1){
         // if (result.recordset.length > 0) {
           //idSub = result.recordset?.[0]?.SC_id;
