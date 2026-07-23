@@ -341,87 +341,86 @@ var updateAreaServicio = /*#__PURE__*/function () {
 exports.updateAreaServicio = updateAreaServicio;
 var createNewAreaServicio = /*#__PURE__*/function () {
   var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(req, res) {
-    var idSub, idEquipo, subcliente, pool, result, _pool2, _result2, _result2$recordset, _result2$recordset$, _ref10, _req$body$details2, _req$body$Serie2, _req$body$Placa2, _req$body$Observacion2, _req$body$Subtotal2, _req$body$IVA2, _req$body$Total2, _result3$recordset, _registro$status2, _registro$msg2, archivos, imagenes, firma, _iterator2, _step2, archivo, resultadoCloudinary, detallesRecibidos, detallesArray, detalles, estadoSeimalsa, estadoMovimiento, servicio, _pool3, _result3, registro, _ref11, _error$originalError$3, _error$originalError2, _error$originalError3;
+    var idSub, subcliente, pool, result, _pool2, _result2, _result2$recordset, _result2$recordset$, _ref10, _req$body$details2, _req$body$Serie2, _req$body$Placa2, _req$body$Observacion2, _req$body$Subtotal2, _req$body$IVA2, _req$body$Total2, _result3$recordset, _registro$status2, _registro$msg2, archivos, imagenes, firma, _iterator2, _step2, archivo, resultadoCloudinary, detallesRecibidos, detallesArray, detalles, estadoSeimalsa, estadoMovimiento, servicio, _pool3, _result3, registro, _ref11, _error$originalError$3, _error$originalError2, _error$originalError3;
     return _regeneratorRuntime().wrap(function _callee7$(_context7) {
       while (1) switch (_context7.prev = _context7.next) {
         case 0:
           idSub = 0;
-          idEquipo = 0;
           subcliente = req.body.Subcliente;
           if (isNaN(Number(subcliente))) {
-            _context7.next = 14;
+            _context7.next = 13;
             break;
           }
           idSub = subcliente;
-          _context7.next = 7;
+          _context7.next = 6;
           return (0, _database.getConnection)();
-        case 7:
+        case 6:
           pool = _context7.sent;
-          _context7.next = 10;
+          _context7.next = 9;
           return pool.request().input('SC_id', _database.sql.Decimal, idSub).input('SC_codUniversal', _database.sql.VarChar, req.body.CodigoS).query(_database.querys.updateSubcliente);
-        case 10:
+        case 9:
           result = _context7.sent;
           if (result.rowsAffected == 1) {
             // if (result.recordset.length > 0) {
             //idSub = result.recordset?.[0]?.SC_id;
             //}
           }
-          _context7.next = 21;
+          _context7.next = 20;
           break;
-        case 14:
-          _context7.next = 16;
+        case 13:
+          _context7.next = 15;
           return (0, _database.getConnection)();
-        case 16:
+        case 15:
           _pool2 = _context7.sent;
-          _context7.next = 19;
+          _context7.next = 18;
           return _pool2.request().input('SC_nombre', _database.sql.VarChar, subcliente).input('SC_establecimiento', _database.sql.VarChar, req.body.Establecimiento).input('SC_codUniversal', _database.sql.VarChar, req.body.CodigoS).input('SC_direccion', _database.sql.VarChar, req.body.Direccion).input('SC_telefono', _database.sql.VarChar, req.body.Telefono).input('SC_USU_ing', _database.sql.Decimal, req.body.USU_id).query(_database.querys.createSubcliente);
-        case 19:
+        case 18:
           _result2 = _context7.sent;
           if (_result2.rowsAffected[0] == 1) {
             if (_result2.recordset.length > 0) {
               idSub = (_result2$recordset = _result2.recordset) === null || _result2$recordset === void 0 ? void 0 : (_result2$recordset$ = _result2$recordset[0]) === null || _result2$recordset$ === void 0 ? void 0 : _result2$recordset$.SC_id;
             }
           }
-        case 21:
-          _context7.prev = 21;
+        case 20:
+          _context7.prev = 20;
           archivos = Array.isArray(req.files) ? req.files : [];
           imagenes = [];
           firma = '';
           _iterator2 = _createForOfIteratorHelper(archivos);
-          _context7.prev = 26;
+          _context7.prev = 25;
           _iterator2.s();
-        case 28:
+        case 27:
           if ((_step2 = _iterator2.n()).done) {
-            _context7.next = 36;
+            _context7.next = 35;
             break;
           }
           archivo = _step2.value;
-          _context7.next = 32;
+          _context7.next = 31;
           return cloudinary.uploader.upload(archivo.path, {
             folder: 'seimalsa'
           });
-        case 32:
+        case 31:
           resultadoCloudinary = _context7.sent;
           if (archivo.originalname.toLowerCase().includes('firma')) {
             firma = resultadoCloudinary.secure_url;
           } else if (imagenes.length < 5) {
             imagenes.push(resultadoCloudinary.secure_url);
           }
-        case 34:
-          _context7.next = 28;
+        case 33:
+          _context7.next = 27;
           break;
-        case 36:
-          _context7.next = 41;
+        case 35:
+          _context7.next = 40;
           break;
-        case 38:
-          _context7.prev = 38;
-          _context7.t0 = _context7["catch"](26);
+        case 37:
+          _context7.prev = 37;
+          _context7.t0 = _context7["catch"](25);
           _iterator2.e(_context7.t0);
-        case 41:
-          _context7.prev = 41;
+        case 40:
+          _context7.prev = 40;
           _iterator2.f();
-          return _context7.finish(41);
-        case 44:
+          return _context7.finish(40);
+        case 43:
           while (imagenes.length < 5) {
             imagenes.push('');
           }
@@ -434,7 +433,7 @@ var createNewAreaServicio = /*#__PURE__*/function () {
             return detalle;
           });
           if (!(detalles.length === 0)) {
-            _context7.next = 50;
+            _context7.next = 49;
             break;
           }
           return _context7.abrupt("return", res.status(400).json({
@@ -442,7 +441,7 @@ var createNewAreaServicio = /*#__PURE__*/function () {
             msg: 'Debe agregar al menos un producto.',
             token: 0
           }));
-        case 50:
+        case 49:
           estadoSeimalsa = 4;
           estadoMovimiento = 10;
           servicio = Number(req.body.Servicio);
@@ -452,13 +451,13 @@ var createNewAreaServicio = /*#__PURE__*/function () {
           if (servicio === 4) {
             estadoMovimiento = Number(req.body.Estado);
           }
-          _context7.next = 57;
+          _context7.next = 56;
           return (0, _database.getConnection)();
-        case 57:
+        case 56:
           _pool3 = _context7.sent;
-          _context7.next = 60;
-          return _pool3.request().input('AS_SS_id', _database.sql.Decimal(18, 0), Number(req.body.Servicio)).input('AS_USU_id', _database.sql.Decimal(18, 0), Number(req.body.USU_id)).input('AS_CLI_id', _database.sql.Decimal(18, 0), Number(req.body.Cliente)).input('AS_TPS_id', _database.sql.Decimal(18, 0), Number(req.body.TipoServicio)).input('AS_UBIC_id', _database.sql.Decimal(18, 0), Number(req.body.Ciudad)).input('AS_serie', _database.sql.VarChar(100), (_req$body$Serie2 = req.body.Serie) !== null && _req$body$Serie2 !== void 0 ? _req$body$Serie2 : '').input('AS_placa', _database.sql.VarChar(100), (_req$body$Placa2 = req.body.Placa) !== null && _req$body$Placa2 !== void 0 ? _req$body$Placa2 : '').input('AS_EQUIP_id', _database.sql.Decimal(18, 0), Number(req.body.Modelo)).input('AS_LOGO_id', _database.sql.Decimal(18, 0), Number(req.body.Logo)).input('AS_observacionTecnica', _database.sql.VarChar(_database.sql.MAX), (_req$body$Observacion2 = req.body.ObservacionTec) !== null && _req$body$Observacion2 !== void 0 ? _req$body$Observacion2 : '').input('AS_Subtotal', _database.sql.Decimal(18, 2), Number((_req$body$Subtotal2 = req.body.Subtotal) !== null && _req$body$Subtotal2 !== void 0 ? _req$body$Subtotal2 : 0)).input('AS_impuesto', _database.sql.Decimal(18, 2), 15).input('AS_iva', _database.sql.Decimal(18, 2), Number((_req$body$IVA2 = req.body.IVA) !== null && _req$body$IVA2 !== void 0 ? _req$body$IVA2 : 0)).input('AS_total', _database.sql.Decimal(18, 2), Number((_req$body$Total2 = req.body.Total) !== null && _req$body$Total2 !== void 0 ? _req$body$Total2 : 0)).input('AS_SC_id', _database.sql.Decimal(18, 0), idSub).input('AS_ES_id', _database.sql.Decimal(18, 0), estadoSeimalsa).input('AS_EM_id', _database.sql.Decimal(18, 0), estadoMovimiento).input('AS_SEDE_id', _database.sql.Decimal(18, 0), 0).input('AS_imagen1', _database.sql.VarChar(1000), imagenes[0]).input('AS_imagen2', _database.sql.VarChar(1000), imagenes[1]).input('AS_imagen3', _database.sql.VarChar(1000), imagenes[2]).input('AS_imagen4', _database.sql.VarChar(1000), imagenes[3]).input('AS_imagen5', _database.sql.VarChar(1000), imagenes[4]).input('AS_imagenfirma', _database.sql.VarChar(1000), firma).input('DetallesJSON', _database.sql.NVarChar(_database.sql.MAX), JSON.stringify(detalles)).input('latitud', _database.sql.Decimal(18, 7), Number(req.body.Latitud)).input('longitud', _database.sql.Decimal(18, 7), Number(req.body.Longitud)).input('precision', _database.sql.Decimal(18, 2), Number(req.body.PrecisionGPS)).input('idEquipoCompleto', _database.sql.Decimal(18, 0), Number(req.body.idEquipoCompleto)).input('codTag', _database.sql.Varchar(50), req.body.QR).execute('dbo.sp_AreaServicio_InsertarCompleto');
-        case 60:
+          _context7.next = 59;
+          return _pool3.request().input('AS_SS_id', _database.sql.Decimal(18, 0), Number(req.body.Servicio)).input('AS_USU_id', _database.sql.Decimal(18, 0), Number(req.body.USU_id)).input('AS_CLI_id', _database.sql.Decimal(18, 0), Number(req.body.Cliente)).input('AS_TPS_id', _database.sql.Decimal(18, 0), Number(req.body.TipoServicio)).input('AS_UBIC_id', _database.sql.Decimal(18, 0), Number(req.body.Ciudad)).input('AS_serie', _database.sql.VarChar(100), (_req$body$Serie2 = req.body.Serie) !== null && _req$body$Serie2 !== void 0 ? _req$body$Serie2 : '').input('AS_placa', _database.sql.VarChar(100), (_req$body$Placa2 = req.body.Placa) !== null && _req$body$Placa2 !== void 0 ? _req$body$Placa2 : '').input('AS_EQUIP_id', _database.sql.Decimal(18, 0), Number(req.body.Modelo)).input('AS_LOGO_id', _database.sql.Decimal(18, 0), Number(req.body.Logo)).input('AS_observacionTecnica', _database.sql.VarChar(_database.sql.MAX), (_req$body$Observacion2 = req.body.ObservacionTec) !== null && _req$body$Observacion2 !== void 0 ? _req$body$Observacion2 : '').input('AS_Subtotal', _database.sql.Decimal(18, 2), Number((_req$body$Subtotal2 = req.body.Subtotal) !== null && _req$body$Subtotal2 !== void 0 ? _req$body$Subtotal2 : 0)).input('AS_impuesto', _database.sql.Decimal(18, 2), 15).input('AS_iva', _database.sql.Decimal(18, 2), Number((_req$body$IVA2 = req.body.IVA) !== null && _req$body$IVA2 !== void 0 ? _req$body$IVA2 : 0)).input('AS_total', _database.sql.Decimal(18, 2), Number((_req$body$Total2 = req.body.Total) !== null && _req$body$Total2 !== void 0 ? _req$body$Total2 : 0)).input('AS_SC_id', _database.sql.Decimal(18, 0), idSub).input('AS_ES_id', _database.sql.Decimal(18, 0), estadoSeimalsa).input('AS_EM_id', _database.sql.Decimal(18, 0), estadoMovimiento).input('AS_SEDE_id', _database.sql.Decimal(18, 0), 0).input('AS_imagen1', _database.sql.VarChar(1000), imagenes[0]).input('AS_imagen2', _database.sql.VarChar(1000), imagenes[1]).input('AS_imagen3', _database.sql.VarChar(1000), imagenes[2]).input('AS_imagen4', _database.sql.VarChar(1000), imagenes[3]).input('AS_imagen5', _database.sql.VarChar(1000), imagenes[4]).input('AS_imagenfirma', _database.sql.VarChar(1000), firma).input('DetallesJSON', _database.sql.NVarChar(_database.sql.MAX), JSON.stringify(detalles)).input('latitud', _database.sql.Decimal(18, 7), Number(req.body.Latitud)).input('longitud', _database.sql.Decimal(18, 7), Number(req.body.Longitud)).input('precision', _database.sql.Decimal(18, 2), Number(req.body.PrecisionGPS)).input('idEquipoCompleto', _database.sql.Decimal(18, 0), Number(req.body.idEquipoCompleto)).input('codTag', _database.sql.VarChar(50), req.body.QR).execute('dbo.sp_AreaServicio_InsertarCompleto');
+        case 59:
           _result3 = _context7.sent;
           registro = (_result3$recordset = _result3.recordset) === null || _result3$recordset === void 0 ? void 0 : _result3$recordset[0];
           return _context7.abrupt("return", res.status(200).json({
@@ -471,20 +470,20 @@ var createNewAreaServicio = /*#__PURE__*/function () {
               cantidadDetalles: registro === null || registro === void 0 ? void 0 : registro.cantidadDetalles
             }
           }));
-        case 65:
-          _context7.prev = 65;
-          _context7.t1 = _context7["catch"](21);
+        case 64:
+          _context7.prev = 64;
+          _context7.t1 = _context7["catch"](20);
           console.error('Error insertando FIRMA:', _context7.t1);
           return _context7.abrupt("return", res.status(500).json({
             status: 'error',
             msg: (_ref11 = (_error$originalError$3 = _context7.t1 === null || _context7.t1 === void 0 ? void 0 : (_error$originalError2 = _context7.t1.originalError) === null || _error$originalError2 === void 0 ? void 0 : (_error$originalError3 = _error$originalError2.info) === null || _error$originalError3 === void 0 ? void 0 : _error$originalError3.message) !== null && _error$originalError$3 !== void 0 ? _error$originalError$3 : _context7.t1 === null || _context7.t1 === void 0 ? void 0 : _context7.t1.message) !== null && _ref11 !== void 0 ? _ref11 : 'No se pudo registrar la firma.',
             token: 0
           }));
-        case 69:
+        case 68:
         case "end":
           return _context7.stop();
       }
-    }, _callee7, null, [[21, 65], [26, 38, 41, 44]]);
+    }, _callee7, null, [[20, 64], [25, 37, 40, 43]]);
   }));
   return function createNewAreaServicio(_x13, _x14) {
     return _ref9.apply(this, arguments);
