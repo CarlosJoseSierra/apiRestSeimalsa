@@ -400,6 +400,7 @@ export const getAreaByPlaca = async (req, res) => {
       const result = await pool.request()
       .input('SC_nombre', sql.VarChar, subcliente)
       .input('SC_establecimiento', sql.VarChar, req.body.Establecimiento)
+      .input('SC_codUniversal', sql.VarChar, req.body.CodigoS)
       .input('SC_direccion', sql.VarChar, req.body.Direccion)
       .input('SC_telefono', sql.VarChar, req.body.Telefono)
       .input('SC_USU_ing', sql.Decimal, req.body.USU_id)
@@ -758,7 +759,19 @@ export const getAreaByPlaca = async (req, res) => {
       res.status(500);
     }
   }
-  
+  export const getEntregadosAJE = async(req, res) =>{
+    try {
+      const pool = await getConnection();
+      const result = await pool
+      
+        .request()
+        .query(querys.getEntregaGeneralAJE);
+        return res.json(result.recordset);
+    } catch (error) {
+      res.status(500);
+    }
+  }
+
   export const getEntregadosElRosado = async(req, res) =>{
     try {
       const pool = await getConnection();

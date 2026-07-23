@@ -22,6 +22,7 @@ import {
     obtenerPDFReparacion,
     obtenerMapaEquipos,
     obtenerDashboardTecnico,
+    getEntregadosAJE,
 } from "../controllers/areaservicio.controller";
 
 const router = Router();
@@ -50,6 +51,7 @@ router.get("/areaservicio/T", getEntregadosTesalia);
 router.get("/areaservicio/U", getEntregadosUnilever);
 router.get("/areaservicio/R", getEntregadosElRosado);
 router.get("/areaservicio/A", getEntregadosArca);
+router.get("/areaservicio/AJE", getEntregadosAJE);
 router.get("/areaservicio/DET/:id", getDetalleCTById);
 router.put("/areaservicio/:id", storage.array('image',7), updateAreaServicio);
 router.get('/areaservicio/:id/pdf',obtenerPDFReparacion);

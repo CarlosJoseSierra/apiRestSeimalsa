@@ -64,7 +64,19 @@ export const getClienteKardexR = async (req, res) => {
   try {
     const pool = await getConnection();
     const result = await pool.request()
-      .query(querys.getClienteKardexP);
+      .query(querys.getClienteKardexR);
+    return res.json(result.recordset);
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};
+
+export const getClienteKardexAJE = async (req, res) => {
+  try {
+    const pool = await getConnection();
+    const result = await pool.request()
+      .query(querys.getClienteKardexAJE);
     return res.json(result.recordset);
   } catch (error) {
     res.status(500);

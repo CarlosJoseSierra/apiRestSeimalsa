@@ -6,6 +6,7 @@ import {
   getClienteKardexU,
   getClienteKardexT,
   getClienteKardexR,
+  getClienteKardexAJE,
 
 } from "../controllers/kardex.controller";
 
@@ -17,5 +18,6 @@ router.get("/kardexA", getClienteKardexA);
 router.get("/kardexU", getClienteKardexU);
 router.get("/kardexT", getClienteKardexT);
 router.get("/kardexR", getClienteKardexR);
+router.get("/kardexAJE", getClienteKardexAJE);
 
 export default router;
