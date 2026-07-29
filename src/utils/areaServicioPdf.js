@@ -140,13 +140,13 @@ function dibujarCabecera(doc, cabecera) {
     process.cwd(),
     'src',
     'assets',
-    'logoSeimalsa.png'
+    'logoSeimalsa4.png'
   );
 
   if (fs.existsSync(logoPath)) {
-    doc.image(logoPath, 45, 24, {
-      //fit: [85, 48],
-      fit: [85, 78],
+      doc.image(logoPath, 45, 24, {
+      //fit: [85, 78],
+      fit: [115, 108],
       align: 'left'
     });
   }
@@ -154,14 +154,14 @@ function dibujarCabecera(doc, cabecera) {
   doc
     .fillColor(COLORES.primario)
     .font('Helvetica-Bold')
-    .fontSize(18)
+    .fontSize(16)
     .text(
-      'REPORTE DE REPARACIÓN / COTIZACIÓN',
+      'REPORTE DE REPARACIÓN / ENTREGA - RETIRO',
       145,
       38,
       {
-        width: 405,
-        align: 'right'
+        width: 415,
+        align: 'center'
       }
     );
 
