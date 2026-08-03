@@ -4,16 +4,69 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateAreaServicio = exports.updateActivoByTecnico = exports.obtenerPDFReparacion = exports.obtenerMapaEquipos = exports.obtenerDashboardTecnico = exports.getReporteGeneral = exports.getReparacionesXtecnico = exports.getEntregadosUnilever = exports.getEntregadosTesalia = exports.getEntregadosPronaca = exports.getEntregadosHeineken = exports.getEntregadosElRosado = exports.getEntregadosArca = exports.getEntregadosAJE = exports.getDetalleCTById = exports.getAreaSinTecnico = exports.getAreaServicioMovimiento = exports.getAreaServicioMantenimiento = exports.getAreaByTecnico = exports.getAreaBySerie = exports.getAreaByPlaca = exports.createNewAreaServicio = void 0;
+exports.updateAreaServicio = exports.updateActivoByTecnico = exports.obtenerPDFReparacion = exports.obtenerMapaEquipos = exports.obtenerDashboardTecnico = exports.obtenerDashboardKPIPorCliente = exports.getReporteGeneral = exports.getReparacionesXtecnico = exports.getEntregadosUnilever = exports.getEntregadosTesalia = exports.getEntregadosPronaca = exports.getEntregadosHeineken = exports.getEntregadosElRosado = exports.getEntregadosArca = exports.getEntregadosAJE = exports.getDetalleCTById = exports.getAreaSinTecnico = exports.getAreaServicioMovimiento = exports.getAreaServicioMantenimiento = exports.getAreaByTecnico = exports.getAreaBySerie = exports.getAreaByPlaca = exports.createNewAreaServicio = void 0;
 var _database = require("../database");
 var _areaServicioPdf = require("../utils/areaServicioPdf.js");
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var cloudinary = require("../libs/cloudinary");
+var obtenerTextoOpcional = function obtenerTextoOpcional(valor) {
+  if (typeof valor !== 'string') {
+    return null;
+  }
+  var texto = valor.trim();
+  if (texto === '' || texto.toUpperCase() === 'TODOS') {
+    return null;
+  }
+  return texto;
+};
+var obtenerNumeroOpcional = function obtenerNumeroOpcional(valor) {
+  if (valor === null || valor === undefined || valor === '') {
+    return null;
+  }
+  var numero = Number(valor);
+  if (!Number.isFinite(numero) || numero <= 0) {
+    return null;
+  }
+  return numero;
+};
+var obtenerFechaOpcional = function obtenerFechaOpcional(valor) {
+  if (valor === null || valor === undefined || typeof valor !== 'string') {
+    return null;
+  }
+  var fecha = valor.trim();
+  if (fecha === '') {
+    return null;
+  }
+
+  /*
+   * Formato esperado:
+   * YYYY-MM-DD
+   */
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+    return null;
+  }
+
+  /*
+   * Verifica que realmente sea una fecha válida.
+   */
+  var _fecha$split$map = fecha.split('-').map(Number),
+    _fecha$split$map2 = _slicedToArray(_fecha$split$map, 3),
+    anio = _fecha$split$map2[0],
+    mes = _fecha$split$map2[1],
+    dia = _fecha$split$map2[2];
+  var fechaValidada = new Date(anio, mes - 1, dia);
+  var esValida = fechaValidada.getFullYear() === anio && fechaValidada.getMonth() === mes - 1 && fechaValidada.getDate() === dia;
+  return esValida ? fecha : null;
+};
 var getAreaBySerie = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
     var pool, result;
@@ -41,7 +94,7 @@ var getAreaBySerie = /*#__PURE__*/function () {
       }
     }, _callee, null, [[0, 10]]);
   }));
-  return function getAreaBySerie(_x, _x2) {
+  return function getAreaBySerie(_x2, _x3) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -73,7 +126,7 @@ var getAreaByPlaca = /*#__PURE__*/function () {
       }
     }, _callee2, null, [[0, 10]]);
   }));
-  return function getAreaByPlaca(_x3, _x4) {
+  return function getAreaByPlaca(_x4, _x5) {
     return _ref2.apply(this, arguments);
   };
 }();
@@ -105,7 +158,7 @@ var getAreaSinTecnico = /*#__PURE__*/function () {
       }
     }, _callee3, null, [[0, 10]]);
   }));
-  return function getAreaSinTecnico(_x5, _x6) {
+  return function getAreaSinTecnico(_x6, _x7) {
     return _ref3.apply(this, arguments);
   };
 }();
@@ -163,7 +216,7 @@ var updateActivoByTecnico = /*#__PURE__*/function () {
       }
     }, _callee4, null, [[3, 17]]);
   }));
-  return function updateActivoByTecnico(_x7, _x8) {
+  return function updateActivoByTecnico(_x8, _x9) {
     return _ref4.apply(this, arguments);
   };
 }();
@@ -195,7 +248,7 @@ var getAreaByTecnico = /*#__PURE__*/function () {
       }
     }, _callee5, null, [[0, 10]]);
   }));
-  return function getAreaByTecnico(_x9, _x10) {
+  return function getAreaByTecnico(_x10, _x11) {
     return _ref5.apply(this, arguments);
   };
 }();
@@ -334,7 +387,7 @@ var updateAreaServicio = /*#__PURE__*/function () {
       }
     }, _callee6, null, [[14, 58], [19, 31, 34, 37]]);
   }));
-  return function updateAreaServicio(_x11, _x12) {
+  return function updateAreaServicio(_x12, _x13) {
     return _ref6.apply(this, arguments);
   };
 }();
@@ -485,7 +538,7 @@ var createNewAreaServicio = /*#__PURE__*/function () {
       }
     }, _callee7, null, [[20, 64], [25, 37, 40, 43]]);
   }));
-  return function createNewAreaServicio(_x13, _x14) {
+  return function createNewAreaServicio(_x14, _x15) {
     return _ref9.apply(this, arguments);
   };
 }();
@@ -517,7 +570,7 @@ var getAreaServicioMovimiento = /*#__PURE__*/function () {
       }
     }, _callee8, null, [[0, 10]]);
   }));
-  return function getAreaServicioMovimiento(_x15, _x16) {
+  return function getAreaServicioMovimiento(_x16, _x17) {
     return _ref12.apply(this, arguments);
   };
 }();
@@ -549,7 +602,7 @@ var getAreaServicioMantenimiento = /*#__PURE__*/function () {
       }
     }, _callee9, null, [[0, 10]]);
   }));
-  return function getAreaServicioMantenimiento(_x17, _x18) {
+  return function getAreaServicioMantenimiento(_x18, _x19) {
     return _ref13.apply(this, arguments);
   };
 }();
@@ -580,7 +633,7 @@ var getReporteGeneral = /*#__PURE__*/function () {
       }
     }, _callee10, null, [[0, 10]]);
   }));
-  return function getReporteGeneral(_x19, _x20) {
+  return function getReporteGeneral(_x20, _x21) {
     return _ref14.apply(this, arguments);
   };
 }();
@@ -611,7 +664,7 @@ var getEntregadosHeineken = /*#__PURE__*/function () {
       }
     }, _callee11, null, [[0, 10]]);
   }));
-  return function getEntregadosHeineken(_x21, _x22) {
+  return function getEntregadosHeineken(_x22, _x23) {
     return _ref15.apply(this, arguments);
   };
 }();
@@ -642,7 +695,7 @@ var getEntregadosPronaca = /*#__PURE__*/function () {
       }
     }, _callee12, null, [[0, 10]]);
   }));
-  return function getEntregadosPronaca(_x23, _x24) {
+  return function getEntregadosPronaca(_x24, _x25) {
     return _ref16.apply(this, arguments);
   };
 }();
@@ -673,7 +726,7 @@ var getEntregadosTesalia = /*#__PURE__*/function () {
       }
     }, _callee13, null, [[0, 10]]);
   }));
-  return function getEntregadosTesalia(_x25, _x26) {
+  return function getEntregadosTesalia(_x26, _x27) {
     return _ref17.apply(this, arguments);
   };
 }();
@@ -704,7 +757,7 @@ var getEntregadosUnilever = /*#__PURE__*/function () {
       }
     }, _callee14, null, [[0, 10]]);
   }));
-  return function getEntregadosUnilever(_x27, _x28) {
+  return function getEntregadosUnilever(_x28, _x29) {
     return _ref18.apply(this, arguments);
   };
 }();
@@ -735,7 +788,7 @@ var getEntregadosAJE = /*#__PURE__*/function () {
       }
     }, _callee15, null, [[0, 10]]);
   }));
-  return function getEntregadosAJE(_x29, _x30) {
+  return function getEntregadosAJE(_x30, _x31) {
     return _ref19.apply(this, arguments);
   };
 }();
@@ -766,7 +819,7 @@ var getEntregadosElRosado = /*#__PURE__*/function () {
       }
     }, _callee16, null, [[0, 10]]);
   }));
-  return function getEntregadosElRosado(_x31, _x32) {
+  return function getEntregadosElRosado(_x32, _x33) {
     return _ref20.apply(this, arguments);
   };
 }();
@@ -797,7 +850,7 @@ var getEntregadosArca = /*#__PURE__*/function () {
       }
     }, _callee17, null, [[0, 10]]);
   }));
-  return function getEntregadosArca(_x33, _x34) {
+  return function getEntregadosArca(_x34, _x35) {
     return _ref21.apply(this, arguments);
   };
 }();
@@ -828,7 +881,7 @@ var getDetalleCTById = /*#__PURE__*/function () {
       }
     }, _callee18, null, [[0, 10]]);
   }));
-  return function getDetalleCTById(_x35, _x36) {
+  return function getDetalleCTById(_x36, _x37) {
     return _ref22.apply(this, arguments);
   };
 }();
@@ -882,7 +935,7 @@ var getReparacionesXtecnico = /*#__PURE__*/function () {
       }
     }, _callee19, null, [[0, 18]]);
   }));
-  return function getReparacionesXtecnico(_x37, _x38) {
+  return function getReparacionesXtecnico(_x38, _x39) {
     return _ref23.apply(this, arguments);
   };
 }();
@@ -953,7 +1006,7 @@ var obtenerPDFReparacion = /*#__PURE__*/function () {
       }
     }, _callee20, null, [[0, 18]]);
   }));
-  return function obtenerPDFReparacion(_x39, _x40) {
+  return function obtenerPDFReparacion(_x40, _x41) {
     return _ref24.apply(this, arguments);
   };
 }();
@@ -998,7 +1051,7 @@ var obtenerMapaEquipos = /*#__PURE__*/function () {
       }
     }, _callee21, null, [[0, 11]]);
   }));
-  return function obtenerMapaEquipos(_x41, _x42) {
+  return function obtenerMapaEquipos(_x42, _x43) {
     return _ref25.apply(this, arguments);
   };
 }();
@@ -1055,8 +1108,157 @@ var obtenerDashboardTecnico = /*#__PURE__*/function () {
       }
     }, _callee22, null, [[0, 13]]);
   }));
-  return function obtenerDashboardTecnico(_x43, _x44) {
+  return function obtenerDashboardTecnico(_x44, _x45) {
     return _ref26.apply(this, arguments);
   };
 }();
 exports.obtenerDashboardTecnico = obtenerDashboardTecnico;
+var obtenerDashboardKPIPorCliente = /*#__PURE__*/function () {
+  var _ref27 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee23(req, res) {
+    var _result$recordsets11, _recordsets$0$, _recordsets$, _recordsets$1$, _recordsets$2, _recordsets$3, _recordsets$4, _recordsets$5, _recordsets$6, _recordsets$7, _recordsets$8, _recordsets$9, _recordsets$10, _recordsets$11, _recordsets$12, clienteId, servicioId, fechaDesde, fechaHasta, provincia, ciudad, marca, modelo, tipoServicioId, estadoCotizacionId, estadoServicioId, estadoMovimientoId, tecnicoId, pool, result, recordsets, _ref28, _ref29, _error$originalError$4, _error$originalError10, _error$originalError11, _error$precedingError, _error$precedingError2;
+    return _regeneratorRuntime().wrap(function _callee23$(_context23) {
+      while (1) switch (_context23.prev = _context23.next) {
+        case 0:
+          _context23.prev = 0;
+          /*
+           * Único dato obligatorio.
+           * Debe corresponder al cliente autenticado.
+           */
+          clienteId = Number(req.params.clienteId);
+          if (!(!Number.isFinite(clienteId) || clienteId <= 0)) {
+            _context23.next = 4;
+            break;
+          }
+          return _context23.abrupt("return", res.status(400).json({
+            success: false,
+            status: 'error',
+            msg: 'El ID del cliente no es válido.',
+            token: 0
+          }));
+        case 4:
+          /*
+           * Filtros opcionales.
+           * Cuando no vienen o tienen valor 0/TODOS,
+           * se envía NULL al procedimiento.
+           */
+          servicioId = obtenerNumeroOpcional(req.query.servicioId);
+          fechaDesde = obtenerFechaOpcional(req.query.fechaDesde);
+          fechaHasta = obtenerFechaOpcional(req.query.fechaHasta);
+          provincia = obtenerTextoOpcional(req.query.provincia);
+          ciudad = obtenerTextoOpcional(req.query.ciudad);
+          marca = obtenerTextoOpcional(req.query.marca);
+          modelo = obtenerTextoOpcional(req.query.modelo);
+          tipoServicioId = obtenerNumeroOpcional(req.query.tipoServicioId);
+          estadoCotizacionId = obtenerNumeroOpcional(req.query.estadoCotizacionId);
+          estadoServicioId = obtenerNumeroOpcional(req.query.estadoServicioId);
+          estadoMovimientoId = obtenerNumeroOpcional(req.query.estadoMovimientoId);
+          tecnicoId = obtenerNumeroOpcional(req.query.tecnicoId);
+          /*
+           * Validar fechas solamente cuando ambas
+           * fueron recibidas.
+           */
+          if (!(fechaDesde && fechaHasta && fechaDesde > fechaHasta)) {
+            _context23.next = 18;
+            break;
+          }
+          return _context23.abrupt("return", res.status(400).json({
+            success: false,
+            status: 'error',
+            msg: 'La fecha inicial no puede ser mayor que la fecha final.',
+            token: 0
+          }));
+        case 18:
+          _context23.next = 20;
+          return (0, _database.getConnection)();
+        case 20:
+          pool = _context23.sent;
+          _context23.next = 23;
+          return pool.request().input('ClienteId', _database.sql.Decimal(18, 0), clienteId).input('ServicioId', _database.sql.Decimal(18, 0), servicioId).input('FechaDesde', _database.sql.Date, fechaDesde).input('FechaHasta', _database.sql.Date, fechaHasta).input('Provincia', _database.sql.VarChar(150), provincia).input('Ciudad', _database.sql.VarChar(150), ciudad).input('Marca', _database.sql.VarChar(150), marca).input('Modelo', _database.sql.VarChar(150), modelo).input('TipoServicioId', _database.sql.Decimal(18, 0), tipoServicioId).input('EstadoCotizacionId', _database.sql.Decimal(18, 0), estadoCotizacionId).input('EstadoServicioId', _database.sql.Decimal(18, 0), estadoServicioId).input('EstadoMovimientoId', _database.sql.Decimal(18, 0), estadoMovimientoId).input('TecnicoId', _database.sql.Decimal(18, 0), tecnicoId).execute('dbo.sp_DashboardEquiposFrio');
+        case 23:
+          result = _context23.sent;
+          recordsets = (_result$recordsets11 = result.recordsets) !== null && _result$recordsets11 !== void 0 ? _result$recordsets11 : [];
+          return _context23.abrupt("return", res.status(200).json({
+            success: true,
+            status: 'ok',
+            msg: 'Dashboard consultado correctamente.',
+            token: 0,
+            /*
+             * Recordset 1
+             */
+            contexto: (_recordsets$0$ = (_recordsets$ = recordsets[0]) === null || _recordsets$ === void 0 ? void 0 : _recordsets$[0]) !== null && _recordsets$0$ !== void 0 ? _recordsets$0$ : {},
+            /*
+             * Recordset 2
+             */
+            indicadores: (_recordsets$1$ = (_recordsets$2 = recordsets[1]) === null || _recordsets$2 === void 0 ? void 0 : _recordsets$2[0]) !== null && _recordsets$1$ !== void 0 ? _recordsets$1$ : {
+              TotalOrdenes: 0,
+              EquiposUnicos: 0,
+              CorrectivosMenores: 0,
+              CorrectivosMayores: 0,
+              MantenimientosPreventivos: 0,
+              VisitasFallidas: 0,
+              SubtotalGeneral: 0,
+              IvaGeneral: 0,
+              TotalGeneral: 0
+            },
+            /*
+             * Recordset 3
+             */
+            ordenesPorServicio: (_recordsets$3 = recordsets[2]) !== null && _recordsets$3 !== void 0 ? _recordsets$3 : [],
+            /*
+             * Recordset 4
+             */
+            ordenesPorMes: (_recordsets$4 = recordsets[3]) !== null && _recordsets$4 !== void 0 ? _recordsets$4 : [],
+            /*
+             * Recordset 5
+             */
+            ordenesPorCiudad: (_recordsets$5 = recordsets[4]) !== null && _recordsets$5 !== void 0 ? _recordsets$5 : [],
+            /*
+             * Recordset 6
+             */
+            ordenesPorProvincia: (_recordsets$6 = recordsets[5]) !== null && _recordsets$6 !== void 0 ? _recordsets$6 : [],
+            /*
+             * Recordset 7
+             */
+            ordenesPorMarca: (_recordsets$7 = recordsets[6]) !== null && _recordsets$7 !== void 0 ? _recordsets$7 : [],
+            /*
+             * Recordset 8
+             */
+            ordenesPorModelo: (_recordsets$8 = recordsets[7]) !== null && _recordsets$8 !== void 0 ? _recordsets$8 : [],
+            /*
+             * Recordset 9
+             */
+            tiposServicio: (_recordsets$9 = recordsets[8]) !== null && _recordsets$9 !== void 0 ? _recordsets$9 : [],
+            /*
+             * Recordset 10
+             */
+            estados: (_recordsets$10 = recordsets[9]) !== null && _recordsets$10 !== void 0 ? _recordsets$10 : [],
+            /*
+             * Recordset 11
+             */
+            areasTrabajo: (_recordsets$11 = recordsets[10]) !== null && _recordsets$11 !== void 0 ? _recordsets$11 : [],
+            /*
+             * Recordset 12
+             */
+            detalle: (_recordsets$12 = recordsets[11]) !== null && _recordsets$12 !== void 0 ? _recordsets$12 : []
+          }));
+        case 28:
+          _context23.prev = 28;
+          _context23.t0 = _context23["catch"](0);
+          console.error('Error consultando Dashboard KPI:', _context23.t0);
+          return _context23.abrupt("return", res.status(500).json({
+            success: false,
+            status: 'error',
+            msg: (_ref28 = (_ref29 = (_error$originalError$4 = _context23.t0 === null || _context23.t0 === void 0 ? void 0 : (_error$originalError10 = _context23.t0.originalError) === null || _error$originalError10 === void 0 ? void 0 : (_error$originalError11 = _error$originalError10.info) === null || _error$originalError11 === void 0 ? void 0 : _error$originalError11.message) !== null && _error$originalError$4 !== void 0 ? _error$originalError$4 : _context23.t0 === null || _context23.t0 === void 0 ? void 0 : (_error$precedingError = _context23.t0.precedingErrors) === null || _error$precedingError === void 0 ? void 0 : (_error$precedingError2 = _error$precedingError[0]) === null || _error$precedingError2 === void 0 ? void 0 : _error$precedingError2.message) !== null && _ref29 !== void 0 ? _ref29 : _context23.t0 === null || _context23.t0 === void 0 ? void 0 : _context23.t0.message) !== null && _ref28 !== void 0 ? _ref28 : 'No se pudo consultar el Dashboard.',
+            token: 0
+          }));
+        case 32:
+        case "end":
+          return _context23.stop();
+      }
+    }, _callee23, null, [[0, 28]]);
+  }));
+  return function obtenerDashboardKPIPorCliente(_x46, _x47) {
+    return _ref27.apply(this, arguments);
+  };
+}();
+exports.obtenerDashboardKPIPorCliente = obtenerDashboardKPIPorCliente;

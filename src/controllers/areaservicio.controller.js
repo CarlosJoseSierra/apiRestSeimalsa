@@ -2,6 +2,85 @@ import { getConnection, querys, sql } from "../database";
 const cloudinary = require("../libs/cloudinary");
 import { generarAreaServicioPDF } from '../utils/areaServicioPdf.js';
 
+const obtenerTextoOpcional = (valor) => {
+  if (typeof valor !== 'string') {
+    return null;
+  }
+
+  const texto = valor.trim();
+
+  if (
+    texto === '' ||
+    texto.toUpperCase() === 'TODOS'
+  ) {
+    return null;
+  }
+
+  return texto;
+};
+
+
+const obtenerNumeroOpcional = (valor) => {
+  if (
+    valor === null ||
+    valor === undefined ||
+    valor === ''
+  ) {
+    return null;
+  }
+
+  const numero = Number(valor);
+
+  if (
+    !Number.isFinite(numero) ||
+    numero <= 0
+  ) {
+    return null;
+  }
+
+  return numero;
+};
+
+
+const obtenerFechaOpcional = (valor) => {
+  if (
+    valor === null ||
+    valor === undefined ||
+    typeof valor !== 'string'
+  ) {
+    return null;
+  }
+
+  const fecha = valor.trim();
+
+  if (fecha === '') {
+    return null;
+  }
+
+  /*
+   * Formato esperado:
+   * YYYY-MM-DD
+   */
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+    return null;
+  }
+
+  /*
+   * Verifica que realmente sea una fecha válida.
+   */
+  const [anio, mes, dia] =
+    fecha.split('-').map(Number);
+
+  const fechaValidada =
+    new Date(anio, mes - 1, dia);
+
+  const esValida =
+    fechaValidada.getFullYear() === anio &&
+    fechaValidada.getMonth() === mes - 1 &&
+    fechaValidada.getDate() === dia;
+
+  return esValida ? fecha : null;
+};
 export const getAreaBySerie = async (req, res) => {
   try {
     const pool = await getConnection();
@@ -1034,6 +1113,322 @@ export const obtenerDashboardTecnico =
         error?.originalError?.info?.message ||
         error?.message ||
         'No se pudo obtener el dashboard.'
+    });
+  }
+};
+
+export const obtenerDashboardKPIPorCliente = async (
+  req,
+  res
+) => {
+  try {
+    /*
+     * Único dato obligatorio.
+     * Debe corresponder al cliente autenticado.
+     */
+    const clienteId =
+      Number(req.params.clienteId);
+
+    if (
+      !Number.isFinite(clienteId) ||
+      clienteId <= 0
+    ) {
+      return res.status(400).json({
+        success: false,
+        status: 'error',
+        msg:
+          'El ID del cliente no es válido.',
+        token: 0
+      });
+    }
+
+    /*
+     * Filtros opcionales.
+     * Cuando no vienen o tienen valor 0/TODOS,
+     * se envía NULL al procedimiento.
+     */
+    const servicioId =
+      obtenerNumeroOpcional(
+        req.query.servicioId
+      );
+
+    const fechaDesde =
+      obtenerFechaOpcional(
+        req.query.fechaDesde
+      );
+
+    const fechaHasta =
+      obtenerFechaOpcional(
+        req.query.fechaHasta
+      );
+
+    const provincia =
+      obtenerTextoOpcional(
+        req.query.provincia
+      );
+
+    const ciudad =
+      obtenerTextoOpcional(
+        req.query.ciudad
+      );
+
+    const marca =
+      obtenerTextoOpcional(
+        req.query.marca
+      );
+
+    const modelo =
+      obtenerTextoOpcional(
+        req.query.modelo
+      );
+
+    const tipoServicioId =
+      obtenerNumeroOpcional(
+        req.query.tipoServicioId
+      );
+
+    const estadoCotizacionId =
+      obtenerNumeroOpcional(
+        req.query.estadoCotizacionId
+      );
+
+    const estadoServicioId =
+      obtenerNumeroOpcional(
+        req.query.estadoServicioId
+      );
+
+    const estadoMovimientoId =
+      obtenerNumeroOpcional(
+        req.query.estadoMovimientoId
+      );
+
+    const tecnicoId =
+      obtenerNumeroOpcional(
+        req.query.tecnicoId
+      );
+
+
+    /*
+     * Validar fechas solamente cuando ambas
+     * fueron recibidas.
+     */
+    if (
+      fechaDesde &&
+      fechaHasta &&
+      fechaDesde > fechaHasta
+    ) {
+      return res.status(400).json({
+        success: false,
+        status: 'error',
+        msg:
+          'La fecha inicial no puede ser mayor que la fecha final.',
+        token: 0
+      });
+    }
+
+
+    const pool =
+      await getConnection();
+
+    const result = await pool
+      .request()
+
+      .input(
+        'ClienteId',
+        sql.Decimal(18, 0),
+        clienteId
+      )
+
+      .input(
+        'ServicioId',
+        sql.Decimal(18, 0),
+        servicioId
+      )
+
+      .input(
+        'FechaDesde',
+        sql.Date,
+        fechaDesde
+      )
+
+      .input(
+        'FechaHasta',
+        sql.Date,
+        fechaHasta
+      )
+
+      .input(
+        'Provincia',
+        sql.VarChar(150),
+        provincia
+      )
+
+      .input(
+        'Ciudad',
+        sql.VarChar(150),
+        ciudad
+      )
+
+      .input(
+        'Marca',
+        sql.VarChar(150),
+        marca
+      )
+
+      .input(
+        'Modelo',
+        sql.VarChar(150),
+        modelo
+      )
+
+      .input(
+        'TipoServicioId',
+        sql.Decimal(18, 0),
+        tipoServicioId
+      )
+
+      .input(
+        'EstadoCotizacionId',
+        sql.Decimal(18, 0),
+        estadoCotizacionId
+      )
+
+      .input(
+        'EstadoServicioId',
+        sql.Decimal(18, 0),
+        estadoServicioId
+      )
+
+      .input(
+        'EstadoMovimientoId',
+        sql.Decimal(18, 0),
+        estadoMovimientoId
+      )
+
+      .input(
+        'TecnicoId',
+        sql.Decimal(18, 0),
+        tecnicoId
+      )
+
+      .execute(
+        'dbo.sp_DashboardEquiposFrio'
+      );
+
+
+    const recordsets =
+      result.recordsets ?? [];
+
+    return res.status(200).json({
+      success: true,
+      status: 'ok',
+      msg:
+        'Dashboard consultado correctamente.',
+      token: 0,
+
+      /*
+       * Recordset 1
+       */
+      contexto:
+        recordsets[0]?.[0] ?? {},
+
+      /*
+       * Recordset 2
+       */
+      indicadores:
+        recordsets[1]?.[0] ?? {
+          TotalOrdenes: 0,
+          EquiposUnicos: 0,
+          CorrectivosMenores: 0,
+          CorrectivosMayores: 0,
+          MantenimientosPreventivos: 0,
+          VisitasFallidas: 0,
+          SubtotalGeneral: 0,
+          IvaGeneral: 0,
+          TotalGeneral: 0
+        },
+
+      /*
+       * Recordset 3
+       */
+      ordenesPorServicio:
+        recordsets[2] ?? [],
+
+      /*
+       * Recordset 4
+       */
+      ordenesPorMes:
+        recordsets[3] ?? [],
+
+      /*
+       * Recordset 5
+       */
+      ordenesPorCiudad:
+        recordsets[4] ?? [],
+
+      /*
+       * Recordset 6
+       */
+      ordenesPorProvincia:
+        recordsets[5] ?? [],
+
+      /*
+       * Recordset 7
+       */
+      ordenesPorMarca:
+        recordsets[6] ?? [],
+
+      /*
+       * Recordset 8
+       */
+      ordenesPorModelo:
+        recordsets[7] ?? [],
+
+      /*
+       * Recordset 9
+       */
+      tiposServicio:
+        recordsets[8] ?? [],
+
+      /*
+       * Recordset 10
+       */
+      estados:
+        recordsets[9] ?? [],
+
+      /*
+       * Recordset 11
+       */
+      areasTrabajo:
+        recordsets[10] ?? [],
+
+      /*
+       * Recordset 12
+       */
+      detalle:
+        recordsets[11] ?? []
+    });
+
+  } catch (error) {
+    console.error(
+      'Error consultando Dashboard KPI:',
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      status: 'error',
+
+      msg:
+        error?.originalError
+          ?.info
+          ?.message ??
+        error?.precedingErrors?.[0]
+          ?.message ??
+        error?.message ??
+        'No se pudo consultar el Dashboard.',
+
+      token: 0
     });
   }
 };

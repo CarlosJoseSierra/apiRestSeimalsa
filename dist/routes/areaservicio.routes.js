@@ -35,5 +35,6 @@ router.put("/areaservicio/:id", storage.array('image', 7), _areaservicio.updateA
 router.get('/areaservicio/:id/pdf', _areaservicio.obtenerPDFReparacion);
 router.get('/areaservicio/mapa/equipos', _areaservicio.obtenerMapaEquipos);
 router.get('/areaservicio/dashboard/:usuarioId', _areaservicio.obtenerDashboardTecnico);
+router.get('/areaservicio/dash/:clienteId', _areaservicio.obtenerDashboardKPIPorCliente);
 var _default = router;
 exports["default"] = _default;

@@ -23,6 +23,7 @@ import {
     obtenerMapaEquipos,
     obtenerDashboardTecnico,
     getEntregadosAJE,
+    obtenerDashboardKPIPorCliente
 } from "../controllers/areaservicio.controller";
 
 const router = Router();
@@ -57,4 +58,5 @@ router.put("/areaservicio/:id", storage.array('image',7), updateAreaServicio);
 router.get('/areaservicio/:id/pdf',obtenerPDFReparacion);
 router.get('/areaservicio/mapa/equipos',obtenerMapaEquipos);
 router.get('/areaservicio/dashboard/:usuarioId',obtenerDashboardTecnico);
+router.get('/areaservicio/dash/:clienteId',obtenerDashboardKPIPorCliente);
 export default router;
