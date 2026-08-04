@@ -4,7 +4,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateAreaServicio = exports.updateActivoByTecnico = exports.obtenerPDFReparacion = exports.obtenerMapaEquipos = exports.obtenerDashboardTecnico = exports.obtenerDashboardKPIPorCliente = exports.getReporteGeneral = exports.getReparacionesXtecnico = exports.getEntregadosUnilever = exports.getEntregadosTesalia = exports.getEntregadosPronaca = exports.getEntregadosHeineken = exports.getEntregadosElRosado = exports.getEntregadosArca = exports.getEntregadosAJE = exports.getDetalleCTById = exports.getAreaSinTecnico = exports.getAreaServicioMovimiento = exports.getAreaServicioMantenimiento = exports.getAreaByTecnico = exports.getAreaBySerie = exports.getAreaByPlaca = exports.createNewAreaServicio = void 0;
+exports.updateAreaServicio = exports.updateActivoByTecnico = exports.obtenerPDFReparacion = exports.obtenerMapaEquiposAdmin = exports.obtenerMapaEquipos = exports.obtenerDashboardTecnico = exports.obtenerDashboardKPIPorCliente = exports.getReporteGeneral = exports.getReparacionesXtecnico = exports.getEntregadosUnilever = exports.getEntregadosTesalia = exports.getEntregadosPronaca = exports.getEntregadosHeineken = exports.getEntregadosElRosado = exports.getEntregadosArca = exports.getEntregadosAJE = exports.getDetalleCTById = exports.getAreaSinTecnico = exports.getAreaServicioMovimiento = exports.getAreaServicioMantenimiento = exports.getAreaByTecnico = exports.getAreaBySerie = exports.getAreaByPlaca = exports.createNewAreaServicio = void 0;
 var _database = require("../database");
 var _areaServicioPdf = require("../utils/areaServicioPdf.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
@@ -1018,8 +1018,8 @@ var obtenerMapaEquipos = /*#__PURE__*/function () {
       while (1) switch (_context21.prev = _context21.next) {
         case 0:
           _context21.prev = 0;
-          clienteId = req.query.clienteId ? Number(req.query.clienteId) : null;
-          clienteId2 = req.query.clienteId2 ? Number(req.query.clienteId2) : 0;
+          clienteId = req.params.clienteId ? Number(req.params.clienteId) : null;
+          clienteId2 = req.params.clienteId2 ? Number(req.params.clienteId2) : 0;
           _context21.next = 5;
           return (0, _database.getConnection)();
         case 5:
@@ -1052,32 +1052,71 @@ var obtenerMapaEquipos = /*#__PURE__*/function () {
   };
 }();
 exports.obtenerMapaEquipos = obtenerMapaEquipos;
-var obtenerDashboardTecnico = /*#__PURE__*/function () {
+var obtenerMapaEquiposAdmin = /*#__PURE__*/function () {
   var _ref26 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee22(req, res) {
-    var _result$recordsets3, _result$recordsets3$, _result$recordsets4, _result$recordsets5, _result$recordsets6, _result$recordsets7, _result$recordsets8, _result$recordsets9, _result$recordsets10, _result$recordsets10$, usuarioId, pool, result, _error$originalError8, _error$originalError9;
+    var pool, result, _error$originalError8, _error$originalError9;
     return _regeneratorRuntime().wrap(function _callee22$(_context22) {
       while (1) switch (_context22.prev = _context22.next) {
         case 0:
           _context22.prev = 0;
+          _context22.next = 3;
+          return (0, _database.getConnection)();
+        case 3:
+          pool = _context22.sent;
+          _context22.next = 6;
+          return pool.request().execute('dbo.sp_AreaServicio_ObtenerMapaEquiposAdmin');
+        case 6:
+          result = _context22.sent;
+          return _context22.abrupt("return", res.status(200).json({
+            status: 'ok',
+            msg: result.recordset.length,
+            token: result.recordset
+          }));
+        case 10:
+          _context22.prev = 10;
+          _context22.t0 = _context22["catch"](0);
+          console.error('Error consultando mapa:', _context22.t0);
+          return _context22.abrupt("return", res.status(500).json({
+            status: 'error',
+            msg: (_context22.t0 === null || _context22.t0 === void 0 ? void 0 : (_error$originalError8 = _context22.t0.originalError) === null || _error$originalError8 === void 0 ? void 0 : (_error$originalError9 = _error$originalError8.info) === null || _error$originalError9 === void 0 ? void 0 : _error$originalError9.message) || (_context22.t0 === null || _context22.t0 === void 0 ? void 0 : _context22.t0.message) || 'No se pudieron obtener las ubicaciones.'
+          }));
+        case 14:
+        case "end":
+          return _context22.stop();
+      }
+    }, _callee22, null, [[0, 10]]);
+  }));
+  return function obtenerMapaEquiposAdmin(_x44, _x45) {
+    return _ref26.apply(this, arguments);
+  };
+}();
+exports.obtenerMapaEquiposAdmin = obtenerMapaEquiposAdmin;
+var obtenerDashboardTecnico = /*#__PURE__*/function () {
+  var _ref27 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee23(req, res) {
+    var _result$recordsets3, _result$recordsets3$, _result$recordsets4, _result$recordsets5, _result$recordsets6, _result$recordsets7, _result$recordsets8, _result$recordsets9, _result$recordsets10, _result$recordsets10$, usuarioId, pool, result, _error$originalError10, _error$originalError11;
+    return _regeneratorRuntime().wrap(function _callee23$(_context23) {
+      while (1) switch (_context23.prev = _context23.next) {
+        case 0:
+          _context23.prev = 0;
           usuarioId = Number(req.params.usuarioId);
           if (!(!Number.isFinite(usuarioId) || usuarioId <= 0)) {
-            _context22.next = 4;
+            _context23.next = 4;
             break;
           }
-          return _context22.abrupt("return", res.status(400).json({
+          return _context23.abrupt("return", res.status(400).json({
             status: 'error',
             msg: 'El usuario no es válido.'
           }));
         case 4:
-          _context22.next = 6;
+          _context23.next = 6;
           return (0, _database.getConnection)();
         case 6:
-          pool = _context22.sent;
-          _context22.next = 9;
+          pool = _context23.sent;
+          _context23.next = 9;
           return pool.request().input('USU_id', _database.sql.Decimal(18, 0), usuarioId).execute('dbo.sp_DashboardTecnico');
         case 9:
-          result = _context22.sent;
-          return _context22.abrupt("return", res.status(200).json({
+          result = _context23.sent;
+          return _context23.abrupt("return", res.status(200).json({
             status: 'ok',
             data: {
               resumen: ((_result$recordsets3 = result.recordsets) === null || _result$recordsets3 === void 0 ? void 0 : (_result$recordsets3$ = _result$recordsets3[0]) === null || _result$recordsets3$ === void 0 ? void 0 : _result$recordsets3$[0]) || {},
@@ -1091,41 +1130,41 @@ var obtenerDashboardTecnico = /*#__PURE__*/function () {
             }
           }));
         case 13:
-          _context22.prev = 13;
-          _context22.t0 = _context22["catch"](0);
-          console.error('Error consultando dashboard:', _context22.t0);
-          return _context22.abrupt("return", res.status(500).json({
+          _context23.prev = 13;
+          _context23.t0 = _context23["catch"](0);
+          console.error('Error consultando dashboard:', _context23.t0);
+          return _context23.abrupt("return", res.status(500).json({
             status: 'error',
-            msg: (_context22.t0 === null || _context22.t0 === void 0 ? void 0 : (_error$originalError8 = _context22.t0.originalError) === null || _error$originalError8 === void 0 ? void 0 : (_error$originalError9 = _error$originalError8.info) === null || _error$originalError9 === void 0 ? void 0 : _error$originalError9.message) || (_context22.t0 === null || _context22.t0 === void 0 ? void 0 : _context22.t0.message) || 'No se pudo obtener el dashboard.'
+            msg: (_context23.t0 === null || _context23.t0 === void 0 ? void 0 : (_error$originalError10 = _context23.t0.originalError) === null || _error$originalError10 === void 0 ? void 0 : (_error$originalError11 = _error$originalError10.info) === null || _error$originalError11 === void 0 ? void 0 : _error$originalError11.message) || (_context23.t0 === null || _context23.t0 === void 0 ? void 0 : _context23.t0.message) || 'No se pudo obtener el dashboard.'
           }));
         case 17:
         case "end":
-          return _context22.stop();
+          return _context23.stop();
       }
-    }, _callee22, null, [[0, 13]]);
+    }, _callee23, null, [[0, 13]]);
   }));
-  return function obtenerDashboardTecnico(_x44, _x45) {
-    return _ref26.apply(this, arguments);
+  return function obtenerDashboardTecnico(_x46, _x47) {
+    return _ref27.apply(this, arguments);
   };
 }();
 exports.obtenerDashboardTecnico = obtenerDashboardTecnico;
 var obtenerDashboardKPIPorCliente = /*#__PURE__*/function () {
-  var _ref27 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee23(req, res) {
-    var _result$recordsets11, _recordsets$0$, _recordsets$, _recordsets$1$, _recordsets$2, _recordsets$3, _recordsets$4, _recordsets$5, _recordsets$6, _recordsets$7, _recordsets$8, _recordsets$9, _recordsets$10, _recordsets$11, _recordsets$12, clienteId, servicioId, fechaDesde, fechaHasta, provincia, ciudad, marca, modelo, tipoServicioId, estadoCotizacionId, estadoServicioId, estadoMovimientoId, tecnicoId, pool, result, recordsets, _ref28, _ref29, _error$originalError$4, _error$originalError10, _error$originalError11, _error$precedingError, _error$precedingError2;
-    return _regeneratorRuntime().wrap(function _callee23$(_context23) {
-      while (1) switch (_context23.prev = _context23.next) {
+  var _ref28 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee24(req, res) {
+    var _result$recordsets11, _recordsets$0$, _recordsets$, _recordsets$1$, _recordsets$2, _recordsets$3, _recordsets$4, _recordsets$5, _recordsets$6, _recordsets$7, _recordsets$8, _recordsets$9, _recordsets$10, _recordsets$11, _recordsets$12, clienteId, servicioId, fechaDesde, fechaHasta, provincia, ciudad, marca, modelo, tipoServicioId, estadoCotizacionId, estadoServicioId, estadoMovimientoId, tecnicoId, pool, result, recordsets, _ref29, _ref30, _error$originalError$4, _error$originalError12, _error$originalError13, _error$precedingError, _error$precedingError2;
+    return _regeneratorRuntime().wrap(function _callee24$(_context24) {
+      while (1) switch (_context24.prev = _context24.next) {
         case 0:
-          _context23.prev = 0;
+          _context24.prev = 0;
           /*
            * Único dato obligatorio.
            * Debe corresponder al cliente autenticado.
            */
           clienteId = Number(req.params.clienteId);
           if (!(!Number.isFinite(clienteId) || clienteId <= 0)) {
-            _context23.next = 4;
+            _context24.next = 4;
             break;
           }
-          return _context23.abrupt("return", res.status(400).json({
+          return _context24.abrupt("return", res.status(400).json({
             success: false,
             status: 'error',
             msg: 'El ID del cliente no es válido.',
@@ -1154,26 +1193,26 @@ var obtenerDashboardKPIPorCliente = /*#__PURE__*/function () {
            * fueron recibidas.
            */
           if (!(fechaDesde && fechaHasta && fechaDesde > fechaHasta)) {
-            _context23.next = 18;
+            _context24.next = 18;
             break;
           }
-          return _context23.abrupt("return", res.status(400).json({
+          return _context24.abrupt("return", res.status(400).json({
             success: false,
             status: 'error',
             msg: 'La fecha inicial no puede ser mayor que la fecha final.',
             token: 0
           }));
         case 18:
-          _context23.next = 20;
+          _context24.next = 20;
           return (0, _database.getConnection)();
         case 20:
-          pool = _context23.sent;
-          _context23.next = 23;
+          pool = _context24.sent;
+          _context24.next = 23;
           return pool.request().input('ClienteId', _database.sql.Decimal(18, 0), clienteId).input('ServicioId', _database.sql.Decimal(18, 0), servicioId).input('FechaDesde', _database.sql.Date, fechaDesde).input('FechaHasta', _database.sql.Date, fechaHasta).input('Provincia', _database.sql.VarChar(150), provincia).input('Ciudad', _database.sql.VarChar(150), ciudad).input('Marca', _database.sql.VarChar(150), marca).input('Modelo', _database.sql.VarChar(150), modelo).input('TipoServicioId', _database.sql.Decimal(18, 0), tipoServicioId).input('EstadoCotizacionId', _database.sql.Decimal(18, 0), estadoCotizacionId).input('EstadoServicioId', _database.sql.Decimal(18, 0), estadoServicioId).input('EstadoMovimientoId', _database.sql.Decimal(18, 0), estadoMovimientoId).input('TecnicoId', _database.sql.Decimal(18, 0), tecnicoId).execute('dbo.sp_DashboardEquiposFrio');
         case 23:
-          result = _context23.sent;
+          result = _context24.sent;
           recordsets = (_result$recordsets11 = result.recordsets) !== null && _result$recordsets11 !== void 0 ? _result$recordsets11 : [];
-          return _context23.abrupt("return", res.status(200).json({
+          return _context24.abrupt("return", res.status(200).json({
             success: true,
             status: 'ok',
             msg: 'Dashboard consultado correctamente.',
@@ -1238,23 +1277,23 @@ var obtenerDashboardKPIPorCliente = /*#__PURE__*/function () {
             detalle: (_recordsets$12 = recordsets[11]) !== null && _recordsets$12 !== void 0 ? _recordsets$12 : []
           }));
         case 28:
-          _context23.prev = 28;
-          _context23.t0 = _context23["catch"](0);
-          console.error('Error consultando Dashboard KPI:', _context23.t0);
-          return _context23.abrupt("return", res.status(500).json({
+          _context24.prev = 28;
+          _context24.t0 = _context24["catch"](0);
+          console.error('Error consultando Dashboard KPI:', _context24.t0);
+          return _context24.abrupt("return", res.status(500).json({
             success: false,
             status: 'error',
-            msg: (_ref28 = (_ref29 = (_error$originalError$4 = _context23.t0 === null || _context23.t0 === void 0 ? void 0 : (_error$originalError10 = _context23.t0.originalError) === null || _error$originalError10 === void 0 ? void 0 : (_error$originalError11 = _error$originalError10.info) === null || _error$originalError11 === void 0 ? void 0 : _error$originalError11.message) !== null && _error$originalError$4 !== void 0 ? _error$originalError$4 : _context23.t0 === null || _context23.t0 === void 0 ? void 0 : (_error$precedingError = _context23.t0.precedingErrors) === null || _error$precedingError === void 0 ? void 0 : (_error$precedingError2 = _error$precedingError[0]) === null || _error$precedingError2 === void 0 ? void 0 : _error$precedingError2.message) !== null && _ref29 !== void 0 ? _ref29 : _context23.t0 === null || _context23.t0 === void 0 ? void 0 : _context23.t0.message) !== null && _ref28 !== void 0 ? _ref28 : 'No se pudo consultar el Dashboard.',
+            msg: (_ref29 = (_ref30 = (_error$originalError$4 = _context24.t0 === null || _context24.t0 === void 0 ? void 0 : (_error$originalError12 = _context24.t0.originalError) === null || _error$originalError12 === void 0 ? void 0 : (_error$originalError13 = _error$originalError12.info) === null || _error$originalError13 === void 0 ? void 0 : _error$originalError13.message) !== null && _error$originalError$4 !== void 0 ? _error$originalError$4 : _context24.t0 === null || _context24.t0 === void 0 ? void 0 : (_error$precedingError = _context24.t0.precedingErrors) === null || _error$precedingError === void 0 ? void 0 : (_error$precedingError2 = _error$precedingError[0]) === null || _error$precedingError2 === void 0 ? void 0 : _error$precedingError2.message) !== null && _ref30 !== void 0 ? _ref30 : _context24.t0 === null || _context24.t0 === void 0 ? void 0 : _context24.t0.message) !== null && _ref29 !== void 0 ? _ref29 : 'No se pudo consultar el Dashboard.',
             token: 0
           }));
         case 32:
         case "end":
-          return _context23.stop();
+          return _context24.stop();
       }
-    }, _callee23, null, [[0, 28]]);
+    }, _callee24, null, [[0, 28]]);
   }));
-  return function obtenerDashboardKPIPorCliente(_x46, _x47) {
-    return _ref27.apply(this, arguments);
+  return function obtenerDashboardKPIPorCliente(_x48, _x49) {
+    return _ref28.apply(this, arguments);
   };
 }();
 exports.obtenerDashboardKPIPorCliente = obtenerDashboardKPIPorCliente;

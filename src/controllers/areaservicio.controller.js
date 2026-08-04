@@ -1001,11 +1001,11 @@ export const obtenerMapaEquipos =
 
   try {
     const clienteId =
-      req.query.clienteId
-        ? Number(req.query.clienteId)
+      req.params.clienteId
+        ? Number(req.params.clienteId)
         : null;
-    const clienteId2 = req.query.clienteId2
-        ? Number(req.query.clienteId2)
+    const clienteId2 = req.params.clienteId2
+        ? Number(req.params.clienteId2)
         : 0;
     const pool = await getConnection();
 
@@ -1022,6 +1022,41 @@ export const obtenerMapaEquipos =
       )
       .execute(
         'dbo.sp_AreaServicio_ObtenerMapaEquipos'
+      );
+
+    return res.status(200).json({
+      status: 'ok',
+      msg: result.recordset.length,
+      token: result.recordset
+    });
+
+  } catch (error) {
+    console.error(
+      'Error consultando mapa:',
+      error
+    );
+
+    return res.status(500).json({
+      status: 'error',
+      msg:
+        error?.originalError?.info?.message ||
+        error?.message ||
+        'No se pudieron obtener las ubicaciones.'
+    });
+  }
+};
+
+export const obtenerMapaEquiposAdmin =
+  async (req, res) => {
+
+  try {
+   
+    const pool = await getConnection();
+
+    const result = await pool
+      .request()
+      .execute(
+        'dbo.sp_AreaServicio_ObtenerMapaEquiposAdmin'
       );
 
     return res.status(200).json({
