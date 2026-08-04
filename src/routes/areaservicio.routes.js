@@ -56,7 +56,7 @@ router.get("/areaservicio/AJE", getEntregadosAJE);
 router.get("/areaservicio/DET/:id", getDetalleCTById);
 router.put("/areaservicio/:id", storage.array('image',7), updateAreaServicio);
 router.get('/areaservicio/:id/pdf',obtenerPDFReparacion);
-router.get('/areaservicio/mapa/equipos',obtenerMapaEquipos);
+router.get('/areaservicio/mapa/equipos/:clienteId/:clienteId2',obtenerMapaEquipos);
 router.get('/areaservicio/dashboard/:usuarioId',obtenerDashboardTecnico);
 router.get('/areaservicio/dash/:clienteId',obtenerDashboardKPIPorCliente);
 export default router;

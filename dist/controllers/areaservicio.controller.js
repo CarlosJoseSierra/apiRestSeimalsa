@@ -1013,43 +1013,39 @@ var obtenerPDFReparacion = /*#__PURE__*/function () {
 exports.obtenerPDFReparacion = obtenerPDFReparacion;
 var obtenerMapaEquipos = /*#__PURE__*/function () {
   var _ref25 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee21(req, res) {
-    var clienteId, pool, result, _error$originalError6, _error$originalError7;
+    var clienteId, clienteId2, pool, result, _error$originalError6, _error$originalError7;
     return _regeneratorRuntime().wrap(function _callee21$(_context21) {
       while (1) switch (_context21.prev = _context21.next) {
         case 0:
           _context21.prev = 0;
           clienteId = req.query.clienteId ? Number(req.query.clienteId) : null;
-          _context21.next = 4;
+          clienteId2 = req.query.clienteId2 ? Number(req.query.clienteId2) : 0;
+          _context21.next = 5;
           return (0, _database.getConnection)();
-        case 4:
+        case 5:
           pool = _context21.sent;
-          _context21.next = 7;
-          return pool.request()
-          /*.input(
-            'AS_CLI_id',
-            sql.Decimal(18, 0),
-            clienteId
-          )*/.execute('dbo.sp_AreaServicio_ObtenerMapaEquipos');
-        case 7:
+          _context21.next = 8;
+          return pool.request().input('AS_CLI_id', _database.sql.Decimal(18, 0), clienteId).input('AS_CLI_id2', _database.sql.Decimal(18, 0), clienteId2).execute('dbo.sp_AreaServicio_ObtenerMapaEquipos');
+        case 8:
           result = _context21.sent;
           return _context21.abrupt("return", res.status(200).json({
             status: 'ok',
             msg: result.recordset.length,
             token: result.recordset
           }));
-        case 11:
-          _context21.prev = 11;
+        case 12:
+          _context21.prev = 12;
           _context21.t0 = _context21["catch"](0);
           console.error('Error consultando mapa:', _context21.t0);
           return _context21.abrupt("return", res.status(500).json({
             status: 'error',
             msg: (_context21.t0 === null || _context21.t0 === void 0 ? void 0 : (_error$originalError6 = _context21.t0.originalError) === null || _error$originalError6 === void 0 ? void 0 : (_error$originalError7 = _error$originalError6.info) === null || _error$originalError7 === void 0 ? void 0 : _error$originalError7.message) || (_context21.t0 === null || _context21.t0 === void 0 ? void 0 : _context21.t0.message) || 'No se pudieron obtener las ubicaciones.'
           }));
-        case 15:
+        case 16:
         case "end":
           return _context21.stop();
       }
-    }, _callee21, null, [[0, 11]]);
+    }, _callee21, null, [[0, 12]]);
   }));
   return function obtenerMapaEquipos(_x42, _x43) {
     return _ref25.apply(this, arguments);

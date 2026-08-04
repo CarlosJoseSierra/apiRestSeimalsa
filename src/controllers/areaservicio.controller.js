@@ -1004,16 +1004,22 @@ export const obtenerMapaEquipos =
       req.query.clienteId
         ? Number(req.query.clienteId)
         : null;
-
+    const clienteId2 = req.query.clienteId2
+        ? Number(req.query.clienteId2)
+        : 0;
     const pool = await getConnection();
 
     const result = await pool
       .request()
-      /*.input(
+      .input(
         'AS_CLI_id',
         sql.Decimal(18, 0),
         clienteId
-      )*/
+      ) .input(
+        'AS_CLI_id2',
+        sql.Decimal(18, 0),
+        clienteId2
+      )
       .execute(
         'dbo.sp_AreaServicio_ObtenerMapaEquipos'
       );

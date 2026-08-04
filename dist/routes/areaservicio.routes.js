@@ -33,7 +33,7 @@ router.get("/areaservicio/AJE", _areaservicio.getEntregadosAJE);
 router.get("/areaservicio/DET/:id", _areaservicio.getDetalleCTById);
 router.put("/areaservicio/:id", storage.array('image', 7), _areaservicio.updateAreaServicio);
 router.get('/areaservicio/:id/pdf', _areaservicio.obtenerPDFReparacion);
-router.get('/areaservicio/mapa/equipos', _areaservicio.obtenerMapaEquipos);
+router.get('/areaservicio/mapa/equipos/:clienteId/:clienteId2', _areaservicio.obtenerMapaEquipos);
 router.get('/areaservicio/dashboard/:usuarioId', _areaservicio.obtenerDashboardTecnico);
 router.get('/areaservicio/dash/:clienteId', _areaservicio.obtenerDashboardKPIPorCliente);
 var _default = router;
