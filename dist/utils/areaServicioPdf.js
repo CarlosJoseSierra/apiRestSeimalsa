@@ -90,9 +90,10 @@ function _descargarImagen() {
   return _descargarImagen.apply(this, arguments);
 }
 function necesitaPagina(doc, altoNecesario) {
-  var limite = doc.page.height - doc.page.margins.bottom - 45;
+  var limite = doc.page.height - doc.page.margins.bottom - 10;
   if (doc.y + altoNecesario > limite) {
     doc.addPage();
+    doc.y = doc.page.margins.top;
     return true;
   }
   return false;
@@ -148,17 +149,25 @@ function dibujarDatosEquipo(doc, cabecera) {
   doc.roundedRect(45, y, 505, 76, 6).lineWidth(0.8).strokeColor(COLORES.borde).stroke();
   dibujarCampo(doc, 'SERIE:', cabecera.AS_serie, 58, y + 13, 55, 140);
   dibujarCampo(doc, 'PLACA:', cabecera.AS_placa, 310, y + 13, 50, 165);
-  dibujarCampo(doc, 'MARCA:', cabecera.EQUIP_marca.toUpperCase(), 58, y + 38, 55, 140);
-  dibujarCampo(doc, 'MODELO:', cabecera.EQUIP_modelo.toUpperCase(), 310, y + 38, 50, 165);
+  dibujarCampo(doc, 'MARCA:',
+  //cabecera.EQUIP_marca.toUpperCase(),
+  texto(cabecera.EQUIP_marca, 'N/D').toUpperCase(), 58, y + 38, 55, 140);
+  dibujarCampo(doc, 'MODELO:',
+  //cabecera.EQUIP_modelo.toUpperCase(),
+  texto(cabecera.EQUIP_modelo, 'N/D').toUpperCase(), 310, y + 38, 50, 165);
   dibujarCampo(doc, 'FECHA:', fechaEcuador(cabecera.AS_fechaReq || cabecera.AS_fecha), 58, y + 60, 55, 390);
-  dibujarCampo(doc, 'LOGO', cabecera.LOGO_nombre.toUpperCase(), 310, y + 60, 50, 165);
+  dibujarCampo(doc, 'LOGO',
+  //cabecera.LOGO_nombre.toUpperCase(),
+  texto(cabecera.LOGO_nombre, 'N/D').toUpperCase(), 310, y + 60, 50, 165);
   doc.y = y + 90;
 }
 function dibujarDatosCliente(doc, cabecera) {
   dibujarTituloSeccion(doc, 'DATOS DEL CLIENTE');
   var y = doc.y;
   doc.roundedRect(45, y, 505, 122, 6).lineWidth(0.8).strokeColor(COLORES.borde).stroke();
-  dibujarCampo(doc, 'CLIENTE:', cabecera.CLI_nombre.toUpperCase(), 58, y + 13, 75, 390);
+  dibujarCampo(doc, 'CLIENTE:',
+  //cabecera.CLI_nombre.toUpperCase(),
+  texto(cabecera.CLI_nombre, 'N/D').toUpperCase(), 58, y + 13, 75, 390);
   dibujarCampo(doc, 'SUBCLIENTE:', cabecera.SC_nombre.toUpperCase(), 58, y + 35, 75, 390);
   dibujarCampo(doc, 'COD. SUBCLIENTE:', cabecera.SC_codUniversal, 310, y + 35, 75, 390);
   dibujarCampo(doc, 'PROVINCIA:', cabecera.UBIC_provincia.toUpperCase(), 58, y + 57, 75, 140);
@@ -190,45 +199,55 @@ function dibujarTablaDetalles(doc, detalles) {
     var y = doc.y;
     doc.rect(45, y, 505, 24).fill(COLORES.primario);
     doc.fillColor(COLORES.blanco).font('Helvetica-Bold').fontSize(8).text('ITEM', columnas.item + 5, y + 8, {
-      width: 30
+      width: 30,
+      lineBreak: false
     }).text('CÓDIGO', columnas.codigo, y + 8, {
-      width: 85
+      width: 85,
+      lineBreak: false
     }).text('DESCRIPCIÓN', columnas.descripcion, y + 8, {
-      width: 260
+      width: 260,
+      lineBreak: false
     }).text('CANT.', columnas.cantidad, y + 8, {
       width: 50,
-      align: 'right'
+      align: 'right',
+      lineBreak: false
     });
     doc.y = y + 24;
   }
   encabezado();
   detalles.forEach(function (detalle, indice) {
-    var descripcion = texto(detalle.AS_DET_PROD_descripcion, 'SIN DESCRIPCIÓN');
+    var descripcion = texto(detalle === null || detalle === void 0 ? void 0 : detalle.AS_DET_PROD_descripcion, 'SIN DESCRIPCIÓN');
+    doc.font('Helvetica').fontSize(8);
     var altoDescripcion = doc.heightOfString(descripcion, {
       width: 255,
-      fontSize: 8
+      lineGap: 2
     });
-    var altoFila = Math.max(26, altoDescripcion + 12);
-    if (doc.y + altoFila > doc.page.height - doc.page.margins.bottom - 40) {
+    var altoFila = Math.max(22, altoDescripcion + 10);
+    var limitePagina = doc.page.height - doc.page.margins.bottom - 10;
+    if (doc.y + altoFila > limitePagina) {
       doc.addPage();
+      doc.y = doc.page.margins.top;
       encabezado();
     }
     var y = doc.y;
     var fondo = indice % 2 === 0 ? '#FFFFFF' : '#F8FAFC';
     doc.rect(45, y, 505, altoFila).fill(fondo).lineWidth(0.5).strokeColor(COLORES.borde).stroke();
-    doc.fillColor(COLORES.texto).font('Helvetica').fontSize(8).text(String(indice + 1), 50, y + 8, {
+    doc.fillColor(COLORES.texto).font('Helvetica').fontSize(8).text(String(indice + 1), 50, y + 6, {
       width: 25
-    }).text(texto(detalle.AS_DET_PROD_codigo), columnas.codigo, y + 8, {
+    }).text(texto(detalle === null || detalle === void 0 ? void 0 : detalle.AS_DET_PROD_codigo), columnas.codigo, y + 6, {
       width: 85
-    }).text(descripcion, columnas.descripcion, y + 7, {
-      width: 255
-    }).text(numero(detalle.AS_DET_cantidad), columnas.cantidad, y + 8, {
+    }).text(descripcion, columnas.descripcion, y + 6, {
+      width: 255,
+      lineGap: 2
+    }).text(numero(detalle === null || detalle === void 0 ? void 0 : detalle.AS_DET_cantidad), columnas.cantidad, y + 6, {
       width: 45,
       align: 'right'
     });
     doc.y = y + altoFila;
   });
-  doc.moveDown(1);
+
+  // Espacio controlado entre tabla y observaciones
+  doc.y += 8;
 }
 function dibujarTotales(doc, cabecera) {
   necesitaPagina(doc, 80);
@@ -247,21 +266,64 @@ function dibujarTotales(doc, cabecera) {
   doc.y = y + 84;
 }
 function dibujarObservaciones(doc, cabecera) {
-  dibujarTituloSeccion(doc, 'OBSERVACIONES');
-  var observacion = texto(cabecera.AS_observacionTecnica.toUpperCase(), 'Sin observaciones técnicas.');
-  var alto = Math.max(75, doc.heightOfString(observacion, {
-    width: 475,
-    fontSize: 9
-  }) + 32);
-  necesitaPagina(doc, alto + 10);
-  var y = doc.y;
-  doc.roundedRect(45, y, 505, alto, 6).fill('#F8FAFC').lineWidth(0.8).strokeColor(COLORES.borde).stroke();
-  doc.fillColor(COLORES.texto).font('Helvetica').fontSize(9).text(observacion, 60, y + 16, {
-    width: 475,
-    align: 'justify',
+  var observacion = texto(cabecera === null || cabecera === void 0 ? void 0 : cabecera.AS_observacionTecnica, 'Sin observaciones técnicas.').toUpperCase();
+
+  /*
+    Medidas de la sección
+  */
+  var anchoSeccion = 505;
+  var anchoTexto = 475;
+  var altoTitulo = 28;
+  var separacionTitulo = 10;
+  var paddingSuperior = 14;
+  var paddingInferior = 14;
+
+  /*
+    Primero configurar la misma fuente con la que
+    se calculará y dibujará el contenido.
+  */
+  doc.font('Helvetica').fontSize(9);
+  var altoTexto = doc.heightOfString(observacion, {
+    width: anchoTexto,
+    align: 'left',
     lineGap: 3
   });
-  doc.y = y + alto + 12;
+
+  /*
+    Para una sola línea deja un cuadro compacto.
+    Para varias líneas aumenta automáticamente.
+  */
+  var altoCaja = Math.max(45, altoTexto + paddingSuperior + paddingInferior);
+
+  /*
+    Se reserva junta toda la sección:
+    título + separación + contenido.
+    Así el título nunca queda solo al final de página.
+  */
+  var altoTotal = altoTitulo + separacionTitulo + altoCaja + 12;
+  necesitaPagina(doc, altoTotal);
+
+  /*
+    Encabezado OBSERVACIONES
+  */
+  var yTitulo = doc.y;
+  doc.roundedRect(45, yTitulo, anchoSeccion, altoTitulo, 5).fill(COLORES.primario);
+  doc.fillColor(COLORES.blanco).font('Helvetica-Bold').fontSize(11).text('OBSERVACIONES', 58, yTitulo + 8, {
+    width: 479,
+    lineBreak: false
+  });
+
+  /*
+    Caja del contenido inmediatamente debajo
+  */
+  var yCaja = yTitulo + altoTitulo + separacionTitulo;
+  doc.roundedRect(45, yCaja, anchoSeccion, altoCaja, 6).fill('#F8FAFC').lineWidth(0.8).strokeColor(COLORES.borde).stroke();
+  doc.fillColor(COLORES.texto).font('Helvetica').fontSize(9).text(observacion, 60, yCaja + paddingSuperior, {
+    width: anchoTexto,
+    align: 'left',
+    lineGap: 3
+  });
+  doc.y = yCaja + altoCaja + 12;
 }
 function dibujarPiePagina(doc) {
   var paginas = doc.bufferedPageRange();

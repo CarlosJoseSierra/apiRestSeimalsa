@@ -81,10 +81,11 @@ function necesitaPagina(doc, altoNecesario) {
   const limite =
     doc.page.height -
     doc.page.margins.bottom -
-    45;
+    10;
 
   if (doc.y + altoNecesario > limite) {
     doc.addPage();
+    doc.y = doc.page.margins.top;
     return true;
   }
 
@@ -222,7 +223,8 @@ function dibujarDatosEquipo(doc, cabecera) {
   dibujarCampo(
     doc,
     'MARCA:',
-    cabecera.EQUIP_marca.toUpperCase(),
+    //cabecera.EQUIP_marca.toUpperCase(),
+    texto(cabecera.EQUIP_marca, 'N/D').toUpperCase(),
     58,
     y + 38,
     55,
@@ -232,7 +234,8 @@ function dibujarDatosEquipo(doc, cabecera) {
   dibujarCampo(
     doc,
     'MODELO:',
-    cabecera.EQUIP_modelo.toUpperCase(),
+    //cabecera.EQUIP_modelo.toUpperCase(),
+    texto(cabecera.EQUIP_modelo, 'N/D').toUpperCase(),
     310,
     y + 38,
     50,
@@ -254,7 +257,8 @@ function dibujarDatosEquipo(doc, cabecera) {
   dibujarCampo(
     doc,
     'LOGO',
-    cabecera.LOGO_nombre.toUpperCase(),
+    //cabecera.LOGO_nombre.toUpperCase(),
+    texto(cabecera.LOGO_nombre, 'N/D').toUpperCase(),
     310,
     y + 60,
     50,
@@ -278,7 +282,8 @@ function dibujarDatosCliente(doc, cabecera) {
   dibujarCampo(
     doc,
     'CLIENTE:',
-    cabecera.CLI_nombre.toUpperCase(),
+    //cabecera.CLI_nombre.toUpperCase(),
+    texto(cabecera.CLI_nombre, 'N/D').toUpperCase(),
     58,
     y + 13,
     75,
@@ -405,7 +410,10 @@ function dibujarDatosServicio(doc, cabecera) {
 }
 
 function dibujarTablaDetalles(doc, detalles) {
-  dibujarTituloSeccion(doc, 'REPUESTOS / SERVICIOS');
+  dibujarTituloSeccion(
+    doc,
+    'REPUESTOS / SERVICIOS'
+  );
 
   const columnas = {
     item: 45,
@@ -425,19 +433,43 @@ function dibujarTablaDetalles(doc, detalles) {
       .fillColor(COLORES.blanco)
       .font('Helvetica-Bold')
       .fontSize(8)
-      .text('ITEM', columnas.item + 5, y + 8, {
-        width: 30
-      })
-      .text('CÓDIGO', columnas.codigo, y + 8, {
-        width: 85
-      })
-      .text('DESCRIPCIÓN', columnas.descripcion, y + 8, {
-        width: 260
-      })
-      .text('CANT.', columnas.cantidad, y + 8, {
-        width: 50,
-        align: 'right'
-      });
+      .text(
+        'ITEM',
+        columnas.item + 5,
+        y + 8,
+        {
+          width: 30,
+          lineBreak: false
+        }
+      )
+      .text(
+        'CÓDIGO',
+        columnas.codigo,
+        y + 8,
+        {
+          width: 85,
+          lineBreak: false
+        }
+      )
+      .text(
+        'DESCRIPCIÓN',
+        columnas.descripcion,
+        y + 8,
+        {
+          width: 260,
+          lineBreak: false
+        }
+      )
+      .text(
+        'CANT.',
+        columnas.cantidad,
+        y + 8,
+        {
+          width: 50,
+          align: 'right',
+          lineBreak: false
+        }
+      );
 
     doc.y = y + 24;
   }
@@ -446,31 +478,41 @@ function dibujarTablaDetalles(doc, detalles) {
 
   detalles.forEach((detalle, indice) => {
     const descripcion = texto(
-      detalle.AS_DET_PROD_descripcion,
+      detalle?.AS_DET_PROD_descripcion,
       'SIN DESCRIPCIÓN'
     );
 
-    const altoDescripcion = doc.heightOfString(
-      descripcion,
-      {
-        width: 255,
-        fontSize: 8
-      }
+    doc
+      .font('Helvetica')
+      .fontSize(8);
+
+    const altoDescripcion =
+      doc.heightOfString(
+        descripcion,
+        {
+          width: 255,
+          lineGap: 2
+        }
+      );
+
+    const altoFila = Math.max(
+      22,
+      altoDescripcion + 10
     );
 
-    const altoFila = Math.max(26, altoDescripcion + 12);
-
-    if (
-      doc.y + altoFila >
+    const limitePagina =
       doc.page.height -
       doc.page.margins.bottom -
-      40
-    ) {
+      10;
+
+    if (doc.y + altoFila > limitePagina) {
       doc.addPage();
+      doc.y = doc.page.margins.top;
       encabezado();
     }
 
     const y = doc.y;
+
     const fondo =
       indice % 2 === 0
         ? '#FFFFFF'
@@ -487,13 +529,18 @@ function dibujarTablaDetalles(doc, detalles) {
       .fillColor(COLORES.texto)
       .font('Helvetica')
       .fontSize(8)
-      .text(String(indice + 1), 50, y + 8, {
-        width: 25
-      })
       .text(
-        texto(detalle.AS_DET_PROD_codigo),
+        String(indice + 1),
+        50,
+        y + 6,
+        {
+          width: 25
+        }
+      )
+      .text(
+        texto(detalle?.AS_DET_PROD_codigo),
         columnas.codigo,
-        y + 8,
+        y + 6,
         {
           width: 85
         }
@@ -501,26 +548,27 @@ function dibujarTablaDetalles(doc, detalles) {
       .text(
         descripcion,
         columnas.descripcion,
-        y + 7,
+        y + 6,
         {
-          width: 255
+          width: 255,
+          lineGap: 2
         }
       )
       .text(
-        numero(detalle.AS_DET_cantidad),
+        numero(detalle?.AS_DET_cantidad),
         columnas.cantidad,
-        y + 8,
+        y + 6,
         {
           width: 45,
           align: 'right'
         }
       );
-     
 
     doc.y = y + altoFila;
   });
 
-  doc.moveDown(1);
+  // Espacio controlado entre tabla y observaciones
+  doc.y += 8;
 }
 
 function dibujarTotales(doc, cabecera) {
@@ -578,27 +626,106 @@ function dibujarTotales(doc, cabecera) {
 }
 
 function dibujarObservaciones(doc, cabecera) {
-  dibujarTituloSeccion(doc, 'OBSERVACIONES');
-
   const observacion = texto(
-    cabecera.AS_observacionTecnica.toUpperCase(),
+    cabecera?.AS_observacionTecnica,
     'Sin observaciones técnicas.'
+  ).toUpperCase();
+
+  /*
+    Medidas de la sección
+  */
+  const anchoSeccion = 505;
+  const anchoTexto = 475;
+
+  const altoTitulo = 28;
+  const separacionTitulo = 10;
+  const paddingSuperior = 14;
+  const paddingInferior = 14;
+
+  /*
+    Primero configurar la misma fuente con la que
+    se calculará y dibujará el contenido.
+  */
+  doc
+    .font('Helvetica')
+    .fontSize(9);
+
+  const altoTexto = doc.heightOfString(
+    observacion,
+    {
+      width: anchoTexto,
+      align: 'left',
+      lineGap: 3
+    }
   );
 
-  const alto = Math.max(
-    75,
-    doc.heightOfString(observacion, {
-      width: 475,
-      fontSize: 9
-    }) + 32
+  /*
+    Para una sola línea deja un cuadro compacto.
+    Para varias líneas aumenta automáticamente.
+  */
+  const altoCaja = Math.max(
+    45,
+    altoTexto + paddingSuperior + paddingInferior
   );
 
-  necesitaPagina(doc, alto + 10);
+  /*
+    Se reserva junta toda la sección:
+    título + separación + contenido.
+    Así el título nunca queda solo al final de página.
+  */
+  const altoTotal =
+    altoTitulo +
+    separacionTitulo +
+    altoCaja +
+    12;
 
-  const y = doc.y;
+  necesitaPagina(doc, altoTotal);
+
+  /*
+    Encabezado OBSERVACIONES
+  */
+  const yTitulo = doc.y;
 
   doc
-    .roundedRect(45, y, 505, alto, 6)
+    .roundedRect(
+      45,
+      yTitulo,
+      anchoSeccion,
+      altoTitulo,
+      5
+    )
+    .fill(COLORES.primario);
+
+  doc
+    .fillColor(COLORES.blanco)
+    .font('Helvetica-Bold')
+    .fontSize(11)
+    .text(
+      'OBSERVACIONES',
+      58,
+      yTitulo + 8,
+      {
+        width: 479,
+        lineBreak: false
+      }
+    );
+
+  /*
+    Caja del contenido inmediatamente debajo
+  */
+  const yCaja =
+    yTitulo +
+    altoTitulo +
+    separacionTitulo;
+
+  doc
+    .roundedRect(
+      45,
+      yCaja,
+      anchoSeccion,
+      altoCaja,
+      6
+    )
     .fill('#F8FAFC')
     .lineWidth(0.8)
     .strokeColor(COLORES.borde)
@@ -608,13 +735,21 @@ function dibujarObservaciones(doc, cabecera) {
     .fillColor(COLORES.texto)
     .font('Helvetica')
     .fontSize(9)
-    .text(observacion, 60, y + 16, {
-      width: 475,
-      align: 'justify',
-      lineGap: 3
-    });
+    .text(
+      observacion,
+      60,
+      yCaja + paddingSuperior,
+      {
+        width: anchoTexto,
+        align: 'left',
+        lineGap: 3
+      }
+    );
 
-  doc.y = y + alto + 12;
+  doc.y =
+    yCaja +
+    altoCaja +
+    12;
 }
 
 function dibujarPiePagina(doc) {
