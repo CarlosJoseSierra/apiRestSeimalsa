@@ -1,4 +1,4 @@
-FROM debian:bullseye as builder
+FROM debian:bookworm as builder
 
 ARG NODE_VERSION=16.16.0
 
@@ -22,7 +22,7 @@ ENV NODE_ENV production
 COPY . .
 
 RUN npm install
-FROM debian:bullseye
+FROM debian:bookworm 
 
 LABEL fly_launch_runtime="nodejs"
 
