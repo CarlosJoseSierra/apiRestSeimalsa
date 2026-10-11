@@ -339,6 +339,16 @@ function dibujarDatosCliente(doc, cabecera) {
     75,
     390
   );
+  
+  dibujarCampo(
+    doc,
+    'NUM. REQ.:',
+    cabecera.AS_numReq.toUpperCase(),
+    310,
+    y + 79,
+    75,
+    390
+  );
 
   dibujarCampo(
     doc,

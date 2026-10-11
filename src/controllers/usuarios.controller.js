@@ -33,48 +33,163 @@ export const getUser = async(req, res) =>{
 }
 
 export const getByUserPass = async (req, res) => {
-    const { USU_usuario, USU_clave } = req.body;
+  const {
+    USU_usuario,
+    USU_clave,
+    dispositivoId
+  } = req.body;
 
-    // validating
-    if (USU_usuario == null || USU_clave == null) {
-      return res.status(400).json({ status: "400",msg: "Favor ingresar Datos Requeridos" });
+  if (
+    USU_usuario == null ||
+    USU_clave == null
+  ) {
+    return res.status(400).json({
+      status: "400",
+      msg: "Favor ingresar Datos Requeridos"
+    });
+  }
+
+  try {
+    const pool = await getConnection();
+    if (!pool) {
+      return res.status(500).json({
+        status: "500",
+        msg: "No se pudo conectar a la base de datos",
+        token: 0
+      });
     }
-  
-    try {
-      const pool = await getConnection();
-      if (!pool) {
-        return res.status(500).json({ status: "500", msg: "No se pudo conectar a la base de datos", token: 0 });
-    }
-      const result = await pool
+
+    const result =
+      await pool
         .request()
-        .input("USU_usuario", sql.VarChar, USU_usuario)
+        .input("USU_usuario",sql.VarChar,USU_usuario)
         .query(querys.getUserPass);
-      //Lo nuevo implementado por cs
-      if(result.recordset[0]){
-          if(result.recordset[0]['USU_clave'] == USU_clave){
-            const userFormToken={
-              id:result.recordset[0]['USU_id'],
-              nameU: result.recordset[0]['USU_usuario'],
-              }
-              //const token = jwt.sign(userFormToken,process.env.SECRET_WORD)
-              const token = '00ggg';
-            return res.json({status: "ok", msg: result.recordset[0],token:token});
-          }
-          else{
-            return res.status(400).json({ status: "400", msg: "El password es incorrecto" ,token:0});
-          }
-      }
-      else{
-        return res.status(400).json({ status: "400", msg: "El user es incorrecto",token:0 });
-      }
-    } catch (error) {
-      //res.status(500);
-      //res.send(error.message);
-      //return res.status(500).json({ status: "500", msg: res.send(error.message),token:0  });
-      if (!res.headersSent) {
-        return res.status(500).json({ status: "500", msg: error.message, token: 0 });
+
+    if (!result.recordset[0]) {
+      return res.status(400).json({
+        status: "400",
+        msg: "El user es incorrecto",
+        token: 0
+      });
     }
+    const usuario = result.recordset[0];
+    if (
+      usuario.USU_clave !==
+      USU_clave
+    ) {
+      return res.status(400).json({
+        status: "400",
+        msg: "El password es incorrecto",
+        token: 0
+      });
     }
+    if (
+      String(usuario.USU_rol)
+        .trim()
+        .toUpperCase()
+        === "TECNICO"
+    ) {
+
+      if (
+        !dispositivoId ||
+        String(dispositivoId).trim() === ""
+      ) {
+
+        return res.status(403).json({
+          status: "403",
+          codigo:
+            "DISPOSITIVO_NO_IDENTIFICADO",
+          msg:
+            "No fue posible identificar este dispositivo.",
+          token: 0
+        });
+      }
+      const dispositivoResult =
+        await pool
+          .request()
+          .input("UD_USU_id",sql.Decimal,usuario.USU_id)
+          .input("UD_dispositivoId",sql.VarChar,String(dispositivoId).trim())
+          .query(`
+            SELECT TOP 1
+                UD_id,
+                UD_USU_id,
+                UD_dispositivoId,
+                UD_nombre,
+                UD_estado
+            FROM USUARIO_DISPOSITIVO
+            WHERE
+                UD_USU_id =
+                    @UD_USU_id
+                AND UD_dispositivoId =
+                    @UD_dispositivoId
+                AND UD_estado = 1
+          `);
+      if (
+        dispositivoResult
+          .recordset
+          .length === 0
+      ) {
+        return res
+          .status(403)
+          .json({
+            status: "403",
+            codigo:
+              "DISPOSITIVO_NO_AUTORIZADO",
+            msg:
+              "Este dispositivo no está autorizado para este técnico.",
+            dispositivoId:
+              String(dispositivoId).trim(),
+            token: 0
+          });
+      }
+
+      const dispositivo =
+        dispositivoResult
+          .recordset[0];
+      await pool
+        .request()
+        .input(
+          "UD_id",
+          sql.Int,
+          dispositivo.UD_id
+        )
+        .query(`UPDATE USUARIO_DISPOSITIVO SET UD_ultimoAcceso = GETDATE() WHERE UD_id = @UD_id`);
+    }
+
+    const userFormToken = {
+
+      id:usuario.USU_id,
+
+      nameU:usuario.USU_usuario
+    };
+
+    const token =
+      '00ggg';
+    return res.json({
+      status: "ok",
+      msg:
+        usuario,
+      token:
+        token
+    });
+  } catch (error) {
+    console.error(
+      "Error en login:",
+      error
+    );
+
+    if (!res.headersSent) {
+      return res
+        .status(500)
+        .json({
+          status: "500",
+
+          msg:
+            error.message,
+          token: 0
+        });
+    }
+  }
 };
 
 export const createFirmaUser = async (req, res) => {

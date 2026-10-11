@@ -173,6 +173,7 @@ function dibujarDatosCliente(doc, cabecera) {
   dibujarCampo(doc, 'PROVINCIA:', cabecera.UBIC_provincia.toUpperCase(), 58, y + 57, 75, 140);
   dibujarCampo(doc, 'CIUDAD:', cabecera.UBIC_ciudad.toUpperCase(), 310, y + 57, 55, 160);
   dibujarCampo(doc, 'ESTABLEC.:', cabecera.SC_establecimiento.toUpperCase(), 58, y + 79, 75, 390);
+  dibujarCampo(doc, 'NUM. REQ.:', cabecera.AS_numReq.toUpperCase(), 310, y + 79, 75, 390);
   dibujarCampo(doc, 'TELÉFONO:', cabecera.SC_telefono, 58, y + 101, 75, 145);
   dibujarCampo(doc, 'TÉCNICO:', cabecera.Tecnico.toUpperCase(), 310, y + 101, 55, 160);
   doc.y = y + 136;

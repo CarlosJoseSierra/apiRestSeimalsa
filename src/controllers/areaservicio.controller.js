@@ -609,6 +609,11 @@ export const getAreaByPlaca = async (req, res) => {
           Number(req.body.Logo)
         )
         .input(
+          'AS_numReq',
+          sql.VarChar(50),
+          req.body.Observacion ?? ''
+        )
+        .input(
           'AS_observacionTecnica',
           sql.VarChar(sql.MAX),
           req.body.ObservacionTec ?? ''

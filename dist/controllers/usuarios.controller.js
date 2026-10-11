@@ -82,11 +82,11 @@ var getUser = /*#__PURE__*/function () {
 exports.getUser = getUser;
 var getByUserPass = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var _req$body2, USU_usuario, USU_clave, pool, result, userFormToken, token;
+    var _req$body2, USU_usuario, USU_clave, dispositivoId, pool, result, usuario, dispositivoResult, dispositivo, userFormToken, token;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
-          _req$body2 = req.body, USU_usuario = _req$body2.USU_usuario, USU_clave = _req$body2.USU_clave; // validating
+          _req$body2 = req.body, USU_usuario = _req$body2.USU_usuario, USU_clave = _req$body2.USU_clave, dispositivoId = _req$body2.dispositivoId;
           if (!(USU_usuario == null || USU_clave == null)) {
             _context3.next = 3;
             break;
@@ -115,47 +115,78 @@ var getByUserPass = /*#__PURE__*/function () {
           return pool.request().input("USU_usuario", _mssql["default"].VarChar, USU_usuario).query(_querys.querys.getUserPass);
         case 11:
           result = _context3.sent;
-          if (!result.recordset[0]) {
-            _context3.next = 22;
+          if (result.recordset[0]) {
+            _context3.next = 14;
             break;
           }
-          if (!(result.recordset[0]['USU_clave'] == USU_clave)) {
-            _context3.next = 19;
-            break;
-          }
-          userFormToken = {
-            id: result.recordset[0]['USU_id'],
-            nameU: result.recordset[0]['USU_usuario']
-          }; //const token = jwt.sign(userFormToken,process.env.SECRET_WORD)
-          token = '00ggg';
-          return _context3.abrupt("return", res.json({
-            status: "ok",
-            msg: result.recordset[0],
-            token: token
-          }));
-        case 19:
-          return _context3.abrupt("return", res.status(400).json({
-            status: "400",
-            msg: "El password es incorrecto",
-            token: 0
-          }));
-        case 20:
-          _context3.next = 23;
-          break;
-        case 22:
           return _context3.abrupt("return", res.status(400).json({
             status: "400",
             msg: "El user es incorrecto",
             token: 0
           }));
-        case 23:
-          _context3.next = 29;
-          break;
+        case 14:
+          usuario = result.recordset[0];
+          if (!(usuario.USU_clave !== USU_clave)) {
+            _context3.next = 17;
+            break;
+          }
+          return _context3.abrupt("return", res.status(400).json({
+            status: "400",
+            msg: "El password es incorrecto",
+            token: 0
+          }));
+        case 17:
+          if (!(String(usuario.USU_rol).trim().toUpperCase() === "TECNICO")) {
+            _context3.next = 28;
+            break;
+          }
+          if (!(!dispositivoId || String(dispositivoId).trim() === "")) {
+            _context3.next = 20;
+            break;
+          }
+          return _context3.abrupt("return", res.status(403).json({
+            status: "403",
+            codigo: "DISPOSITIVO_NO_IDENTIFICADO",
+            msg: "No fue posible identificar este dispositivo.",
+            token: 0
+          }));
+        case 20:
+          _context3.next = 22;
+          return pool.request().input("UD_USU_id", _mssql["default"].Decimal, usuario.USU_id).input("UD_dispositivoId", _mssql["default"].VarChar, String(dispositivoId).trim()).query("\n            SELECT TOP 1\n                UD_id,\n                UD_USU_id,\n                UD_dispositivoId,\n                UD_nombre,\n                UD_estado\n            FROM USUARIO_DISPOSITIVO\n            WHERE\n                UD_USU_id =\n                    @UD_USU_id\n                AND UD_dispositivoId =\n                    @UD_dispositivoId\n                AND UD_estado = 1\n          ");
+        case 22:
+          dispositivoResult = _context3.sent;
+          if (!(dispositivoResult.recordset.length === 0)) {
+            _context3.next = 25;
+            break;
+          }
+          return _context3.abrupt("return", res.status(403).json({
+            status: "403",
+            codigo: "DISPOSITIVO_NO_AUTORIZADO",
+            msg: "Este dispositivo no está autorizado para este técnico.",
+            dispositivoId: String(dispositivoId).trim(),
+            token: 0
+          }));
         case 25:
-          _context3.prev = 25;
+          dispositivo = dispositivoResult.recordset[0];
+          _context3.next = 28;
+          return pool.request().input("UD_id", _mssql["default"].Int, dispositivo.UD_id).query("UPDATE USUARIO_DISPOSITIVO SET UD_ultimoAcceso = GETDATE() WHERE UD_id = @UD_id");
+        case 28:
+          userFormToken = {
+            id: usuario.USU_id,
+            nameU: usuario.USU_usuario
+          };
+          token = '00ggg';
+          return _context3.abrupt("return", res.json({
+            status: "ok",
+            msg: usuario,
+            token: token
+          }));
+        case 33:
+          _context3.prev = 33;
           _context3.t0 = _context3["catch"](3);
+          console.error("Error en login:", _context3.t0);
           if (res.headersSent) {
-            _context3.next = 29;
+            _context3.next = 38;
             break;
           }
           return _context3.abrupt("return", res.status(500).json({
@@ -163,11 +194,11 @@ var getByUserPass = /*#__PURE__*/function () {
             msg: _context3.t0.message,
             token: 0
           }));
-        case 29:
+        case 38:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[3, 25]]);
+    }, _callee3, null, [[3, 33]]);
   }));
   return function getByUserPass(_x5, _x6) {
     return _ref3.apply(this, arguments);
